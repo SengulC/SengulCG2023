@@ -22,6 +22,20 @@
 	return vect;
 }
 
+void bAndWdraw(DrawingWindow &window) {
+	window.clearPixels();
+	std::vector<float> colors = interpolateSingleFloats(255.0, 0.0, window.width);
+	for (size_t y = 0; y < window.height; y++) {
+		for (size_t x = 0; x < window.width; x++) {
+			float red = colors[x];
+			float green = colors[x];
+			float blue = colors[x];
+			uint32_t colour = (255 << 24) + (int(red) << 16) + (int(green) << 8) + int(blue);
+			window.setPixelColour(x, y, colour);
+		}
+	}
+}
+
 void draw(DrawingWindow &window) {
 	window.clearPixels();
 	std::vector<float> colors = interpolateSingleFloats(255.0, 0.0, window.width);
