@@ -20,6 +20,21 @@ void draw(DrawingWindow &window) {
 	}
 }
 
+// returns an evenly spaced list of size numberOfValues that contains floating point numbers between from and to. 
+ std::vector<float> interpolateSingleFloats(float from, float to, int numberOfValues) {
+	float step = (to-from)/(numberOfValues-1);
+	std::vector<float> vect;
+	vect.push_back(from);
+	float next = from;
+	for (int i = 0; i < numberOfValues-2; i++) {
+		float num = next+step;
+		vect.push_back(num);
+		next = next + step;
+	}
+	vect.push_back(to);
+	return vect;
+}
+
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
 		if (event.key.keysym.sym == SDLK_LEFT) std::cout << "LEFT" << std::endl;
@@ -35,6 +50,10 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
 	SDL_Event event;
+	std::vector<float> result;
+	result = interpolateSingleFloats(2.2, 8.5, 7);
+	for(size_t i=0; i<result.size(); i++) std::cout << result[i] << " ";
+	std::cout << std::endl;
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
