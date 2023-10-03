@@ -78,31 +78,23 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 }
 
 int main(int argc, char *argv[]) {
-	// DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
-	// SDL_Event event;
-	// std::vector<glm::vec3> result;
+	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
+	SDL_Event event;
+	while (true) {
+		// We MUST poll for events - otherwise the window will freeze !
+		if (window.pollForInputEvents(event)) handleEvent(event, window);
+		draw(window);
+		// Need to render the frame at the end, or nothing actually gets shown on the screen !
+		window.renderFrame();
+	}
+
+	// interpolateThreeElementValues test
 	// glm::vec3 from(1.0, 4.0, 9.2);
-	// glm::vec3 to(4.0, 1.0, 9.8);
-	// result = interpolateThreeElementValues(from, to, 4);
-	// for(size_t i=0; i<result.size(); i++) std::cout << result[i] << " ";
-	// std::cout << std::endl;
-	// while (true) {
-	// 	// We MUST poll for events - otherwise the window will freeze !
-	// 	if (window.pollForInputEvents(event)) handleEvent(event, window);
-	// 	draw(window);
-	// 	// Need to render the frame at the end, or nothing actually gets shown on the screen !
-	// 	window.renderFrame();
-	// }
-	glm::vec3 from(1.0, 4.0, 9.2);
-    glm::vec3 to(4.0, 1.0, 9.8);
-    int numberOfValues = 4; // You can change this to the desired number of interpolated values.
-
-    std::vector<glm::vec3> interpolatedValues = interpolateThreeElementValues(from, to, numberOfValues);
-
-    // Printing the interpolated values
-    for (const glm::vec3& value : interpolatedValues) {
-        std::cout << "(" << value.x << ", " << value.y << ", " << value.z << ")" << std::endl;
-    }
+    // glm::vec3 to(4.0, 1.0, 9.8);
+    // int numberOfValues = 4; // You can change this to the desired number of interpolated values.
+    // std::vector<glm::vec3> interpolatedValues = interpolateThreeElementValues(from, to, numberOfValues);
+    // // Printing the interpolated values
+    // for (const glm::vec3& value : interpolatedValues) {
+    //     std::cout << "(" << value.x << ", " << value.y << ", " << value.z << ")" << std::endl;
+    // }
 }
-
-//take these two functions in  c++, how do i check this works with example inputs from and to
