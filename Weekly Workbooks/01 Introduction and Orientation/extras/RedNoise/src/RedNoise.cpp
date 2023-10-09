@@ -4,6 +4,8 @@
 #include <fstream>
 #include <vector>
 #include <glm/glm.hpp>
+#include <CanvasPoint.h>
+#include <Colour.h>
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -21,6 +23,23 @@
 	}
 	vect.push_back(to);
 	return vect;
+}
+
+void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float toY, uint32_t color) {
+	float xDiff = toX-fromX;
+	float yDiff = toY-fromY;
+	float steps = std::max(std::abs(xDiff), std::abs(yDiff));
+	float xSteps = xDiff / steps;
+	float ySteps = yDiff / steps;
+	
+	for (float i = 0.0; i < steps; i++) {
+		float x = fromX + (xSteps*i);
+		float y = fromY + (ySteps*i);
+		if (y < 240) {
+			window.setPixelColour(std::round(x), std::round(y), color);
+		}
+	}
+	return;
 }
 
  std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 to, int numberOfValues) {
@@ -118,7 +137,17 @@ int main(int argc, char *argv[]) {
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
-		rainbowDraw(window);
+		float centreX = (WIDTH-1)/2;
+		float centreY = (HEIGHT-1)/2;
+		float third = WIDTH/3;
+		uint32_t red = (255 << 24) + (int(255) << 16) + (int(0) << 8) + int(0);
+		// uint32_t bgreen = (255 << 24) + (int(0) << 16) + (int(255) << 8) + int(85);
+		
+		drawLine(window, 0, 0, centreX, centreY, red); 
+		drawLine(window, (WIDTH)-1, 0, centreX, centreY, red); 
+		drawLine(window, centreX, 0, centreX, (HEIGHT)-1, red); 
+		drawLine(window, third, centreY, third+third, centreY, red); 
+		window.setPixelColour(centreX,0, red);
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}
