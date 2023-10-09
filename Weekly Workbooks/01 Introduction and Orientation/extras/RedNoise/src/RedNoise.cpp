@@ -91,10 +91,10 @@ void bAndWdraw(DrawingWindow &window) {
 
 void rainbowDraw(DrawingWindow &window) {
 	window.clearPixels();
-	glm::vec3 red(255, 0, 0);        // red 
-	glm::vec3 blue(0, 0, 255);       // blue 
-	glm::vec3 green(0, 255, 0);    // green 
-	glm::vec3 yellow(255, 255, 0);   // yellow32_t yellow = (255 << 24) + (int(255) << 16) + (int(255) << 8) + int(0);
+	glm::vec3 red(255, 0, 0);
+	glm::vec3 blue(0, 0, 255);
+	glm::vec3 green(0, 255, 0);
+	glm::vec3 yellow(255, 255, 0);
 
 	// fill 1st column
 	std::vector<glm::vec3> redyellow = interpolateThreeElementValues(red, yellow, window.height);
