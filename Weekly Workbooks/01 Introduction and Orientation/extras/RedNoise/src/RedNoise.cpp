@@ -138,12 +138,28 @@ void rainbowDraw(DrawingWindow &window) {
 	}
 }
 
+CanvasTriangle randomTriangle() {
+	CanvasPoint v0 = {static_cast<float>(rand()%320),static_cast<float>(rand()%240),0,0};
+	CanvasPoint v1 = {static_cast<float>(rand()%320),static_cast<float>(rand()%240),0,0};
+	CanvasPoint v2 = {static_cast<float>(rand()%320),static_cast<float>(rand()%240),0,0};
+	CanvasTriangle triangle = {v0,v1,v2};
+	return triangle;
+}
+
+Colour randomColor() {
+	Colour color = {rand()%256, rand()%256, rand()%256};
+	return color;
+}
+
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
 		if (event.key.keysym.sym == SDLK_LEFT) std::cout << "LEFT" << std::endl;
 		else if (event.key.keysym.sym == SDLK_RIGHT) std::cout << "RIGHT" << std::endl;
 		else if (event.key.keysym.sym == SDLK_UP) std::cout << "UP" << std::endl;
 		else if (event.key.keysym.sym == SDLK_DOWN) std::cout << "DOWN" << std::endl;
+		else if (event.key.keysym.sym == 'u') {
+			drawStroked(window, randomTriangle(), randomColor());
+		}
 	} else if (event.type == SDL_MOUSEBUTTONDOWN) {
 		window.savePPM("output.ppm");
 		window.saveBMP("output.bmp");
@@ -171,6 +187,12 @@ int main(int argc, char *argv[]) {
 		CanvasPoint v2 = {third+third,(HEIGHT)-1,0,0};
 		CanvasTriangle triangle = {v0,v1,v2};
 		drawStroked(window, triangle, red);
+
+		if (SDL_PollEvent(&event)) {
+			if (event.type == SDLK_u) {
+				drawStroked(window, randomTriangle(), randomColor());
+			}
+		}
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
