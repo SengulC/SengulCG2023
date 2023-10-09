@@ -54,8 +54,10 @@ void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float 
 	return;
 }
 
-
-void drawStroked(DrawingWindow &window, float x,float y, float z) {
+void drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
+	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v1().x, triangle.v1().y, color);
+	drawLine(window, triangle.v1().x, triangle.v1().y, triangle.v2().x, triangle.v2().y, color);
+	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v2().x, triangle.v2().y, color);
 	return;
 }
 
@@ -158,12 +160,18 @@ int main(int argc, char *argv[]) {
 		float centreY = (HEIGHT-1)/2;
 		float third = WIDTH/3;
 		Colour red = {"red", 255, 0, 0};
-		// uint32_t bgreen = (255 << 24) + (int(0) << 16) + (int(255) << 8) + int(85);
 		
-		drawLine(window, 0, 0, centreX, centreY, red); 
-		drawLine(window, (WIDTH)-1, 0, centreX, centreY, red); 
-		drawLine(window, centreX, 0, centreX, (HEIGHT)-1, red); 
-		drawLine(window, third, centreY, third+third, centreY, red); 
+		// drawLine(window, 0, 0, centreX, centreY, red); 
+		// drawLine(window, (WIDTH)-1, 0, centreX, centreY, red); 
+		// drawLine(window, centreX, 0, centreX, (HEIGHT)-1, red); 
+		// drawLine(window, third, centreY, third+third, centreY, red); 
+		// CanvasPoint(float xPos, float yPos, float pointDepth, float pointBrightness) :
+		CanvasPoint v0 = {(WIDTH)-1,0,0,0};
+		CanvasPoint v1 = {third,centreY,0,0};
+		CanvasPoint v2 = {third+third,(HEIGHT)-1,0,0};
+		CanvasTriangle triangle = {v0,v1,v2};
+		drawStroked(window, triangle, red);
+
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}
