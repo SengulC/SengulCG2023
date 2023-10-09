@@ -10,6 +10,15 @@
 #define WIDTH 320
 #define HEIGHT 240
 
+std::vector<int> unpack(Colour color) {
+	std::vector<int> colour = {color.red, color.green, color.blue};
+	return colour;
+}
+
+uint32_t pack(std::vector<int> colorgb) {
+	return (255 << 24) + (int(colorgb[0]) << 16) + (int(colorgb[1]) << 8) + int(colorgb[2]);
+}
+
 // returns an evenly spaced list of size numberOfValues that contains floating point numbers between from and to. 
  std::vector<float> interpolateSingleFloats(float from, float to, int numberOfValues) {
 	float step = (to-from)/(numberOfValues-1);
@@ -25,20 +34,28 @@
 	return vect;
 }
 
-void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float toY, uint32_t color) {
+void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float toY, Colour color) {
 	float xDiff = toX-fromX;
 	float yDiff = toY-fromY;
 	float steps = std::max(std::abs(xDiff), std::abs(yDiff));
 	float xSteps = xDiff / steps;
 	float ySteps = yDiff / steps;
+
+	std::vector<int> colorgb = unpack(color);
+	uint32_t fincolor = pack(colorgb);
 	
 	for (float i = 0.0; i < steps; i++) {
 		float x = fromX + (xSteps*i);
 		float y = fromY + (ySteps*i);
 		if (y < 240) {
-			window.setPixelColour(std::round(x), std::round(y), color);
+			window.setPixelColour(std::round(x), std::round(y), fincolor);
 		}
 	}
+	return;
+}
+
+
+void drawStroked(DrawingWindow &window, float x,float y, float z) {
 	return;
 }
 
@@ -140,14 +157,13 @@ int main(int argc, char *argv[]) {
 		float centreX = (WIDTH-1)/2;
 		float centreY = (HEIGHT-1)/2;
 		float third = WIDTH/3;
-		uint32_t red = (255 << 24) + (int(255) << 16) + (int(0) << 8) + int(0);
+		Colour red = {"red", 255, 0, 0};
 		// uint32_t bgreen = (255 << 24) + (int(0) << 16) + (int(255) << 8) + int(85);
 		
 		drawLine(window, 0, 0, centreX, centreY, red); 
 		drawLine(window, (WIDTH)-1, 0, centreX, centreY, red); 
 		drawLine(window, centreX, 0, centreX, (HEIGHT)-1, red); 
 		drawLine(window, third, centreY, third+third, centreY, red); 
-		window.setPixelColour(centreX,0, red);
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}
