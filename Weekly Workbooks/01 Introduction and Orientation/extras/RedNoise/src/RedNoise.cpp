@@ -87,22 +87,21 @@ void drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 
 void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 	std::vector<CanvasPoint> points = {triangle.v0(), triangle.v1(), triangle.v2()};
-	// sorted in ascending order of Ys
-	std::sort(points.begin(), points.end(), sortByY);
+	std::sort(points.begin(), points.end(), sortByY); // sorted in ascending order of Ys
 	
 	// split triangle into 2 from middle vertex
 	CanvasPoint middleV = points[1];
-	// float topBottomXDiff = (points[2].x) - (points[0].x); 
-	// float topBottomYDiff = (points[2].y) - (points[0].y);
-	// float ratio = topBottomXDiff / topBottomYDiff;
-
 	int topHeight = std::abs(middleV.y - points[0].y);
 	int bottomHeight = std::abs(points[2].y - middleV.y);
+
+	// interpolate from 1st point to last point to find extra vertex
 	std::vector<float> extraVInterpolatedX = interpolateSingleFloats(points[0].x, points[2].x, topHeight+bottomHeight);
 	float extraVx = extraVInterpolatedX[topHeight];
 	CanvasPoint extraV = {extraVx, middleV.y};
-	CanvasTriangle topTriangle = {points[0], middleV, extraV};
-	CanvasTriangle bottomTriangle = {points[2], middleV, extraV};
+
+	// define triangles for verification
+	// CanvasTriangle topTriangle = {points[0], middleV, extraV};
+	// CanvasTriangle bottomTriangle = {points[2], middleV, extraV};
 
 	int count = 0;
 	for (int i=points[0].y; i<(extraV.y); i++) {
