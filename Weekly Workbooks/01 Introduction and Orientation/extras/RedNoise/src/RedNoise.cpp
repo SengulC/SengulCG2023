@@ -61,7 +61,6 @@ void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float 
 
 	std::vector<int> colorgb = unpack(color);
 	uint32_t fincolor = pack(colorgb);
-	uint32_t blue = (255 << 24) + (int(0) << 16) + (int(0) << 8) + int(255);
 	
 	for (float i = 0.0; i < steps; i++) {
 		float x = fromX + (xSteps*i);
@@ -227,22 +226,19 @@ int main(int argc, char *argv[]) {
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
 		
 		// TESTING
-		float centreX = (WIDTH-1)/2;
-		float centreY = (HEIGHT-1)/2;
-		float third = WIDTH/3;
-		Colour red = {"red", 255, 0, 0};
+		// float centreX = (WIDTH-1)/2;
+		// float centreY = (HEIGHT-1)/2;
+		// float third = WIDTH/3;
+		// Colour red = {"red", 255, 0, 0};
 		// drawLine(window, 0, 0, centreX, centreY, red); 
 		// drawLine(window, (WIDTH)-1, 0, centreX, centreY, red); 
 		// drawLine(window, centreX, 0, centreX, (HEIGHT)-1, red); 
 		// drawLine(window, third, centreY, third+third, centreY, red); 
-		
-		CanvasPoint v0 = {100,100,0,0};
-		CanvasPoint v1 = {200,50,0,0};
-		CanvasPoint v2 = {150,(HEIGHT)-1,0,0};
-		CanvasTriangle triangle = {v0,v1,v2};
-		drawFilled(window, triangle, red);
-
-
+		// CanvasPoint v0 = {100,100,0,0};
+		// CanvasPoint v1 = {200,50,0,0};
+		// CanvasPoint v2 = {150,(HEIGHT)-1,0,0};
+		// CanvasTriangle triangle = {v0,v1,v2};
+		// drawFilled(window, triangle, red);
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
