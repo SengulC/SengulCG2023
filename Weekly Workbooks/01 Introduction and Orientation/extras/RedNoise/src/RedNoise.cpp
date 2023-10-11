@@ -19,6 +19,10 @@ uint32_t pack(std::vector<int> colorgb) {
 	return (255 << 24) + (int(colorgb[0]) << 16) + (int(colorgb[1]) << 8) + int(colorgb[2]);
 }
 
+bool sortByY(const CanvasPoint& a, const CanvasPoint& b) {
+    return a.y < b.y;
+}
+
 // returns an evenly spaced list of size numberOfValues that contains floating point numbers between from and to. 
  std::vector<float> interpolateSingleFloats(float from, float to, int numberOfValues) {
 	float step = (to-from)/(numberOfValues-1);
@@ -34,33 +38,6 @@ uint32_t pack(std::vector<int> colorgb) {
 	return vect;
 }
 
-void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float toY, Colour color) {
-	float xDiff = toX-fromX;
-	float yDiff = toY-fromY;
-	float steps = std::max(std::abs(xDiff), std::abs(yDiff));
-	float xSteps = xDiff / steps;
-	float ySteps = yDiff / steps;
-
-	std::vector<int> colorgb = unpack(color);
-	uint32_t fincolor = pack(colorgb);
-	
-	for (float i = 0.0; i < steps; i++) {
-		float x = fromX + (xSteps*i);
-		float y = fromY + (ySteps*i);
-		if (y < 240) {
-			window.setPixelColour(std::round(x), std::round(y), fincolor);
-		}
-	}
-	return;
-}
-
-void drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
-	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v1().x, triangle.v1().y, color);
-	drawLine(window, triangle.v1().x, triangle.v1().y, triangle.v2().x, triangle.v2().y, color);
-	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v2().x, triangle.v2().y, color);
-	return;
-}
-
  std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 to, int numberOfValues) {
 	std::vector<glm::vec3> vect;
 	std::vector<float> zero = interpolateSingleFloats(from[0], to[0], numberOfValues);
@@ -74,6 +51,80 @@ void drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 
 	return vect;
 }
+
+void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float toY, Colour color) {
+	float xDiff = toX-fromX;
+	float yDiff = toY-fromY;
+	float steps = std::max(std::abs(xDiff), std::abs(yDiff));
+	float xSteps = xDiff / steps;
+	float ySteps = yDiff / steps;
+
+	std::vector<int> colorgb = unpack(color);
+	uint32_t fincolor = pack(colorgb);
+	uint32_t blue = (255 << 24) + (int(0) << 16) + (int(0) << 8) + int(255);
+	
+	for (float i = 0.0; i < steps; i++) {
+		float x = fromX + (xSteps*i);
+		float y = fromY + (ySteps*i);
+
+		int xval = std::round(x);
+		int yval = std::round(y);
+		if (xval > WIDTH || yval > HEIGHT) {
+			continue;
+		} else {
+			window.setPixelColour(xval, yval, fincolor);
+		}
+	}
+	return;
+}
+
+void drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
+	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v1().x, triangle.v1().y, color);
+	drawLine(window, triangle.v1().x, triangle.v1().y, triangle.v2().x, triangle.v2().y, color);
+	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v2().x, triangle.v2().y, color);
+	return;
+}
+
+void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
+	std::vector<CanvasPoint> points = {triangle.v0(), triangle.v1(), triangle.v2()};
+	// sorted in ascending order of Ys
+	std::sort(points.begin(), points.end(), sortByY);
+	
+	// split triangle into 2 from middle vertex
+	CanvasPoint middleV = points[1];
+	// float topBottomXDiff = (points[2].x) - (points[0].x); 
+	// float topBottomYDiff = (points[2].y) - (points[0].y);
+	// float ratio = topBottomXDiff / topBottomYDiff;
+
+	int topHeight = std::abs(middleV.y - points[0].y);
+	int bottomHeight = std::abs(points[2].y - middleV.y);
+	std::vector<float> extraVInterpolatedX = interpolateSingleFloats(points[0].x, points[2].x, topHeight+bottomHeight);
+	float extraVx = extraVInterpolatedX[topHeight];
+	CanvasPoint extraV = {extraVx, middleV.y};
+	CanvasTriangle topTriangle = {points[0], middleV, extraV};
+	CanvasTriangle bottomTriangle = {points[2], middleV, extraV};
+
+	int count = 0;
+	for (int i=points[0].y; i<(extraV.y); i++) {
+		std::vector<float> topTriangleLeft = interpolateSingleFloats(points[0].x, extraV.x, topHeight);
+		std::vector<float> topTriangleRight = interpolateSingleFloats(points[0].x, middleV.x, topHeight);
+		drawLine(window, topTriangleLeft[count], i, topTriangleRight[count], i, color);
+		count++;
+	}
+	
+	count = 0;
+	for (int i = middleV.y + 1; i <= points[2].y; i++) {
+		std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x + 1, points[2].x, bottomHeight);
+		std::vector<float> bottomTriangleRight = interpolateSingleFloats(middleV.x, points[2].x, bottomHeight);
+		drawLine(window, bottomTriangleLeft[count], i, bottomTriangleRight[count], i, color);
+		count++;
+	}
+
+	drawLine(window, extraV.x, extraV.y, middleV.x, middleV.y, color);
+	drawStroked(window, triangle, {255, 255, 255});
+	return;
+}
+
 
 void bAndWdraw(DrawingWindow &window) {
 	window.clearPixels();
@@ -160,6 +211,9 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 		else if (event.key.keysym.sym == 'u') {
 			drawStroked(window, randomTriangle(), randomColor());
 		}
+		else if (event.key.keysym.sym == 'f') {
+			drawFilled(window, randomTriangle(), randomColor());
+		}
 	} else if (event.type == SDL_MOUSEBUTTONDOWN) {
 		window.savePPM("output.ppm");
 		window.saveBMP("output.bmp");
@@ -172,27 +226,24 @@ int main(int argc, char *argv[]) {
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
+		
+		// TESTING
 		float centreX = (WIDTH-1)/2;
 		float centreY = (HEIGHT-1)/2;
 		float third = WIDTH/3;
 		Colour red = {"red", 255, 0, 0};
-		
 		// drawLine(window, 0, 0, centreX, centreY, red); 
 		// drawLine(window, (WIDTH)-1, 0, centreX, centreY, red); 
 		// drawLine(window, centreX, 0, centreX, (HEIGHT)-1, red); 
 		// drawLine(window, third, centreY, third+third, centreY, red); 
-		// CanvasPoint(float xPos, float yPos, float pointDepth, float pointBrightness) :
-		CanvasPoint v0 = {(WIDTH)-1,0,0,0};
-		CanvasPoint v1 = {third,centreY,0,0};
-		CanvasPoint v2 = {third+third,(HEIGHT)-1,0,0};
+		
+		CanvasPoint v0 = {100,100,0,0};
+		CanvasPoint v1 = {200,50,0,0};
+		CanvasPoint v2 = {150,(HEIGHT)-1,0,0};
 		CanvasTriangle triangle = {v0,v1,v2};
-		drawStroked(window, triangle, red);
+		drawFilled(window, triangle, red);
 
-		if (SDL_PollEvent(&event)) {
-			if (event.type == SDLK_u) {
-				drawStroked(window, randomTriangle(), randomColor());
-			}
-		}
+
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
