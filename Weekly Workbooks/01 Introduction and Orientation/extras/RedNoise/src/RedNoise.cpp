@@ -68,11 +68,11 @@ void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float 
 
 		int xval = std::round(x);
 		int yval = std::round(y);
-		if (xval > WIDTH || yval > HEIGHT) {
-			continue;
-		} else {
-			window.setPixelColour(xval, yval, fincolor);
-		}
+		// if (xval > WIDTH || yval > HEIGHT) {
+			// continue;
+		// } else {
+		window.setPixelColour(xval, yval, fincolor);
+		// }
 	}
 	return;
 }
