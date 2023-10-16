@@ -229,8 +229,7 @@ std::vector<ModelTriangle> readObj() {
 	std::string myText;
 
 	// Read from the text file
-	std::ifstream MyReadFile("filename.txt");
-
+	std::ifstream MyReadFile("./models/cornell-box.obj");
 	// Use a while loop together with the getline() function to read the file line by line
 	while (getline (MyReadFile, myText)) {
 	// Output the text from the file
