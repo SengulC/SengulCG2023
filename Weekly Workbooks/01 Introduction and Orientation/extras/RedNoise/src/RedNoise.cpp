@@ -6,6 +6,9 @@
 #include <glm/glm.hpp>
 #include <CanvasPoint.h>
 #include <Colour.h>
+#include <ModelTriangle.h>
+#include <iostream>
+#include <string>
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -216,6 +219,28 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 		window.savePPM("output.ppm");
 		window.saveBMP("output.bmp");
 	}
+}
+
+std::vector<ModelTriangle> readObj() {
+	// remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
+	// modelTriangle: const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2, Colour trigColour
+
+	// Create a text string, which is used to output the text file
+	std::string myText;
+
+	// Read from the text file
+	std::ifstream MyReadFile("filename.txt");
+
+	// Use a while loop together with the getline() function to read the file line by line
+	while (getline (MyReadFile, myText)) {
+	// Output the text from the file
+	std::cout << myText;
+	}
+
+	// Close the file
+	MyReadFile.close();
+	
+	return;
 }
 
 int main(int argc, char *argv[]) {
