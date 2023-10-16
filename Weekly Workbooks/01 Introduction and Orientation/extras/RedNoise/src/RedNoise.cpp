@@ -221,30 +221,58 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 	}
 }
 
-std::vector<ModelTriangle> readObj() {
+std::vector<ModelTriangle> readObj(std::string file) {
 	// remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
+	
 	// modelTriangle: const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2, Colour trigColour
+	std::vector<ModelTriangle> modelTriangles;
+	ModelTriangle tempTriangle;
+	std::vector<glm::vec3> vertices;
+	Colour trigColour = {255,0,0};
 
-	// Create a text string, which is used to output the text file
-	std::string myText;
-
-	// Read from the text file
-	std::ifstream MyReadFile("./models/cornell-box.obj");
-	// Use a while loop together with the getline() function to read the file line by line
-	while (getline (MyReadFile, myText)) {
-	// Output the text from the file
-	std::cout << myText;
+	std::string myObj; // init string
+	std::ifstream theObjFile(file); // read file
+	
+	// read the file line by line
+	// make a list of vec3s for the vertices
+	while (getline (theObjFile, myObj)) {
+		if (myObj[0] == 'o'){
+			// once you hit the next object, clear vertices
+			vertices.empty();
+		}
+		else if (myObj[0] == 'v') {
+			std::vector<std::string> xyz = split(myObj, ' ');
+			glm::vec3 currVector{std::stof(xyz[1]), std::stof(xyz[2]), std::stof(xyz[3])}; // xyz[0] = 'v'
+			vertices.push_back(currVector);
+		}
+		// else if (myObj[0] == 'u') {
+		// 	// color
+		// }
+		else if (myObj[0] == 'f') {
+			// e.g. myObj = "f 2/ 3/ 4/"
+			std::vector<std::string> facet = split(myObj, ' '); // ["f", "2/", "3/", "4/"]
+			// facet[x][0] gets vertex num. convert that to int. look up that vec3 in vertices list (-1 bc of indexing).
+			glm::vec3 v0 = vertices[std::stoi(facet[1])-1];
+			glm::vec3 v1 = vertices[std::stoi(facet[2])-1];
+			glm::vec3 v2 = vertices[std::stoi(facet[3])-1];
+			tempTriangle = {v0,v1,v2, trigColour};
+			modelTriangles.push_back(tempTriangle);
+		}
 	}
 
-	// Close the file
-	MyReadFile.close();
-	
-	return;
+	theObjFile.close();
+	return modelTriangles;
 }
 
 int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
 	SDL_Event event;
+
+	std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj");
+	for (const ModelTriangle& value : modelTriangles) {
+    	std::cout << value << std::endl;
+	}
+
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
