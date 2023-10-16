@@ -9,6 +9,7 @@
 #include <ModelTriangle.h>
 #include <iostream>
 #include <string>
+#include <map>
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -221,7 +222,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 	}
 }
 
-std::vector<ModelTriangle> readObj(std::string file) {
+std::vector<ModelTriangle> readObj(std::string file, float scale) {
 	// remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
 	
 	// modelTriangle: const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2, Colour trigColour
@@ -242,7 +243,7 @@ std::vector<ModelTriangle> readObj(std::string file) {
 		}
 		else if (myObj[0] == 'v') {
 			std::vector<std::string> xyz = split(myObj, ' ');
-			glm::vec3 currVector{std::stof(xyz[1]), std::stof(xyz[2]), std::stof(xyz[3])}; // xyz[0] = 'v'
+			glm::vec3 currVector{std::stof(xyz[1])*scale, std::stof(xyz[2])*scale, std::stof(xyz[3])*scale}; // xyz[0] = 'v'
 			vertices.push_back(currVector);
 		}
 		// else if (myObj[0] == 'u') {
@@ -264,14 +265,47 @@ std::vector<ModelTriangle> readObj(std::string file) {
 	return modelTriangles;
 }
 
+std::map<std::string, Colour> readMaterial(std::string file) {
+	std::map<std::string, Colour> palette;
+	std::string myObj; // init string
+	std::ifstream theObjFile(file); // read file
+	std::string name;
+	
+	// read the file line by line
+	// add a colour to the palette for each newmtl
+	while (getline (theObjFile, myObj)) {
+		if (myObj[0] == 'n') {
+			name = split(myObj, ' ')[1];
+		}
+		if (myObj[0] == 'K') {
+			std::vector<std::string> nrgb = split(myObj, ' ');
+			// [Kd, 0.700000, 0.700000, 0.700000]
+			float r = std::stof(nrgb[1])*255;
+			float g = std::stof(nrgb[2])*255;
+			float b = std::stof(nrgb[3])*255;
+			Colour currColor = {name, int(r), int(g), int(b)};
+			palette.insert({name,currColor});
+		}
+	}
+
+	theObjFile.close();
+	return palette;
+}
+
 int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
 	SDL_Event event;
 
-	std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj");
-	for (const ModelTriangle& value : modelTriangles) {
-    	std::cout << value << std::endl;
+	std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
+	for (const auto& pair : mtls) {
+    std::cout << "Material Name: " << pair.first << ", Colour: ("
+              << pair.second.red << ", " << pair.second.green << ", " << pair.second.blue << ")\n";
 	}
+
+	std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", 1);
+	// for (const ModelTriangle& value : modelTriangles) {
+    // 	std::cout << value << std::endl;
+	// }
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !

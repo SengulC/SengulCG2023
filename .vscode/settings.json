@@ -64,6 +64,10 @@
         "unordered_map": "cpp",
         "variant": "cpp",
         "algorithm": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "__tree": "cpp",
+        "map": "cpp",
+        "functional": "cpp",
+        "version": "cpp"
     }
 }
