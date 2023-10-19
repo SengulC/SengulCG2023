@@ -290,7 +290,6 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
     // Calculate the relative position of the vertex in camera coordinates
     glm::vec3 relativePosition = vertexPosition - cameraPosition;
 
-	scale = 1.0f;
     // Apply scaling to the relative position
     relativePosition = relativePosition * glm::vec3{scale, scale, scale};
 
@@ -304,7 +303,6 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
 
 void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color) {
 	window.setPixelColour(point.x, point.y, pack(unpack(color)));
-	return;
 }
 
 int main(int argc, char *argv[]) {
@@ -318,27 +316,28 @@ int main(int argc, char *argv[]) {
 	// }
 
 	std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", 1);
-    for (const ModelTriangle& value : modelTriangles) {
-        std::cout << value << std::endl;
-    }
+//    for (const ModelTriangle& value : modelTriangles) {
+//        std::cout << value << std::endl;
+//    }
 
 	// Loop over model triangles in the obj file
 	// Point cloud render
-//	for (const ModelTriangle& triangle : modelTriangles) {
-//		// Loop over vec3s in the current model triangle
-//		std::array<glm::vec3, 3> currVertices = triangle.vertices;
-//		for (const glm::vec3 currVertex : currVertices) {
-//			// Calculate the CanvasPoint for the vertex
-//			glm::vec3 cameraPosition {0.0, 0.0, 4.0};
-//			float focalLength = 2.0;
-//			CanvasPoint currIntersection = getCanvasIntersectionPoint(currVertex, cameraPosition, focalLength, 240.0);
-//
-//			// Draw the point on the window
-//			drawPoint(window, currIntersection, {255, 255, 255});
-//		}
-//	}
+	for (const ModelTriangle& triangle : modelTriangles) {
+		// Loop over vec3s in the current model triangle
+		std::array<glm::vec3, 3> currVertices = triangle.vertices;
+		for (const glm::vec3 currVertex : currVertices) {
+			// Calculate the CanvasPoint for the vertex
+            glm::vec3 cameraPosition {0.0, 0.0, 4.0};
+			float focalLength = 8.0;
+            float scale = 240.0f;
+			CanvasPoint currIntersection = getCanvasIntersectionPoint(currVertex, cameraPosition, focalLength, scale);
 
-	 /*std::vector<CanvasTriangle> twodTriangles;
+			// Draw the point on the window
+			drawPoint(window, currIntersection, {255, 255, 255});
+		}
+	}
+
+//	 std::vector<CanvasTriangle> twodTriangles;
 	 // Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
 	 for (const ModelTriangle& currtriangle : modelTriangles) {
 	 	// 3 vertices
@@ -347,13 +346,13 @@ int main(int argc, char *argv[]) {
 	 	CanvasPoint v1 = {currtriangle.vertices[1].x, currtriangle.vertices[1].y, currtriangle.vertices[1].z};
 	 	CanvasPoint v2 = {currtriangle.vertices[2].x, currtriangle.vertices[2].y, currtriangle.vertices[2].z};
 	 	CanvasTriangle tri {v0,v1,v2};
-	 	// drawFilled(window, tri, {255,255,255});
+        drawStroked(window, tri, {255,255,255});
 	 }
 
 //	 Print model triangle vertices
-	 for (const ModelTriangle& value : modelTriangles) {
-     	std::cout << value << std::endl;
-	 }*/
+//	 for (const ModelTriangle& value : modelTriangles) {
+//     	std::cout << value << std::endl;
+//	 }
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
