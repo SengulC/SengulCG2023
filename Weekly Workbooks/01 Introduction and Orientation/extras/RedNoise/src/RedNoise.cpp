@@ -14,7 +14,7 @@
 #define WIDTH 320
 #define HEIGHT 240
 
-std::vector<int> unpack(Colour color) {
+std::vector<int> unpack(const Colour& color) {
 	std::vector<int> colour = {color.red, color.green, color.blue};
 	return colour;
 }
@@ -72,11 +72,11 @@ void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float 
 
 		int xval = std::round(x);
 		int yval = std::round(y);
-		// if (xval > WIDTH || yval > HEIGHT) {
-			// continue;
-		// } else {
-		window.setPixelColour(xval, yval, fincolor);
-		// }
+		if (xval > WIDTH || yval > HEIGHT) {
+			continue;
+		} else {
+			window.setPixelColour(xval, yval, fincolor);
+		}
 	}
 	return;
 }
@@ -126,7 +126,6 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 	drawStroked(window, triangle, {255, 255, 255});
 	return;
 }
-
 
 void bAndWdraw(DrawingWindow &window) {
 	window.clearPixels();
@@ -223,46 +222,38 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 }
 
 std::vector<ModelTriangle> readObj(std::string file, float scale) {
-	// remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
-	
-	// modelTriangle: const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2, Colour trigColour
-	std::vector<ModelTriangle> modelTriangles;
-	ModelTriangle tempTriangle;
-	std::vector<glm::vec3> vertices;
-	Colour trigColour = {255,0,0};
+    // remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
 
-	std::string myObj; // init string
-	std::ifstream theObjFile(file); // read file
-	
-	// read the file line by line
-	// make a list of vec3s for the vertices
-	while (getline (theObjFile, myObj)) {
-		if (myObj[0] == 'o'){
-			// once you hit the next object, clear vertices
-			vertices.empty();
-		}
-		else if (myObj[0] == 'v') {
-			std::vector<std::string> xyz = split(myObj, ' ');
-			glm::vec3 currVector{std::stof(xyz[1])*scale, std::stof(xyz[2])*scale, std::stof(xyz[3])*scale}; // xyz[0] = 'v'
-			vertices.push_back(currVector);
-		}
-		// else if (myObj[0] == 'u') {
-		// 	// color
-		// }
-		else if (myObj[0] == 'f') {
-			// e.g. myObj = "f 2/ 3/ 4/"
-			std::vector<std::string> facet = split(myObj, ' '); // ["f", "2/", "3/", "4/"]
-			// facet[x][0] gets vertex num. convert that to int. look up that vec3 in vertices list (-1 bc of indexing).
-			glm::vec3 v0 = vertices[std::stoi(facet[1])-1];
-			glm::vec3 v1 = vertices[std::stoi(facet[2])-1];
-			glm::vec3 v2 = vertices[std::stoi(facet[3])-1];
-			tempTriangle = {v0,v1,v2, trigColour};
-			modelTriangles.push_back(tempTriangle);
-		}
-	}
+    // modelTriangle: const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2, Colour trigColour
+    std::vector<ModelTriangle> modelTriangles;
+    ModelTriangle tempTriangle;
+    std::vector<glm::vec3> vertices;
+    Colour trigColour = {255,0,0};
 
-	theObjFile.close();
-	return modelTriangles;
+    std::string myObj; // init string
+    std::ifstream theObjFile(file); // read file
+
+    // read the file line by line
+    // make a list of vec3s for the vertices
+    while (getline (theObjFile, myObj)) {
+        if (myObj[0] == 'v') {
+            std::vector<std::string> xyz = split(myObj, ' ');
+            glm::vec3 currVector{std::stof(xyz[1])*scale, std::stof(xyz[2])*scale, std::stof(xyz[3])*scale}; // xyz[0] = 'v'
+            vertices.push_back(currVector);
+        }
+        else if (myObj[0] == 'f') {
+            // e.g. myObj = "f 2/ 3/ 4/"
+            std::vector<std::string> facet = split(myObj, ' '); // ["f", "2/", "3/", "4/"]
+            // facet[x][0] gets vertex num. convert that to int. look up that vec3 in vertices list (-1 bc of indexing).
+            glm::vec3 v0 = vertices[std::stoi(facet[1])-1];
+            glm::vec3 v1 = vertices[std::stoi(facet[2])-1];
+            glm::vec3 v2 = vertices[std::stoi(facet[3])-1];
+            tempTriangle = {v0,v1,v2, trigColour};
+            modelTriangles.push_back(tempTriangle);
+        }
+    }
+    theObjFile.close();
+    return modelTriangles;
 }
 
 std::map<std::string, Colour> readMaterial(std::string file) {
@@ -292,51 +283,109 @@ std::map<std::string, Colour> readMaterial(std::string file) {
 	return palette;
 }
 
+CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, float focalLength, float scale) {
+    float u, v;
+    CanvasPoint intersection{0.0, 0.0, 0.0}; // Initialize depth to 0.0
+
+    // Calculate the relative position of the vertex in camera coordinates
+    glm::vec3 relativePosition = vertexPosition - cameraPosition;
+
+	scale = 1.0f;
+    // Apply scaling to the relative position
+    relativePosition = relativePosition * glm::vec3{scale, scale, scale};
+
+    // Calculate the 2D coordinates on the image plane
+    u = (focalLength * (relativePosition.x / relativePosition.z)) + (WIDTH / 2);
+    v = (focalLength * (relativePosition.y / relativePosition.z)) + (HEIGHT / 2);
+
+    intersection = {u, v, relativePosition.z}; // Include the z-coordinate
+    return intersection;
+}
+
+void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color) {
+	window.setPixelColour(point.x, point.y, pack(unpack(color)));
+	return;
+}
+
 int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
 	SDL_Event event;
 
 	std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-	for (const auto& pair : mtls) {
-    std::cout << "Material Name: " << pair.first << ", Colour: ("
-              << pair.second.red << ", " << pair.second.green << ", " << pair.second.blue << ")\n";
-	}
+	// for (const auto& pair : mtls) {
+    // std::cout << "Material Name: " << pair.first << ", Colour: ("
+    //           << pair.second.red << ", " << pair.second.green << ", " << pair.second.blue << ")\n";
+	// }
 
 	std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", 1);
-	// for (const ModelTriangle& value : modelTriangles) {
-    // 	std::cout << value << std::endl;
-	// }
+    for (const ModelTriangle& value : modelTriangles) {
+        std::cout << value << std::endl;
+    }
+
+	// Loop over model triangles in the obj file
+	// Point cloud render
+//	for (const ModelTriangle& triangle : modelTriangles) {
+//		// Loop over vec3s in the current model triangle
+//		std::array<glm::vec3, 3> currVertices = triangle.vertices;
+//		for (const glm::vec3 currVertex : currVertices) {
+//			// Calculate the CanvasPoint for the vertex
+//			glm::vec3 cameraPosition {0.0, 0.0, 4.0};
+//			float focalLength = 2.0;
+//			CanvasPoint currIntersection = getCanvasIntersectionPoint(currVertex, cameraPosition, focalLength, 240.0);
+//
+//			// Draw the point on the window
+//			drawPoint(window, currIntersection, {255, 255, 255});
+//		}
+//	}
+
+	 /*std::vector<CanvasTriangle> twodTriangles;
+	 // Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
+	 for (const ModelTriangle& currtriangle : modelTriangles) {
+	 	// 3 vertices
+	 	// CanvasTriangle(const CanvasPoint (x,y, depth) &v0, const CanvasPoint &v1, const CanvasPoint &v2);
+	 	CanvasPoint v0 = {currtriangle.vertices[0].x, currtriangle.vertices[0].y, currtriangle.vertices[0].z};
+	 	CanvasPoint v1 = {currtriangle.vertices[1].x, currtriangle.vertices[1].y, currtriangle.vertices[1].z};
+	 	CanvasPoint v2 = {currtriangle.vertices[2].x, currtriangle.vertices[2].y, currtriangle.vertices[2].z};
+	 	CanvasTriangle tri {v0,v1,v2};
+	 	// drawFilled(window, tri, {255,255,255});
+	 }
+
+//	 Print model triangle vertices
+	 for (const ModelTriangle& value : modelTriangles) {
+     	std::cout << value << std::endl;
+	 }*/
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
 		
-		// TESTING
-		// float centreX = (WIDTH-1)/2;
-		// float centreY = (HEIGHT-1)/2;
-		// float third = WIDTH/3;
-		// Colour red = {"red", 255, 0, 0};
-		// drawLine(window, 0, 0, centreX, centreY, red); 
-		// drawLine(window, (WIDTH)-1, 0, centreX, centreY, red); 
-		// drawLine(window, centreX, 0, centreX, (HEIGHT)-1, red); 
-		// drawLine(window, third, centreY, third+third, centreY, red); 
-		// CanvasPoint v0 = {100,100,0,0};
-		// CanvasPoint v1 = {200,50,0,0};
-		// CanvasPoint v2 = {150,(HEIGHT)-1,0,0};
-		// CanvasTriangle triangle = {v0,v1,v2};
-		// drawFilled(window, triangle, red);
+		/* TESTING
+		 float centreX = (WIDTH-1)/2;
+		 float centreY = (HEIGHT-1)/2;
+		 float third = WIDTH/3;
+		 Colour red = {"red", 255, 0, 0};
+		 drawLine(window, 0, 0, centreX, centreY, red);
+		 drawLine(window, (WIDTH)-1, 0, centreX, centreY, red);
+		 drawLine(window, centreX, 0, centreX, (HEIGHT)-1, red);
+		 drawLine(window, third, centreY, third+third, centreY, red);
+		 CanvasPoint v0 = {100,100,0,0};
+		 CanvasPoint v1 = {200,50,0,0};
+		 CanvasPoint v2 = {150,(HEIGHT)-1,0,0};
+		 CanvasTriangle triangle = {v0,v1,v2};
+		 drawFilled(window, triangle, red);
+		 */
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}
 
-	// interpolateThreeElementValues test
-	// glm::vec3 from(1.0, 4.0, 9.2);
-    // glm::vec3 to(4.0, 1.0, 9.8);
-    // int numberOfValues = 4; // You can change this to the desired number of interpolated values.
-    // std::vector<glm::vec3> interpolatedValues = interpolateThreeElementValues(from, to, numberOfValues);
-    // // Printing the interpolated values
-    // for (const glm::vec3& value : interpolatedValues) {
-    //     std::cout << "(" << value.x << ", " << value.y << ", " << value.z << ")" << std::endl;
-    // }
+	/* interpolateThreeElementValues test
+	 glm::vec3 from(1.0, 4.0, 9.2);
+     glm::vec3 to(4.0, 1.0, 9.8);
+     int numberOfValues = 4; // You can change this to the desired number of interpolated values.
+     std::vector<glm::vec3> interpolatedValues = interpolateThreeElementValues(from, to, numberOfValues);
+     // Printing the interpolated values
+     for (const glm::vec3& value : interpolatedValues) {
+         std::cout << "(" << value.x << ", " << value.y << ", " << value.z << ")" << std::endl;
+     } */
 }
