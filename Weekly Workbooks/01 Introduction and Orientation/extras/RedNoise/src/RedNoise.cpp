@@ -338,16 +338,21 @@ int main(int argc, char *argv[]) {
 	}
 
 //	 std::vector<CanvasTriangle> twodTriangles;
-	 // Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
-	 for (const ModelTriangle& currtriangle : modelTriangles) {
-	 	// 3 vertices
-	 	// CanvasTriangle(const CanvasPoint (x,y, depth) &v0, const CanvasPoint &v1, const CanvasPoint &v2);
-	 	CanvasPoint v0 = {currtriangle.vertices[0].x, currtriangle.vertices[0].y, currtriangle.vertices[0].z};
-	 	CanvasPoint v1 = {currtriangle.vertices[1].x, currtriangle.vertices[1].y, currtriangle.vertices[1].z};
-	 	CanvasPoint v2 = {currtriangle.vertices[2].x, currtriangle.vertices[2].y, currtriangle.vertices[2].z};
-	 	CanvasTriangle tri {v0,v1,v2};
-        drawStroked(window, tri, {255,255,255});
-	 }
+//	  Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
+    glm::vec3 cameraPosition {0.0,0.0,2.0};
+    float focalLength= 2.0f;
+    float scale = 240.0f;
+    for (ModelTriangle &modelTriangle : modelTriangles) {
+        // Convert the model triangle to a canvas triangle
+        CanvasTriangle canvasTriangle;
+        for (int i = 0; i < 3; i++) {
+            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
+        }
+        // Draw the canvas triangle
+        drawStroked(window, canvasTriangle, modelTriangle.colour);
+    }
+
+
 
 //	 Print model triangle vertices
 //	 for (const ModelTriangle& value : modelTriangles) {
