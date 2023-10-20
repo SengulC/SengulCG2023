@@ -52,7 +52,6 @@ bool sortByY(const CanvasPoint& a, const CanvasPoint& b) {
 		glm::vec3 temp(zero[i], one[i], two[i]);
 		vect.push_back(temp);
 	}
-
 	return vect;
 }
 
@@ -66,27 +65,27 @@ void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float 
 	std::vector<int> colorgb = unpack(color);
 	uint32_t fincolor = pack(colorgb);
 	
-	for (float i = 0.0; i < steps; i++) {
-		float x = fromX + (xSteps*i);
-		float y = fromY + (ySteps*i);
+	for (int i = 0; i < steps; i++) {
+		float x = fromX + (xSteps* static_cast<float>(i));
+		float y = fromY + (ySteps* static_cast<float>(i));
 
-		int xval = std::round(x);
-		int yval = std::round(y);
+		int xval = static_cast<int>(std::round(x));
+		int yval = static_cast<int>(std::round(y));
 		if (xval > WIDTH || yval > HEIGHT) {
+            std::cout << "EXCEEDING BOUNDARIES" << std::endl;
 			continue;
 		} else {
 			window.setPixelColour(xval, yval, fincolor);
 		}
 	}
-	return;
 }
 
 void drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v1().x, triangle.v1().y, color);
 	drawLine(window, triangle.v1().x, triangle.v1().y, triangle.v2().x, triangle.v2().y, color);
 	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v2().x, triangle.v2().y, color);
-	return;
 }
+
 
 void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 	std::vector<CanvasPoint> points = {triangle.v0(), triangle.v1(), triangle.v2()};
@@ -94,12 +93,13 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 	
 	// split triangle into 2 from middle vertex
 	CanvasPoint middleV = points[1];
-	int topHeight = std::abs(middleV.y - points[0].y);
-	int bottomHeight = std::abs(points[2].y - middleV.y);
+	int topHeight = static_cast<int> (std::abs(middleV.y - points[0].y));
+	int bottomHeight = static_cast<int> (std::abs(points[2].y - middleV.y));
 
 	// interpolate from 1st point to last point to find extra vertex
 	std::vector<float> extraVInterpolatedX = interpolateSingleFloats(points[0].x, points[2].x, topHeight+bottomHeight);
-	float extraVx = extraVInterpolatedX[topHeight];
+	// std::cout << "extra v size:" << extraVInterpolatedX.size() << std::endl;
+    float extraVx = extraVInterpolatedX[topHeight];
 	CanvasPoint extraV = {extraVx, middleV.y};
 
 	// define triangles for verification
@@ -107,7 +107,7 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 	// CanvasTriangle bottomTriangle = {points[2], middleV, extraV};
 
 	int count = 0;
-	for (int i=points[0].y; i<(extraV.y); i++) {
+	for (int i = static_cast<int> (std::round(points[0].y)) ; i < static_cast<int> (std::round(extraV.y)); i++) {
 		std::vector<float> topTriangleLeft = interpolateSingleFloats(points[0].x, extraV.x, topHeight);
 		std::vector<float> topTriangleRight = interpolateSingleFloats(points[0].x, middleV.x, topHeight);
 		drawLine(window, topTriangleLeft[count], i, topTriangleRight[count], i, color);
@@ -115,7 +115,7 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 	}
 	
 	count = 0;
-	for (int i = middleV.y + 1; i <= points[2].y; i++) {
+	for (int i = static_cast<int> (std::round(middleV.y + 1)); i <= static_cast<int> (std::round(points[2].y)); i++) {
 		std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x + 1, points[2].x, bottomHeight);
 		std::vector<float> bottomTriangleRight = interpolateSingleFloats(middleV.x, points[2].x, bottomHeight);
 		drawLine(window, bottomTriangleLeft[count], i, bottomTriangleRight[count], i, color);
@@ -124,7 +124,6 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 
 	drawLine(window, extraV.x, extraV.y, middleV.x, middleV.y, color);
 	drawStroked(window, triangle, {255, 255, 255});
-	return;
 }
 
 void bAndWdraw(DrawingWindow &window) {
@@ -260,7 +259,7 @@ std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string
     return modelTriangles;
 }
 
-std::map<std::string, Colour> readMaterial(std::string file) {
+std::map<std::string, Colour> readMaterial(const std::string& file) {
 	std::map<std::string, Colour> palette;
 	std::string myObj; // init string
 	std::ifstream theObjFile(file); // read file
@@ -304,7 +303,9 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
 }
 
 void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color) {
-	window.setPixelColour(point.x, point.y, pack(unpack(color)));
+    if (point.x > WIDTH || point.y > HEIGHT) {
+        window.setPixelColour(static_cast<size_t>(point.x), static_cast<size_t>(point.y), pack(unpack(color)));
+    }
 }
 
 int main(int argc, char *argv[]) {
@@ -312,7 +313,7 @@ int main(int argc, char *argv[]) {
 	SDL_Event event;
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-    std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
+    std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.2);
 
     // color name: Colour{r,g,b}
 
