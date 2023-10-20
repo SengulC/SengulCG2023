@@ -284,20 +284,18 @@ std::map<std::string, Colour> readMaterial(std::string file) {
 }
 
 CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, float focalLength, float scale) {
-    float u, v;
-    CanvasPoint intersection{0.0, 0.0, 0.0}; // Initialize depth to 0.0
-
-    // Calculate the relative position of the vertex in camera coordinates
-    glm::vec3 relativePosition = vertexPosition - cameraPosition;
-
-    // Apply scaling to the relative position
-    relativePosition = relativePosition * glm::vec3{scale, scale, scale};
+    float x, y;
+    CanvasPoint intersection;
 
     // Calculate the 2D coordinates on the image plane
-    u = (focalLength * (relativePosition.x / relativePosition.z)) + (WIDTH / 2);
-    v = (focalLength * (relativePosition.y / relativePosition.z)) + (HEIGHT / 2);
+    x = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.x - cameraPosition.x) + cameraPosition.x;
+    y = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.y - cameraPosition.y) + cameraPosition.y;
 
-    intersection = {u, v, relativePosition.z}; // Include the z-coordinate
+    // Scaling and shifting
+    x = x * scale + (320.0f / 2);
+    y = y * -scale + (240.0f / 2);
+    intersection.x = x;
+    intersection.y = y;
     return intersection;
 }
 
@@ -315,11 +313,15 @@ int main(int argc, char *argv[]) {
     //           << pair.second.red << ", " << pair.second.green << ", " << pair.second.blue << ")\n";
 	// }
 
-	std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", 1);
+	std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", 0.35);
+    std::cout << modelTriangles.size() << std::endl;
 //    for (const ModelTriangle& value : modelTriangles) {
 //        std::cout << value << std::endl;
 //    }
 
+    glm::vec3 cameraPosition {0.0, 0.0, 4.0};
+    float focalLength = 1.5;
+    float scale = 240.0f;
 	// Loop over model triangles in the obj file
 	// Point cloud render
 	for (const ModelTriangle& triangle : modelTriangles) {
@@ -327,11 +329,7 @@ int main(int argc, char *argv[]) {
 		std::array<glm::vec3, 3> currVertices = triangle.vertices;
 		for (const glm::vec3 currVertex : currVertices) {
 			// Calculate the CanvasPoint for the vertex
-            glm::vec3 cameraPosition {0.0, 0.0, 4.0};
-			float focalLength = 8.0;
-            float scale = 240.0f;
 			CanvasPoint currIntersection = getCanvasIntersectionPoint(currVertex, cameraPosition, focalLength, scale);
-
 			// Draw the point on the window
 			drawPoint(window, currIntersection, {255, 255, 255});
 		}
@@ -339,20 +337,16 @@ int main(int argc, char *argv[]) {
 
 //	 std::vector<CanvasTriangle> twodTriangles;
 //	  Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
-    glm::vec3 cameraPosition {0.0,0.0,2.0};
-    float focalLength= 2.0f;
-    float scale = 240.0f;
     for (ModelTriangle &modelTriangle : modelTriangles) {
-        // Convert the model triangle to a canvas triangle
+        // Define canvas tri.
         CanvasTriangle canvasTriangle;
         for (int i = 0; i < 3; i++) {
+        // Loop over: 0, 1, 2 -- vertices of current tri.
             canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
         }
-        // Draw the canvas triangle
-        drawStroked(window, canvasTriangle, modelTriangle.colour);
+        // Finished w/ def~n of tri, draw tri.
+        drawStroked(window, canvasTriangle, randomColor());
     }
-
-
 
 //	 Print model triangle vertices
 //	 for (const ModelTriangle& value : modelTriangles) {
