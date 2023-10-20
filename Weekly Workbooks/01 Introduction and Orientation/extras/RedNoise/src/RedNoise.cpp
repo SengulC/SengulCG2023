@@ -221,14 +221,14 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 	}
 }
 
-std::vector<ModelTriangle> readObj(std::string file, float scale) {
+std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale) {
     // remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
 
     // modelTriangle: const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2, Colour trigColour
     std::vector<ModelTriangle> modelTriangles;
     ModelTriangle tempTriangle;
     std::vector<glm::vec3> vertices;
-    Colour trigColour = {255,0,0};
+    Colour trigColour;
 
     std::string myObj; // init string
     std::ifstream theObjFile(file); // read file
@@ -236,7 +236,11 @@ std::vector<ModelTriangle> readObj(std::string file, float scale) {
     // read the file line by line
     // make a list of vec3s for the vertices
     while (getline (theObjFile, myObj)) {
-        if (myObj[0] == 'v') {
+        if (myObj[0] == 'u') {
+            std::vector<std::string> colorInfo = split(myObj, ' ');
+            trigColour = mtls[colorInfo[1]];
+        }
+        else if (myObj[0] == 'v') {
             std::vector<std::string> xyz = split(myObj, ' ');
             glm::vec3 currVector{std::stof(xyz[1])*scale, std::stof(xyz[2])*scale, std::stof(xyz[3])*scale}; // xyz[0] = 'v'
             vertices.push_back(currVector);
@@ -307,17 +311,21 @@ int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
 	SDL_Event event;
 
-	std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-	// for (const auto& pair : mtls) {
-    // std::cout << "Material Name: " << pair.first << ", Colour: ("
-    //           << pair.second.red << ", " << pair.second.green << ", " << pair.second.blue << ")\n";
-	// }
+    std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
+    std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
-	std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", 0.35);
-    std::cout << modelTriangles.size() << std::endl;
-//    for (const ModelTriangle& value : modelTriangles) {
-//        std::cout << value << std::endl;
-//    }
+    // color name: Colour{r,g,b}
+
+
+//	 for (const auto& pair : mtls) {
+//     std::cout << "Material Name: " << pair.first << ", Colour: ("
+//               << pair.second.red << ", " << pair.second.green << ", " << pair.second.blue << ")\n";
+//	 }
+
+//    std::cout << modelTriangles.size() << std::endl;
+    //    for (const ModelTriangle& value : modelTriangles) {
+    //        std::cout << value << std::endl;
+    //    }
 
     glm::vec3 cameraPosition {0.0, 0.0, 4.0};
     float focalLength = 1.5;
@@ -335,8 +343,8 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-//	 std::vector<CanvasTriangle> twodTriangles;
-//	  Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
+    //	 std::vector<CanvasTriangle> twodTriangles;
+    //	 Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
     for (ModelTriangle &modelTriangle : modelTriangles) {
         // Define canvas tri.
         CanvasTriangle canvasTriangle;
@@ -345,13 +353,13 @@ int main(int argc, char *argv[]) {
             canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
         }
         // Finished w/ def~n of tri, draw tri.
-        drawStroked(window, canvasTriangle, randomColor());
+        drawFilled(window, canvasTriangle, modelTriangle.colour);
     }
 
-//	 Print model triangle vertices
-//	 for (const ModelTriangle& value : modelTriangles) {
-//     	std::cout << value << std::endl;
-//	 }
+    //	 Print model triangle vertices
+    //	 for (const ModelTriangle& value : modelTriangles) {
+    //     	std::cout << value << std::endl;
+    //	 }
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
