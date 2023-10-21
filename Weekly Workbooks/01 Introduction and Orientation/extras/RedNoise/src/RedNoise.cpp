@@ -14,6 +14,8 @@
 
 #define WIDTH 320
 #define HEIGHT 240
+std::vector<CanvasTriangle> twodTriangles;
+int indexcheck;
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
@@ -27,6 +29,13 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 		else if (event.key.keysym.sym == 'f') {
 			drawFilled(window, randomTriangle(), randomColor());
 		}
+        else if (event.key.keysym.sym == 'x') {
+            drawFilled(window, twodTriangles[indexcheck], randomColor());
+            indexcheck++;
+        }
+        else if (event.key.keysym.sym == 'c') {
+            window.clearPixels();
+        }
 	} else if (event.type == SDL_MOUSEBUTTONDOWN) {
 		window.savePPM("output.ppm");
 		window.saveBMP("output.bmp");
@@ -60,9 +69,10 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-
     //	 Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
-    std::vector<CanvasTriangle> twodTriangles;
+
+    // make the list of twodTriangles
+    // add a keypress ifcase that j draws next index and update index
     for (ModelTriangle &modelTriangle : modelTriangles) {
         // Define canvas tri.
         CanvasTriangle canvasTriangle;
@@ -72,8 +82,12 @@ int main(int argc, char *argv[]) {
         }
         // Finished w/ def~n of tri, draw tri.
         twodTriangles.push_back(canvasTriangle);
-        drawFilled(window, canvasTriangle, modelTriangle.colour);
+        indexcheck=0;
+//        drawFilled(window, canvasTriangle, modelTriangle.colour);
     }
+    CanvasTriangle trianglee;
+    trianglee.vertices= {CanvasPoint{WIDTH/2,50}, CanvasPoint{50,150}, CanvasPoint{200,150}};
+    drawFilled(window,trianglee, {100,40,20});
 
 //    for (CanvasTriangle &tri : twodTriangles) {
 //        drawFilled(window, tri, {255,255,255});

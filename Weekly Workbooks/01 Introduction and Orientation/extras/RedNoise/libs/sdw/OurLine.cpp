@@ -16,7 +16,7 @@ bool sortByY(const CanvasPoint& a, const CanvasPoint& b) {
 }
 
 std::vector<float> interpolateSingleFloats(float from, float to, int numberOfValues) {
-    float step = (to-from)/(numberOfValues-1);
+    float step = (to-from)/(static_cast<float>(numberOfValues)-1);
     std::vector<float> vect;
     vect.push_back(from);
     float next = from;
@@ -52,7 +52,7 @@ void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float 
     std::vector<int> colorgb = unpack(color);
     uint32_t fincolor = pack(colorgb);
 
-    for (int i = 0; i < steps; i++) {
+    for (int i = 0; i < static_cast<int>(std::round(steps)); i++) {
         float x = fromX + (xSteps* static_cast<float>(i));
         float y = fromY + (ySteps* static_cast<float>(i));
 
