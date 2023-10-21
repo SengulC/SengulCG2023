@@ -30,6 +30,9 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 			drawFilled(window, randomTriangle(), randomColor());
 		}
         else if (event.key.keysym.sym == 'x') {
+            if(indexcheck == twodTriangles.size()){
+                indexcheck =0;
+            }
             drawFilled(window, twodTriangles[indexcheck], randomColor());
             indexcheck++;
         }
@@ -83,11 +86,11 @@ int main(int argc, char *argv[]) {
         // Finished w/ def~n of tri, draw tri.
         twodTriangles.push_back(canvasTriangle);
         indexcheck=0;
-//        drawFilled(window, canvasTriangle, modelTriangle.colour);
+        drawFilled(window, canvasTriangle, modelTriangle.colour);
     }
     CanvasTriangle trianglee;
     trianglee.vertices= {CanvasPoint{WIDTH/2,50}, CanvasPoint{50,150}, CanvasPoint{200,150}};
-    drawFilled(window,trianglee, {100,40,20});
+//    drawFilled(window,trianglee, {100,40,20});
 
 //    for (CanvasTriangle &tri : twodTriangles) {
 //        drawFilled(window, tri, {255,255,255});

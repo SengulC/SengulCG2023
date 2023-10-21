@@ -21,12 +21,17 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
             left = points[1].x;
             right = points[2].x;
         }
-        std::vector<float> leftLine = interpolateSingleFloats(points[0].x, left, height);
-        std::vector<float> rightLine = interpolateSingleFloats(points[0].x, right, height);
+        std::vector<float> leftLine = interpolateSingleFloats(points[0].x, left, height+1);
+        std::vector<float> rightLine = interpolateSingleFloats(points[0].x, right, height+1);
 
         int count = 0;
         for (int i=points[0].y; i<points[2].y; i++) {
-            drawLine(window, leftLine[count], i, rightLine[count], i, color);
+            if (leftLine[count] == 0 || leftLine[count] >= 320){
+                continue;
+            } else {
+                drawLine(window, leftLine[count], i, rightLine[count], i, color);
+            }
+
             count++;
         }
     }
@@ -51,7 +56,12 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
         for (int i = static_cast<int> (std::round(points[0].y)); i < static_cast<int> (std::round(extraV.y)); i++) {
             std::vector<float> topTriangleLeft = interpolateSingleFloats(points[0].x, extraV.x, topHeight);
             std::vector<float> topTriangleRight = interpolateSingleFloats(points[0].x, middleV.x, topHeight);
-            drawLine(window, topTriangleLeft[count], i, topTriangleRight[count], i, color);
+            if (topTriangleLeft[count] == 0 || topTriangleLeft[count] >= 320){
+                continue;
+            } else {
+                drawLine(window, topTriangleLeft[count], i, topTriangleRight[count], i, color);
+            }
+
             count++;
         }
 
@@ -60,11 +70,18 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
              i <= static_cast<int> (std::round(points[2].y)); i++) {
             std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x + 1, points[2].x, bottomHeight);
             std::vector<float> bottomTriangleRight = interpolateSingleFloats(middleV.x, points[2].x, bottomHeight);
-            drawLine(window, bottomTriangleLeft[count], i, bottomTriangleRight[count], i, color);
+            if (bottomTriangleLeft[count] == 0 || bottomTriangleLeft[count] >= 320){
+                continue;
+            } else {
+                drawLine(window, bottomTriangleLeft[count], i, bottomTriangleRight[count], i, color);
+            }
+
             count++;
         }
+        if (extraV.x != 0 || extraV.x >= 320){
+            drawLine(window, extraV.x, extraV.y, middleV.x, middleV.y, color);
+        }
 
-        drawLine(window, extraV.x, extraV.y, middleV.x, middleV.y, color);
     }
     drawStroked(window, triangle, {255, 255, 255});
 }
