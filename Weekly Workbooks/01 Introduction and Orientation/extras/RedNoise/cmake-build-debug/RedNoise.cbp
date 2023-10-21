@@ -118,6 +118,30 @@
 		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/ModelTriangle.h">
 			<Option target="RedNoise"/>
 		</Unit>
+		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurLine.cpp">
+			<Option target="RedNoise"/>
+		</Unit>
+		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurLine.h">
+			<Option target="RedNoise"/>
+		</Unit>
+		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurObject.cpp">
+			<Option target="RedNoise"/>
+		</Unit>
+		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurObject.h">
+			<Option target="RedNoise"/>
+		</Unit>
+		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurRender.cpp">
+			<Option target="RedNoise"/>
+		</Unit>
+		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurRender.h">
+			<Option target="RedNoise"/>
+		</Unit>
+		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurTriangle.cpp">
+			<Option target="RedNoise"/>
+		</Unit>
+		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurTriangle.h">
+			<Option target="RedNoise"/>
+		</Unit>
 		<Unit filename="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/RayTriangleIntersection.cpp">
 			<Option target="RedNoise"/>
 		</Unit>

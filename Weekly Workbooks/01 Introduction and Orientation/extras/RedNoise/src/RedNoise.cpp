@@ -1,7 +1,5 @@
 #include <CanvasTriangle.h>
 #include <DrawingWindow.h>
-#include <Utils.h>
-#include <fstream>
 #include <vector>
 #include <glm/glm.hpp>
 #include <CanvasPoint.h>
@@ -10,197 +8,12 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <OurLine.h>
+#include <OurTriangle.h>
+#include <OurObject.h>
 
 #define WIDTH 320
 #define HEIGHT 240
-
-std::vector<int> unpack(const Colour& color) {
-	std::vector<int> colour = {color.red, color.green, color.blue};
-	return colour;
-}
-
-uint32_t pack(std::vector<int> colorgb) {
-	return (255 << 24) + (int(colorgb[0]) << 16) + (int(colorgb[1]) << 8) + int(colorgb[2]);
-}
-
-bool sortByY(const CanvasPoint& a, const CanvasPoint& b) {
-    return a.y < b.y;
-}
-
-// returns an evenly spaced list of size numberOfValues that contains floating point numbers between from and to. 
- std::vector<float> interpolateSingleFloats(float from, float to, int numberOfValues) {
-	float step = (to-from)/(numberOfValues-1);
-	std::vector<float> vect;
-	vect.push_back(from);
-	float next = from;
-	for (int i = 0; i < numberOfValues-2; i++) {
-		float num = next+step;
-		vect.push_back(num);
-		next = next + step;
-	}
-	vect.push_back(to);
-	return vect;
-}
-
- std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 to, int numberOfValues) {
-	std::vector<glm::vec3> vect;
-	std::vector<float> zero = interpolateSingleFloats(from[0], to[0], numberOfValues);
-	std::vector<float> one = interpolateSingleFloats(from[1], to[1], numberOfValues);
-	std::vector<float> two = interpolateSingleFloats(from[2], to[2], numberOfValues);
-	
-	for (int i = 0; i < numberOfValues; i++) {
-		glm::vec3 temp(zero[i], one[i], two[i]);
-		vect.push_back(temp);
-	}
-	return vect;
-}
-
-void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float toY, Colour color) {
-	float xDiff = toX-fromX;
-	float yDiff = toY-fromY;
-	float steps = std::max(std::abs(xDiff), std::abs(yDiff));
-	float xSteps = xDiff / steps;
-	float ySteps = yDiff / steps;
-
-	std::vector<int> colorgb = unpack(color);
-	uint32_t fincolor = pack(colorgb);
-	
-	for (int i = 0; i < steps; i++) {
-		float x = fromX + (xSteps* static_cast<float>(i));
-		float y = fromY + (ySteps* static_cast<float>(i));
-
-		int xval = static_cast<int>(std::round(x));
-		int yval = static_cast<int>(std::round(y));
-		if (xval > WIDTH || yval > HEIGHT) {
-            std::cout << "EXCEEDING BOUNDARIES" << std::endl;
-			continue;
-		} else {
-			window.setPixelColour(xval, yval, fincolor);
-		}
-	}
-}
-
-void drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
-	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v1().x, triangle.v1().y, color);
-	drawLine(window, triangle.v1().x, triangle.v1().y, triangle.v2().x, triangle.v2().y, color);
-	drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v2().x, triangle.v2().y, color);
-}
-
-
-void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
-	std::vector<CanvasPoint> points = {triangle.v0(), triangle.v1(), triangle.v2()};
-	std::sort(points.begin(), points.end(), sortByY); // sorted in ascending order of Ys
-	
-	// split triangle into 2 from middle vertex
-	CanvasPoint middleV = points[1];
-	int topHeight = static_cast<int> (std::abs(middleV.y - points[0].y));
-	int bottomHeight = static_cast<int> (std::abs(points[2].y - middleV.y));
-
-	// interpolate from 1st point to last point to find extra vertex
-	std::vector<float> extraVInterpolatedX = interpolateSingleFloats(points[0].x, points[2].x, topHeight+bottomHeight);
-	// std::cout << "extra v size:" << extraVInterpolatedX.size() << std::endl;
-    float extraVx = extraVInterpolatedX[topHeight];
-	CanvasPoint extraV = {extraVx, middleV.y};
-
-	// define triangles for verification
-	// CanvasTriangle topTriangle = {points[0], middleV, extraV};
-	// CanvasTriangle bottomTriangle = {points[2], middleV, extraV};
-
-	int count = 0;
-	for (int i = static_cast<int> (std::round(points[0].y)) ; i < static_cast<int> (std::round(extraV.y)); i++) {
-		std::vector<float> topTriangleLeft = interpolateSingleFloats(points[0].x, extraV.x, topHeight);
-		std::vector<float> topTriangleRight = interpolateSingleFloats(points[0].x, middleV.x, topHeight);
-		drawLine(window, topTriangleLeft[count], i, topTriangleRight[count], i, color);
-		count++;
-	}
-	
-	count = 0;
-	for (int i = static_cast<int> (std::round(middleV.y + 1)); i <= static_cast<int> (std::round(points[2].y)); i++) {
-		std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x + 1, points[2].x, bottomHeight);
-		std::vector<float> bottomTriangleRight = interpolateSingleFloats(middleV.x, points[2].x, bottomHeight);
-		drawLine(window, bottomTriangleLeft[count], i, bottomTriangleRight[count], i, color);
-		count++;
-	}
-
-	drawLine(window, extraV.x, extraV.y, middleV.x, middleV.y, color);
-	drawStroked(window, triangle, {255, 255, 255});
-}
-
-void bAndWdraw(DrawingWindow &window) {
-	window.clearPixels();
-	std::vector<float> colors = interpolateSingleFloats(255.0, 0.0, window.width);
-	for (size_t y = 0; y < window.height; y++) {
-		for (size_t x = 0; x < window.width; x++) {
-			float red = colors[x];
-			float green = colors[x];
-			float blue = colors[x];
-			uint32_t colour = (255 << 24) + (int(red) << 16) + (int(green) << 8) + int(blue);
-			window.setPixelColour(x, y, colour);
-		}
-	}
-}
-
-void rainbowDraw(DrawingWindow &window) {
-	window.clearPixels();
-	glm::vec3 red(255, 0, 0);
-	glm::vec3 blue(0, 0, 255);
-	glm::vec3 green(0, 255, 0);
-	glm::vec3 yellow(255, 255, 0);
-
-	// fill 1st column
-	std::vector<glm::vec3> redyellow = interpolateThreeElementValues(red, yellow, window.height);
-	for (size_t y = 0; y < window.height; y++) {
-		window.setPixelColour(0, y, (255 << 24) + (int(redyellow[y][0]) << 16) + (int(redyellow[y][1]) << 8) + int(redyellow[y][2]));
-	}
-
-	// fill last column
-	std::vector<glm::vec3> bluegreen = interpolateThreeElementValues(blue, green, window.height);
-	for (size_t y = 0; y < window.height; y++) {
-		window.setPixelColour((window.width)-1, y, (255 << 24) + (int(bluegreen[y][0]) << 16) + (int(bluegreen[y][1]) << 8) + int(bluegreen[y][2]));
-	}
-	
-	// fill each row
-	for (size_t y = 0; y < window.height; y++) {
-		for (size_t x = 0; x < window.width; x++) {
-
-			uint32_t from = window.getPixelColour(0, y);
-			uint32_t to = window.getPixelColour(window.width-1, y);
-
-			// XXXXXXXXX XXXXXXXXX XXXXXXXXX XXXXXXXXX
-			int r = (from >> 16) & 0xFF;
-			int g = (from >> 8) & 0xFF;
-			int b = from & 0xFF;
-			glm::vec3 vecFrom(r,g,b);
-
-			r = (to >> 16) & 0xFF;
-			g = (to >> 8) & 0xFF;
-			b = to & 0xFF;
-			glm::vec3 vecTo(r,g,b);
-
-			std::vector<glm::vec3> colors = interpolateThreeElementValues(vecFrom, vecTo, window.width);
-			// have a list of vec3s, need to extract each vec3 to get rgb data
-			glm::vec3 color = colors[x];
-			float redY = color[0];
-			float greenY = color[1];
-			float blueY = color[2];
-			uint32_t colour = (255 << 24) + (int(redY) << 16) + (int(greenY) << 8) + int(blueY);
-			window.setPixelColour(x, y, colour);
-		}
-	}
-}
-
-CanvasTriangle randomTriangle() {
-	CanvasPoint v0 = {static_cast<float>(rand()%320),static_cast<float>(rand()%240),0,0};
-	CanvasPoint v1 = {static_cast<float>(rand()%320),static_cast<float>(rand()%240),0,0};
-	CanvasPoint v2 = {static_cast<float>(rand()%320),static_cast<float>(rand()%240),0,0};
-	CanvasTriangle triangle = {v0,v1,v2};
-	return triangle;
-}
-
-Colour randomColor() {
-	Colour color = {rand()%256, rand()%256, rand()%256};
-	return color;
-}
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
@@ -220,113 +33,16 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 	}
 }
 
-std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale) {
-    // remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
-
-    // modelTriangle: const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2, Colour trigColour
-    std::vector<ModelTriangle> modelTriangles;
-    ModelTriangle tempTriangle;
-    std::vector<glm::vec3> vertices;
-    Colour trigColour;
-
-    std::string myObj; // init string
-    std::ifstream theObjFile(file); // read file
-
-    // read the file line by line
-    // make a list of vec3s for the vertices
-    while (getline (theObjFile, myObj)) {
-        if (myObj[0] == 'u') {
-            std::vector<std::string> colorInfo = split(myObj, ' ');
-            trigColour = mtls[colorInfo[1]];
-        }
-        else if (myObj[0] == 'v') {
-            std::vector<std::string> xyz = split(myObj, ' ');
-            glm::vec3 currVector{std::stof(xyz[1])*scale, std::stof(xyz[2])*scale, std::stof(xyz[3])*scale}; // xyz[0] = 'v'
-            vertices.push_back(currVector);
-        }
-        else if (myObj[0] == 'f') {
-            // e.g. myObj = "f 2/ 3/ 4/"
-            std::vector<std::string> facet = split(myObj, ' '); // ["f", "2/", "3/", "4/"]
-            // facet[x][0] gets vertex num. convert that to int. look up that vec3 in vertices list (-1 bc of indexing).
-            glm::vec3 v0 = vertices[std::stoi(facet[1])-1];
-            glm::vec3 v1 = vertices[std::stoi(facet[2])-1];
-            glm::vec3 v2 = vertices[std::stoi(facet[3])-1];
-            tempTriangle = {v0,v1,v2, trigColour};
-            modelTriangles.push_back(tempTriangle);
-        }
-    }
-    theObjFile.close();
-    return modelTriangles;
-}
-
-std::map<std::string, Colour> readMaterial(const std::string& file) {
-	std::map<std::string, Colour> palette;
-	std::string myObj; // init string
-	std::ifstream theObjFile(file); // read file
-	std::string name;
-	
-	// read the file line by line
-	// add a colour to the palette for each newmtl
-	while (getline (theObjFile, myObj)) {
-		if (myObj[0] == 'n') {
-			name = split(myObj, ' ')[1];
-		}
-		if (myObj[0] == 'K') {
-			std::vector<std::string> nrgb = split(myObj, ' ');
-			// [Kd, 0.700000, 0.700000, 0.700000]
-			float r = std::stof(nrgb[1])*255;
-			float g = std::stof(nrgb[2])*255;
-			float b = std::stof(nrgb[3])*255;
-			Colour currColor = {name, int(r), int(g), int(b)};
-			palette.insert({name,currColor});
-		}
-	}
-
-	theObjFile.close();
-	return palette;
-}
-
-CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, float focalLength, float scale) {
-    float x, y;
-    CanvasPoint intersection;
-
-    // Calculate the 2D coordinates on the image plane
-    x = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.x - cameraPosition.x) + cameraPosition.x;
-    y = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.y - cameraPosition.y) + cameraPosition.y;
-
-    // Scaling and shifting
-    x = x * scale + (320.0f / 2);
-    y = y * -scale + (240.0f / 2);
-    intersection.x = x;
-    intersection.y = y;
-    return intersection;
-}
-
-void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color) {
-    if (point.x > WIDTH || point.y > HEIGHT) {
-        window.setPixelColour(static_cast<size_t>(point.x), static_cast<size_t>(point.y), pack(unpack(color)));
-    }
-}
-
 int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
 	SDL_Event event;
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-    std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.2);
+    std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
-    // color name: Colour{r,g,b}
-
-
-//	 for (const auto& pair : mtls) {
-//     std::cout << "Material Name: " << pair.first << ", Colour: ("
-//               << pair.second.red << ", " << pair.second.green << ", " << pair.second.blue << ")\n";
-//	 }
-
-//    std::cout << modelTriangles.size() << std::endl;
-    //    for (const ModelTriangle& value : modelTriangles) {
-    //        std::cout << value << std::endl;
-    //    }
+//    for (const ModelTriangle& value : modelTriangles) {
+//        std::cout << value << std::endl;
+//    }
 
     glm::vec3 cameraPosition {0.0, 0.0, 4.0};
     float focalLength = 1.5;
@@ -344,8 +60,9 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-    //	 std::vector<CanvasTriangle> twodTriangles;
+
     //	 Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
+    std::vector<CanvasTriangle> twodTriangles;
     for (ModelTriangle &modelTriangle : modelTriangles) {
         // Define canvas tri.
         CanvasTriangle canvasTriangle;
@@ -354,8 +71,13 @@ int main(int argc, char *argv[]) {
             canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
         }
         // Finished w/ def~n of tri, draw tri.
+        twodTriangles.push_back(canvasTriangle);
         drawFilled(window, canvasTriangle, modelTriangle.colour);
     }
+
+//    for (CanvasTriangle &tri : twodTriangles) {
+//        drawFilled(window, tri, {255,255,255});
+//    }
 
     //	 Print model triangle vertices
     //	 for (const ModelTriangle& value : modelTriangles) {

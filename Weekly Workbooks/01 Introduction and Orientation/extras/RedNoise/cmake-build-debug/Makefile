@@ -249,6 +249,102 @@ libs/sdw/ModelTriangle.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/ModelTriangle.cpp.s
 .PHONY : libs/sdw/ModelTriangle.cpp.s
 
+libs/sdw/OurLine.o: libs/sdw/OurLine.cpp.o
+.PHONY : libs/sdw/OurLine.o
+
+# target to build an object file
+libs/sdw/OurLine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o
+.PHONY : libs/sdw/OurLine.cpp.o
+
+libs/sdw/OurLine.i: libs/sdw/OurLine.cpp.i
+.PHONY : libs/sdw/OurLine.i
+
+# target to preprocess a source file
+libs/sdw/OurLine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.i
+.PHONY : libs/sdw/OurLine.cpp.i
+
+libs/sdw/OurLine.s: libs/sdw/OurLine.cpp.s
+.PHONY : libs/sdw/OurLine.s
+
+# target to generate assembly for a file
+libs/sdw/OurLine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.s
+.PHONY : libs/sdw/OurLine.cpp.s
+
+libs/sdw/OurObject.o: libs/sdw/OurObject.cpp.o
+.PHONY : libs/sdw/OurObject.o
+
+# target to build an object file
+libs/sdw/OurObject.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o
+.PHONY : libs/sdw/OurObject.cpp.o
+
+libs/sdw/OurObject.i: libs/sdw/OurObject.cpp.i
+.PHONY : libs/sdw/OurObject.i
+
+# target to preprocess a source file
+libs/sdw/OurObject.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.i
+.PHONY : libs/sdw/OurObject.cpp.i
+
+libs/sdw/OurObject.s: libs/sdw/OurObject.cpp.s
+.PHONY : libs/sdw/OurObject.s
+
+# target to generate assembly for a file
+libs/sdw/OurObject.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.s
+.PHONY : libs/sdw/OurObject.cpp.s
+
+libs/sdw/OurRender.o: libs/sdw/OurRender.cpp.o
+.PHONY : libs/sdw/OurRender.o
+
+# target to build an object file
+libs/sdw/OurRender.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o
+.PHONY : libs/sdw/OurRender.cpp.o
+
+libs/sdw/OurRender.i: libs/sdw/OurRender.cpp.i
+.PHONY : libs/sdw/OurRender.i
+
+# target to preprocess a source file
+libs/sdw/OurRender.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.i
+.PHONY : libs/sdw/OurRender.cpp.i
+
+libs/sdw/OurRender.s: libs/sdw/OurRender.cpp.s
+.PHONY : libs/sdw/OurRender.s
+
+# target to generate assembly for a file
+libs/sdw/OurRender.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.s
+.PHONY : libs/sdw/OurRender.cpp.s
+
+libs/sdw/OurTriangle.o: libs/sdw/OurTriangle.cpp.o
+.PHONY : libs/sdw/OurTriangle.o
+
+# target to build an object file
+libs/sdw/OurTriangle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o
+.PHONY : libs/sdw/OurTriangle.cpp.o
+
+libs/sdw/OurTriangle.i: libs/sdw/OurTriangle.cpp.i
+.PHONY : libs/sdw/OurTriangle.i
+
+# target to preprocess a source file
+libs/sdw/OurTriangle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.i
+.PHONY : libs/sdw/OurTriangle.cpp.i
+
+libs/sdw/OurTriangle.s: libs/sdw/OurTriangle.cpp.s
+.PHONY : libs/sdw/OurTriangle.s
+
+# target to generate assembly for a file
+libs/sdw/OurTriangle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.s
+.PHONY : libs/sdw/OurTriangle.cpp.s
+
 libs/sdw/RayTriangleIntersection.o: libs/sdw/RayTriangleIntersection.cpp.o
 .PHONY : libs/sdw/RayTriangleIntersection.o
 
@@ -393,6 +489,18 @@ help:
 	@echo "... libs/sdw/ModelTriangle.o"
 	@echo "... libs/sdw/ModelTriangle.i"
 	@echo "... libs/sdw/ModelTriangle.s"
+	@echo "... libs/sdw/OurLine.o"
+	@echo "... libs/sdw/OurLine.i"
+	@echo "... libs/sdw/OurLine.s"
+	@echo "... libs/sdw/OurObject.o"
+	@echo "... libs/sdw/OurObject.i"
+	@echo "... libs/sdw/OurObject.s"
+	@echo "... libs/sdw/OurRender.o"
+	@echo "... libs/sdw/OurRender.i"
+	@echo "... libs/sdw/OurRender.s"
+	@echo "... libs/sdw/OurTriangle.o"
+	@echo "... libs/sdw/OurTriangle.i"
+	@echo "... libs/sdw/OurTriangle.s"
 	@echo "... libs/sdw/RayTriangleIntersection.o"
 	@echo "... libs/sdw/RayTriangleIntersection.i"
 	@echo "... libs/sdw/RayTriangleIntersection.s"

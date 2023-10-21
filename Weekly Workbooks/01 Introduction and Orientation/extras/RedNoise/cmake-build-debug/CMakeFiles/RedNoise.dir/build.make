@@ -209,6 +209,62 @@ CMakeFiles/RedNoise.dir/src/RedNoise.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RedNoise.dir/src/RedNoise.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/src/RedNoise.cpp" -o CMakeFiles/RedNoise.dir/src/RedNoise.cpp.s
 
+CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o: CMakeFiles/RedNoise.dir/flags.make
+CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o: /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurLine.cpp
+CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o: CMakeFiles/RedNoise.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o -MF CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o.d -o CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o -c "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurLine.cpp"
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurLine.cpp" > CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.i
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurLine.cpp" -o CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.s
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o: CMakeFiles/RedNoise.dir/flags.make
+CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o: /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurTriangle.cpp
+CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o: CMakeFiles/RedNoise.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o -MF CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o.d -o CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o -c "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurTriangle.cpp"
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurTriangle.cpp" > CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.i
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurTriangle.cpp" -o CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.s
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o: CMakeFiles/RedNoise.dir/flags.make
+CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o: /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurRender.cpp
+CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o: CMakeFiles/RedNoise.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o -MF CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o.d -o CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o -c "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurRender.cpp"
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurRender.cpp" > CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.i
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurRender.cpp" -o CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.s
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o: CMakeFiles/RedNoise.dir/flags.make
+CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o: /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurObject.cpp
+CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o: CMakeFiles/RedNoise.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o -MF CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o.d -o CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o -c "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurObject.cpp"
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurObject.cpp" > CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.i
+
+CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw/OurObject.cpp" -o CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.s
+
 # Object files for target RedNoise
 RedNoise_OBJECTS = \
 "CMakeFiles/RedNoise.dir/libs/sdw/CanvasPoint.cpp.o" \
@@ -220,7 +276,11 @@ RedNoise_OBJECTS = \
 "CMakeFiles/RedNoise.dir/libs/sdw/TextureMap.cpp.o" \
 "CMakeFiles/RedNoise.dir/libs/sdw/TexturePoint.cpp.o" \
 "CMakeFiles/RedNoise.dir/libs/sdw/Utils.cpp.o" \
-"CMakeFiles/RedNoise.dir/src/RedNoise.cpp.o"
+"CMakeFiles/RedNoise.dir/src/RedNoise.cpp.o" \
+"CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o" \
+"CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o" \
+"CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o" \
+"CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o"
 
 # External object files for target RedNoise
 RedNoise_EXTERNAL_OBJECTS =
@@ -235,10 +295,14 @@ RedNoise: CMakeFiles/RedNoise.dir/libs/sdw/TextureMap.cpp.o
 RedNoise: CMakeFiles/RedNoise.dir/libs/sdw/TexturePoint.cpp.o
 RedNoise: CMakeFiles/RedNoise.dir/libs/sdw/Utils.cpp.o
 RedNoise: CMakeFiles/RedNoise.dir/src/RedNoise.cpp.o
+RedNoise: CMakeFiles/RedNoise.dir/libs/sdw/OurLine.cpp.o
+RedNoise: CMakeFiles/RedNoise.dir/libs/sdw/OurTriangle.cpp.o
+RedNoise: CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o
+RedNoise: CMakeFiles/RedNoise.dir/libs/sdw/OurObject.cpp.o
 RedNoise: CMakeFiles/RedNoise.dir/build.make
 RedNoise: /usr/local/Cellar/sdl2/2.28.3/lib/libSDL2.dylib
 RedNoise: CMakeFiles/RedNoise.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable RedNoise"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable RedNoise"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/RedNoise.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
