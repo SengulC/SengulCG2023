@@ -44,8 +44,8 @@ std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 t
 }
 
 void drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color) {
-    from.x = std::floor(from.x);
-    to.x = std::floor(to.x);
+    from.x = std::round(from.x);
+    to.x = std::round(to.x);
     float xDiff = to.x-from.x;
     float yDiff = to.y-from.y;
     float steps = std::max(std::abs(xDiff), std::abs(yDiff));
