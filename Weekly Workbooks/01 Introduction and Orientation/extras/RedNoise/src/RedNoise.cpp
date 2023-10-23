@@ -46,7 +46,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 }
 
 int main(int argc, char *argv[]) {
-	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
+	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, true);
 	SDL_Event event;
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
 //    }
 
     glm::vec3 cameraPosition {0.0, 0.0, 4.0};
-    float focalLength = 1.5;
+    float focalLength = 1.6;
     float scale = 240.0f;
 	// Loop over model triangles in the obj file
 	// Point cloud render
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
 			// Calculate the CanvasPoint for the vertex
 			CanvasPoint currIntersection = getCanvasIntersectionPoint(currVertex, cameraPosition, focalLength, scale);
 			// Draw the point on the window
-			drawPoint(window, currIntersection, {255, 255, 255});
+//			drawPoint(window, currIntersection, {255, 255, 255});
 		}
 	}
 
@@ -88,9 +88,17 @@ int main(int argc, char *argv[]) {
         indexcheck=0;
         drawFilled(window, canvasTriangle, modelTriangle.colour);
     }
-    CanvasTriangle trianglee;
-    trianglee.vertices= {CanvasPoint{WIDTH/2,50}, CanvasPoint{50,150}, CanvasPoint{200,150}};
-//    drawFilled(window,trianglee, {100,40,20});
+    CanvasTriangle flatbottom;
+    flatbottom.vertices= {CanvasPoint{WIDTH/2,50}, CanvasPoint{50,150}, CanvasPoint{200,150}};
+//    drawFilled(window,flatbottom, {255,40,20});
+
+
+    CanvasTriangle flattop;
+    flattop.vertices= {CanvasPoint{50,50}, CanvasPoint{75,50}, CanvasPoint{100,100}};
+//    drawFilled(window,flattop, {100,40,20});
+
+//    drawFilled(window, twodTriangles[6], {255,0,0});
+//    drawFilled(window, twodTriangles[4], {255,0,0});
 
 //    for (CanvasTriangle &tri : twodTriangles) {
 //        drawFilled(window, tri, {255,255,255});

@@ -16,11 +16,12 @@ bool sortByY(const CanvasPoint& a, const CanvasPoint& b) {
 }
 
 std::vector<float> interpolateSingleFloats(float from, float to, int numberOfValues) {
-    float step = (to-from)/(static_cast<float>(numberOfValues)-1);
+//    numberOfValues = numberOfValues+1;
+    float step = (to-from)/(static_cast<float>(numberOfValues));
     std::vector<float> vect;
     vect.push_back(from);
     float next = from;
-    for (int i = 0; i < numberOfValues-2; i++) {
+    for (int i = 0; i < numberOfValues; i++) {
         float num = next+step;
         vect.push_back(num);
         next = next + step;
@@ -43,6 +44,8 @@ std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 t
 }
 
 void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float toY, Colour color) {
+    fromX = std::floor(fromX);
+    toX = std::floor(toX);
     float xDiff = toX-fromX;
     float yDiff = toY-fromY;
     float steps = std::max(std::abs(xDiff), std::abs(yDiff));
@@ -68,7 +71,5 @@ void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float 
 }
 
 void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color) {
-    if (point.x > WIDTH || point.y > HEIGHT) {
-        window.setPixelColour(static_cast<size_t>(point.x), static_cast<size_t>(point.y), pack(unpack(color)));
-    }
+    window.setPixelColour(static_cast<size_t>(point.x), static_cast<size_t>(point.y), pack(unpack(color)));
 }
