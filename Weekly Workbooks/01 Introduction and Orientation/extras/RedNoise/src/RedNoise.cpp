@@ -46,7 +46,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 }
 
 int main(int argc, char *argv[]) {
-	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, true);
+	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
 	SDL_Event event;
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
@@ -57,25 +57,23 @@ int main(int argc, char *argv[]) {
 //    }
 
     glm::vec3 cameraPosition {0.0, 0.0, 4.0};
-    float focalLength = 1.6;
+    float focalLength = 1.5;
     float scale = 240.0f;
 	// Loop over model triangles in the obj file
 	// Point cloud render
-	for (const ModelTriangle& triangle : modelTriangles) {
+	/*for (const ModelTriangle& triangle : modelTriangles) {
 		// Loop over vec3s in the current model triangle
 		std::array<glm::vec3, 3> currVertices = triangle.vertices;
 		for (const glm::vec3 currVertex : currVertices) {
 			// Calculate the CanvasPoint for the vertex
 			CanvasPoint currIntersection = getCanvasIntersectionPoint(currVertex, cameraPosition, focalLength, scale);
 			// Draw the point on the window
-//			drawPoint(window, currIntersection, {255, 255, 255});
+			drawPoint(window, currIntersection, {255, 255, 255});
 		}
 	}
+	 */
 
     //	 Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
-
-    // make the list of twodTriangles
-    // add a keypress ifcase that j draws next index and update index
     for (ModelTriangle &modelTriangle : modelTriangles) {
         // Define canvas tri.
         CanvasTriangle canvasTriangle;
@@ -98,48 +96,12 @@ int main(int argc, char *argv[]) {
 //    drawFilled(window,flattop, {100,40,20});
 
 //    drawFilled(window, twodTriangles[6], {255,0,0});
-//    drawFilled(window, twodTriangles[4], {255,0,0});
-
-//    for (CanvasTriangle &tri : twodTriangles) {
-//        drawFilled(window, tri, {255,255,255});
-//    }
-
-    //	 Print model triangle vertices
-    //	 for (const ModelTriangle& value : modelTriangles) {
-    //     	std::cout << value << std::endl;
-    //	 }
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
-		
-		/* TESTING
-		 float centreX = (WIDTH-1)/2;
-		 float centreY = (HEIGHT-1)/2;
-		 float third = WIDTH/3;
-		 Colour red = {"red", 255, 0, 0};
-		 drawLine(window, 0, 0, centreX, centreY, red);
-		 drawLine(window, (WIDTH)-1, 0, centreX, centreY, red);
-		 drawLine(window, centreX, 0, centreX, (HEIGHT)-1, red);
-		 drawLine(window, third, centreY, third+third, centreY, red);
-		 CanvasPoint v0 = {100,100,0,0};
-		 CanvasPoint v1 = {200,50,0,0};
-		 CanvasPoint v2 = {150,(HEIGHT)-1,0,0};
-		 CanvasTriangle triangle = {v0,v1,v2};
-		 drawFilled(window, triangle, red);
-		 */
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}
-
-	/* interpolateThreeElementValues test
-	 glm::vec3 from(1.0, 4.0, 9.2);
-     glm::vec3 to(4.0, 1.0, 9.8);
-     int numberOfValues = 4; // You can change this to the desired number of interpolated values.
-     std::vector<glm::vec3> interpolatedValues = interpolateThreeElementValues(from, to, numberOfValues);
-     // Printing the interpolated values
-     for (const glm::vec3& value : interpolatedValues) {
-         std::cout << "(" << value.x << ", " << value.y << ", " << value.z << ")" << std::endl;
-     } */
 }

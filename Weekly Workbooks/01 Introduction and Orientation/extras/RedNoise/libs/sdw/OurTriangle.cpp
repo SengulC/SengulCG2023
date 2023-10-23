@@ -1,9 +1,9 @@
 #include "OurTriangle.h"
 
 void drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
-    drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v1().x, triangle.v1().y, color);
-    drawLine(window, triangle.v1().x, triangle.v1().y, triangle.v2().x, triangle.v2().y, color);
-    drawLine(window, triangle.v0().x, triangle.v0().y, triangle.v2().x, triangle.v2().y, color);
+    drawLine(window, triangle.v0(), triangle.v1(), color);
+    drawLine(window, triangle.v1(),triangle.v2(), color);
+    drawLine(window, triangle.v0(), triangle.v2(), color);
 }
 
 void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
@@ -24,11 +24,11 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
         std::vector<float> leftLine = interpolateSingleFloats(points[0].x, left, height+1);
         std::vector<float> rightLine = interpolateSingleFloats(points[0].x, right, height+1);
 
-        std::cout<< "left vertex, right vertex, and interpolation"  << left << " " << right << " " << leftLine[leftLine.size()-1] << " " << rightLine[rightLine.size()-1] <<std::endl;
+//        std::cout<< "left vertex, right vertex, and interpolation"  << left << " " << right << " " << leftLine[leftLine.size()-1] << " " << rightLine[rightLine.size()-1] <<std::endl;
 
         int count = 0;
         for (int i=points[0].y; i<points[2].y; i++) {
-            drawLine(window, leftLine[count], i, rightLine[count], i, color);
+            drawLine(window, CanvasPoint{leftLine[count], static_cast<float>(i)}, CanvasPoint{rightLine[count], static_cast<float>(i)}, color);
             count++;
         }
 
@@ -47,13 +47,13 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
 
         int count = 0;
         for (int i=points[0].y; i<points[2].y; i++) {
-            drawLine(window, leftLine[count], i, rightLine[count], i, color);
+            drawLine(window, CanvasPoint{(leftLine[count]), static_cast<float>(i)}, CanvasPoint{(rightLine[count]), static_cast<float>(i)}, color);
             count++;
         }
     }
 
     else {
-        // split triangle into 2 from middle vertex
+        // static_cast<float>(s)plit triangle istatic_cast<float>(s)tatic_cast<float>(n)to 2 from middle vertex
         CanvasPoint middleV = points[1];
         int topHeight = static_cast<int> (std::abs(middleV.y - points[0].y));
         int bottomHeight = static_cast<int> (std::abs(points[2].y - middleV.y));
@@ -72,7 +72,7 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
         for (int i = static_cast<int> (std::round(points[0].y)); i < static_cast<int> (std::round(extraV.y)); i++) {
             std::vector<float> topTriangleLeft = interpolateSingleFloats(points[0].x, extraV.x, topHeight);
             std::vector<float> topTriangleRight = interpolateSingleFloats(points[0].x, middleV.x, topHeight);
-            drawLine(window, topTriangleLeft[count], i, topTriangleRight[count], i, color);
+            drawLine(window, CanvasPoint{topTriangleLeft[count], static_cast<float>(i)}, CanvasPoint{topTriangleRight[count], static_cast<float>(i)}, color);
             count++;
         }
 
@@ -81,14 +81,15 @@ void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
              i <= static_cast<int> (std::round(points[2].y)); i++) {
             std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x + 1, points[2].x, bottomHeight);
             std::vector<float> bottomTriangleRight = interpolateSingleFloats(middleV.x, points[2].x, bottomHeight);
-            drawLine(window, bottomTriangleLeft[count], i, bottomTriangleRight[count], i, color);
+            drawLine(window, CanvasPoint{bottomTriangleLeft[count], static_cast<float>(i)}, CanvasPoint{bottomTriangleRight[count], static_cast<float>(i)}, color);
             count++;
         }
-        drawLine(window, extraV.x, extraV.y, middleV.x, middleV.y, color);
+        drawLine(window, CanvasPoint{extraV.x, extraV.y}, CanvasPoint{middleV.x, middleV.y}, color);
     }
     drawStroked(window, triangle, color);
 }
 
+/*
 void drawFlatBottomTriangle(DrawingWindow &window, std::vector<CanvasPoint> points, Colour color) {
     float left;
     float right;
@@ -106,17 +107,16 @@ void drawFlatBottomTriangle(DrawingWindow &window, std::vector<CanvasPoint> poin
 
         int count = 0;
         for (int i = points[0].y; i < points[2].y; i++) {
-            if (leftLine[count] == 0 || leftLine[count] >= 320) {
+            if ((leftLine[count]) == 0 || (leftLine[count]) >= 320) {
                 continue;
             } else {
-                drawLine(window, leftLine[count], i, rightLine[count], i, color);
+                drawLine(window, CanvasPoint{(leftLine[count]), i}, CanvasPoint{(rightLine[count]), i}, color);
             }
 
             count++;
         }
     }
 }
-
 void drawFlatTopTriangle(DrawingWindow &window, std::vector<CanvasPoint> points, Colour color) {
     // flat-topped triangle
     float left; float right;
@@ -133,12 +133,10 @@ void drawFlatTopTriangle(DrawingWindow &window, std::vector<CanvasPoint> points,
 
     int count = 0;
     for (int i=points[0].y; i<points[2].y; i++) {
-        drawLine(window, leftLine[count], i, rightLine[count], i, color);
+        drawLine(window, (leftLine[count]), i, (rightLine[count]), i, color);
         count++;
     }
 }
-
-/*
 void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color) {
     std::cout<<"FLAT BOTTOM"<<std::endl;
     std::vector<CanvasPoint> points = {triangle.v0(), triangle.v1(), triangle.v2()};

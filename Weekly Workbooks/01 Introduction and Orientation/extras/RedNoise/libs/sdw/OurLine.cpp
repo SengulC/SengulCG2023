@@ -43,11 +43,11 @@ std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 t
     return vect;
 }
 
-void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float toY, Colour color) {
-    fromX = std::floor(fromX);
-    toX = std::floor(toX);
-    float xDiff = toX-fromX;
-    float yDiff = toY-fromY;
+void drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color) {
+    from.x = std::floor(from.x);
+    to.x = std::floor(to.x);
+    float xDiff = to.x-from.x;
+    float yDiff = to.y-from.y;
     float steps = std::max(std::abs(xDiff), std::abs(yDiff));
     float xSteps = xDiff / steps;
     float ySteps = yDiff / steps;
@@ -56,8 +56,8 @@ void drawLine(DrawingWindow &window, float fromX, float fromY, float toX, float 
     uint32_t fincolor = pack(colorgb);
 
     for (int i = 0; i < static_cast<int>(std::round(steps)); i++) {
-        float x = fromX + (xSteps* static_cast<float>(i));
-        float y = fromY + (ySteps* static_cast<float>(i));
+        float x = from.x + (xSteps* static_cast<float>(i));
+        float y = from.y + (ySteps* static_cast<float>(i));
 
         int xval = static_cast<int>(std::round(x));
         int yval = static_cast<int>(std::round(y));
