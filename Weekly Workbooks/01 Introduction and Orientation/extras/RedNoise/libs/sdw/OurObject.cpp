@@ -1,9 +1,13 @@
 #include "OurObject.h"
 
-std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale) {
-    // remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
+#define WIDTH 320
+#define HEIGHT 240
 
-    // modelTriangle: const glm::vec3 &v0, const glm::vec3 &v1, const glm::vec3 &v2, Colour trigColour
+std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale) {
+    std::vector<std::vector<int>> depthMatrix(WIDTH, std::vector<int>(HEIGHT,0));
+    // initialize depth matrix
+
+    // remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
     std::vector<ModelTriangle> modelTriangles;
     ModelTriangle tempTriangle;
     std::vector<glm::vec3> vertices;
@@ -79,6 +83,7 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
     y = y * -scale + (240.0f / 2); // negative scale bc y axis was flipped
     intersection.x = x;
     intersection.y = y;
+    intersection.depth = vertexPosition.z;
     return intersection;
 }
 

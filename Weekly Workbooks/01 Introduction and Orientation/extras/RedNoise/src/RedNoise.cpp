@@ -8,7 +8,6 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <OurLine.h>
 #include <OurTriangle.h>
 #include <OurObject.h>
 
@@ -27,11 +26,18 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 			drawStroked(window, randomTriangle(), randomColor());
 		}
 		else if (event.key.keysym.sym == 'f') {
-			drawFilled(window, randomTriangle(), randomColor());
-		}
+            drawFilled(window, randomTriangle(), randomColor());
+        }
+        else if (event.key.keysym.sym == 'w') {
+            // draw wireframe
+            for (const CanvasTriangle& tri : twodTriangles) {
+                drawStroked(window, tri, {255,255,255});
+            }
+        }
         else if (event.key.keysym.sym == 'x') {
-            if(indexcheck == twodTriangles.size()){
-                indexcheck =0;
+            if (indexcheck == twodTriangles.size()) {
+                indexcheck = 0;
+                window.clearPixels();
             }
             drawFilled(window, twodTriangles[indexcheck], randomColor());
             indexcheck++;
@@ -39,6 +45,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         else if (event.key.keysym.sym == 'c') {
             window.clearPixels();
         }
+
 	} else if (event.type == SDL_MOUSEBUTTONDOWN) {
 		window.savePPM("output.ppm");
 		window.saveBMP("output.bmp");
@@ -70,10 +77,14 @@ int main(int argc, char *argv[]) {
         indexcheck=0;
         drawFilled(window, canvasTriangle, modelTriangle.colour);
     }
+
+    // draw wireframe
+    for (const CanvasTriangle& tri : twodTriangles) {
+        drawStroked(window, tri, {255,255,255});
+    }
     CanvasTriangle flatbottom;
     flatbottom.vertices= {CanvasPoint{WIDTH/2,50}, CanvasPoint{50,150}, CanvasPoint{200,150}};
 //    drawFilled(window,flatbottom, {255,40,20});
-
 
     CanvasTriangle flattop;
     flattop.vertices= {CanvasPoint{50,50}, CanvasPoint{75,50}, CanvasPoint{100,100}};
