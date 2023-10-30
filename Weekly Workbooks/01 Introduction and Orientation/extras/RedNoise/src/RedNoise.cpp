@@ -16,6 +16,9 @@
 #define HEIGHT 240
 std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
+glm::vec3 cameraPosition {0.0, 0.0, 4.0};
+float focalLength = 1.5;
+float scale = 240.0f;
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
@@ -36,6 +39,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             }
         }
         else if (event.key.keysym.sym == 'x') {
+            // draw triangles one by one
             if (indexcheck == twodTriangles.size()) {
                 indexcheck = 0;
                 window.clearPixels();
@@ -45,6 +49,13 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         }
         else if (event.key.keysym.sym == 'c') {
             window.clearPixels();
+        }
+        else if (event.key.keysym.sym == 'r') {
+            window.clearPixels();
+            std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
+            std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
+            twodTriangles = rasterize(window, modelTriangles, mtls, cameraPosition, focalLength, scale);
+            indexcheck=0;
         }
 
 	} else if (event.type == SDL_MOUSEBUTTONDOWN) {
@@ -59,29 +70,9 @@ int main(int argc, char *argv[]) {
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
-    glm::vec3 cameraPosition {0.0, 0.0, 4.0};
-    float focalLength = 1.5;
-    float scale = 240.0f;
 
     twodTriangles = rasterize(window, modelTriangles, mtls, cameraPosition, focalLength, scale);
     indexcheck=0;
-
-    //	 Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
-//    for (ModelTriangle &modelTriangle : modelTriangles) {
-//        CanvasTriangle canvasTriangle;
-//        for (int i = 0; i < 3; i++) {
-//            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
-//        }
-//        twodTriangles.push_back(canvasTriangle);
-//        indexcheck=0;
-//        drawFilled(window, canvasTriangle, modelTriangle.colour);
-//    }
-//
-//    // draw wireframe
-//    for (const CanvasTriangle& tri : twodTriangles) {
-//        drawStroked(window, tri, {255,255,255});
-//    }
-
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
