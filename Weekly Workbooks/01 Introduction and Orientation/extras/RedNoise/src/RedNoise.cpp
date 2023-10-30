@@ -10,6 +10,7 @@
 #include <map>
 #include <OurTriangle.h>
 #include <OurObject.h>
+#include <OurRender.h>
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -58,38 +59,29 @@ int main(int argc, char *argv[]) {
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
-
-//    for (const ModelTriangle& value : modelTriangles) {
-//        std::cout << value << std::endl;
-//    }
-
     glm::vec3 cameraPosition {0.0, 0.0, 4.0};
     float focalLength = 1.5;
     float scale = 240.0f;
 
+    twodTriangles = rasterize(window, modelTriangles, mtls, cameraPosition, focalLength, scale);
+    indexcheck=0;
+
     //	 Wireframe render: create a 2D CanvasTriangle for each 3D ModelTriangle
-    for (ModelTriangle &modelTriangle : modelTriangles) {
-        CanvasTriangle canvasTriangle;
-        for (int i = 0; i < 3; i++) {
-            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
-        }
-        twodTriangles.push_back(canvasTriangle);
-        indexcheck=0;
-        drawFilled(window, canvasTriangle, modelTriangle.colour);
-    }
+//    for (ModelTriangle &modelTriangle : modelTriangles) {
+//        CanvasTriangle canvasTriangle;
+//        for (int i = 0; i < 3; i++) {
+//            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
+//        }
+//        twodTriangles.push_back(canvasTriangle);
+//        indexcheck=0;
+//        drawFilled(window, canvasTriangle, modelTriangle.colour);
+//    }
+//
+//    // draw wireframe
+//    for (const CanvasTriangle& tri : twodTriangles) {
+//        drawStroked(window, tri, {255,255,255});
+//    }
 
-    // draw wireframe
-    for (const CanvasTriangle& tri : twodTriangles) {
-        drawStroked(window, tri, {255,255,255});
-    }
-    CanvasTriangle flatbottom;
-    flatbottom.vertices= {CanvasPoint{WIDTH/2,50}, CanvasPoint{50,150}, CanvasPoint{200,150}};
-//    drawFilled(window,flatbottom, {255,40,20});
-
-    CanvasTriangle flattop;
-    flattop.vertices= {CanvasPoint{50,50}, CanvasPoint{75,50}, CanvasPoint{100,100}};
-//    drawFilled(window,flattop, {100,40,20});
-//    drawFilled(window, twodTriangles[6], {255,0,0});
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !

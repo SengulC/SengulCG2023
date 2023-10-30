@@ -1,4 +1,6 @@
 #include "OurRender.h"
+#include "OurTriangle.h"
+#include "OurObject.h"
 
 void bAndWdraw(DrawingWindow &window) {
     window.clearPixels();
@@ -61,4 +63,23 @@ void rainbowDraw(DrawingWindow &window) {
             window.setPixelColour(x, y, colour);
         }
     }
+}
+
+std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, const std::map<std::string, Colour>& materials,
+               glm::vec3 cameraPosition, float focalLength, float scale) {
+    std::vector<CanvasTriangle> twodTriangles;
+    for (ModelTriangle &modelTriangle : modelTriangles) {
+        CanvasTriangle canvasTriangle;
+        for (int i = 0; i < 3; i++) {
+            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
+        }
+        twodTriangles.push_back(canvasTriangle);
+        drawFilled(window, canvasTriangle, modelTriangle.colour);
+    }
+
+    // draw wireframe
+    for (const CanvasTriangle& tri : twodTriangles) {
+        drawStroked(window, tri, {255,255,255});
+    }
+    return twodTriangles;
 }
