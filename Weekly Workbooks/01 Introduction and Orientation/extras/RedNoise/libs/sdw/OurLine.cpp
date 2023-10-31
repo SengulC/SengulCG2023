@@ -67,7 +67,7 @@ void drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour co
         float z = depths[i];
         int xval = static_cast<int>(std::round(x));
         int yval = static_cast<int>(std::round(y));
-        if (1/z > depthMatrix[xval][yval]) {
+        if (z > depthMatrix[xval][yval]) {
             window.setPixelColour(xval, yval, fincolor);
             depthMatrix[xval][yval] = 1/z;
         } else {
