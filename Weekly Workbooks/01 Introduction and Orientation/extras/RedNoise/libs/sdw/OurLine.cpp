@@ -43,11 +43,12 @@ std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 t
     return vect;
 }
 
-void drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color) {
+void drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<int>> depthMatrix) {
     from.x = std::round(from.x);
     to.x = std::round(to.x);
     float xDiff = to.x-from.x;
     float yDiff = to.y-from.y;
+    float zDiff = to.depth-from.depth;
     float steps = std::max(std::abs(xDiff), std::abs(yDiff));
     float xSteps = xDiff / steps;
     float ySteps = yDiff / steps;
@@ -59,14 +60,19 @@ void drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour co
         float x = from.x + (xSteps* static_cast<float>(i));
         float y = from.y + (ySteps* static_cast<float>(i));
 
+        int magnitude = static_cast<int>(sqrt(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff));
+        std::vector<float> depths = interpolateSingleFloats(from.depth, to.depth, magnitude);
+        // numberOfValues in interpolation = magnitude ??
+
+        float z = depths[i];
         int xval = static_cast<int>(std::round(x));
         int yval = static_cast<int>(std::round(y));
-//        if (xval > WIDTH || yval > HEIGHT) {
-//            std::cout << "EXCEEDING BOUNDARIES" << std::endl;
-//            continue;
-//        } else {
-        window.setPixelColour(xval, yval, fincolor);
-//        }
+        if (1/z > depthMatrix[xval][yval]) {
+            window.setPixelColour(xval, yval, fincolor);
+            depthMatrix[xval][yval] = 1/z;
+        } else {
+            continue;
+        }
     }
 }
 

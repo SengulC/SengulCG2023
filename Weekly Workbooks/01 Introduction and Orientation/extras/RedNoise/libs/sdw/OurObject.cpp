@@ -4,9 +4,6 @@
 #define HEIGHT 240
 
 std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale) {
-    std::vector<std::vector<int>> depthMatrix(WIDTH, std::vector<int>(HEIGHT,0));
-    // initialize depth matrix
-
     // remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
     std::vector<ModelTriangle> modelTriangles;
     ModelTriangle tempTriangle;
@@ -84,6 +81,7 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
     intersection.x = x;
     intersection.y = y;
     intersection.depth = vertexPosition.z;
+    // is this correct?
     return intersection;
 }
 

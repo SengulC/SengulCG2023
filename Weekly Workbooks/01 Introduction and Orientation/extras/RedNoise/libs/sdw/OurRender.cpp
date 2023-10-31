@@ -65,21 +65,34 @@ void rainbowDraw(DrawingWindow &window) {
     }
 }
 
-std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, const std::map<std::string, Colour>& materials,
-               glm::vec3 cameraPosition, float focalLength, float scale) {
+std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, float focalLength, float scale, std::vector<std::vector<int>> depthMatrix) {
+    // draw wireframe
     std::vector<CanvasTriangle> twodTriangles;
+
     for (ModelTriangle &modelTriangle : modelTriangles) {
         CanvasTriangle canvasTriangle;
         for (int i = 0; i < 3; i++) {
+            // populate each vertex - 0, 1, 2
             canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
         }
-        twodTriangles.push_back(canvasTriangle);
-        drawFilled(window, canvasTriangle, modelTriangle.colour);
-    }
 
-    // draw wireframe
-    for (const CanvasTriangle& tri : twodTriangles) {
-        drawStroked(window, tri, {255,255,255});
+//        std::sort(canvasTriangle.vertices.begin(), canvasTriangle.vertices.end(), sortByY); // sorted in ascending order of Ys
+//        std::vector<float> leftDepths = interpolateSingleFloats(canvasTriangle.v0().depth, canvasTriangle.v2().depth, canvasTriangle.v2().y - canvasTriangle.v0().y);
+//        std::vector<float> rightDepths = interpolateSingleFloats(canvasTriangle.v0().depth, canvasTriangle.v1().depth, canvasTriangle.v1().y - canvasTriangle.v0().y);
+
+        twodTriangles.push_back(canvasTriangle);
+        drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+        drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
+
+//        // for the curr. Canvas triangle's area populate the depth matrix via canvasTriangle vertices
+//        for (CanvasPoint &vertex : canvasTriangle.vertices) {
+//            // if the currently stored pixel @ [x][y] is < than 1/z (init. w/ 0), overwrite:
+//            if (depthMatrix[vertex.x][vertex.y] < 1/(vertex.depth)) {
+//                depthMatrix[vertex.x][vertex.y] = 1/(vertex.depth);
+//            }
+//        }
+
+
     }
     return twodTriangles;
 }

@@ -17,5 +17,4 @@ void bAndWdraw(DrawingWindow &window);
 
 void rainbowDraw(DrawingWindow &window);
 
-std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, const std::map<std::string, Colour>& materials,
-                                      glm::vec3 cameraPosition, float focalLength, float scale);
+std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, float focalLength, float scale, std::vector<std::vector<int>> depthMatrix);
