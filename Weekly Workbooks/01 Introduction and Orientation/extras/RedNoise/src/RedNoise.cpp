@@ -17,17 +17,37 @@
 std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
 glm::vec3 cameraPosition {0.0, 0.0, 4.0};
-float focalLength = 1.5;
-float scale = 240.0f;
+float focalLength = 1;
+float scale = 200.0f;
 bool toggle = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
-		if (event.key.keysym.sym == SDLK_LEFT) std::cout << "LEFT" << std::endl;
-		else if (event.key.keysym.sym == SDLK_RIGHT) std::cout << "RIGHT" << std::endl;
-		else if (event.key.keysym.sym == SDLK_UP) std::cout << "UP" << std::endl;
-		else if (event.key.keysym.sym == SDLK_DOWN) std::cout << "DOWN" << std::endl;
+        if (event.key.keysym.sym == SDLK_UP) {
+            // y
+            cameraPosition += glm::vec3{0,0.1,0};
+        }
+        else if (event.key.keysym.sym == SDLK_DOWN) {
+            // y
+            cameraPosition -= glm::vec3{0,0.1,0};
+        }
+        else if (event.key.keysym.sym == SDLK_LEFT) {
+            // x
+            cameraPosition -= glm::vec3{0.1,0,0};
+        }
+		else if (event.key.keysym.sym == SDLK_RIGHT) {
+            // x
+            cameraPosition += glm::vec3{0.1,0,0};
+        }
+        else if (event.key.keysym.sym == SDLK_LESS) {
+            // Z
+            cameraPosition -= glm::vec3{0,0,0.1};
+        }
+        else if (event.key.keysym.sym == SDLK_GREATER) {
+            // Z
+            cameraPosition += glm::vec3{0,0,0.1};
+        }
 		else if (event.key.keysym.sym == 'u') {
 			drawStroked(window, randomTriangle(), randomColor(), depthMatrix);
 		}
@@ -103,6 +123,7 @@ int main(int argc, char *argv[]) {
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
     // RASTERIZER
+//    twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
     indexcheck = 0;
 
 	while (true) {

@@ -81,7 +81,7 @@ std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTr
         twodTriangles.push_back(canvasTriangle);
         // drawing of triangle(s) updates the depth matrix
         depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
-//        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
+        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
 
     }
     return twodTriangles;
