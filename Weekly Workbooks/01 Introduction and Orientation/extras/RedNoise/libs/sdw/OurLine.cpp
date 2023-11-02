@@ -67,16 +67,23 @@ std::vector<std::vector<int>> drawLine(DrawingWindow &window, CanvasPoint from, 
         float z = depths[i];
         int xval = static_cast<int>(std::round(x));
         int yval = static_cast<int>(std::round(y));
-        if (depthMatrix[xval][yval] == 0 || z > depthMatrix[xval][yval]) {
-            depthMatrix[xval][yval] = 1 / z;
-            window.setPixelColour(xval, yval, fincolor);
-            std::cout<< "B " << depthMatrix[xval][yval]<<std::endl;
+        // green
+        if (fincolor == 4278255360 || fincolor == 4294901760) {
+            if (depthMatrix[xval][yval] == 0 || z > depthMatrix[xval][yval]) {
+                depthMatrix[xval][yval] = 1 / z;
+                window.setPixelColour(xval, yval, fincolor);
+            }
         }
+//        if (depthMatrix[xval][yval] == 0 ) {
+//            depthMatrix[xval][yval] = 1 / z;
+//            window.setPixelColour(xval, yval, fincolor);
 //        } else if (z > depthMatrix[xval][yval]) {
-//            window.setPixelColour(xval, yval, 0xFFFFFFFF);
-//            depthMatrix[xval][yval] = 1/z;
-//            continue;
+//            depthMatrix[xval][yval] = 1 / z;
+//            window.setPixelColour(xval, yval, fincolor);
+//        } else {
+//            window.setPixelColour(xval, yval, 0xFF0000);
 //        }
+
     }
     return depthMatrix;
 }

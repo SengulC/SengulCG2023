@@ -68,6 +68,7 @@ void rainbowDraw(DrawingWindow &window) {
 std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, float focalLength, float scale, std::vector<std::vector<int>> depthMatrix) {
     std::vector<CanvasTriangle> twodTriangles;
 
+    // conversion
     for (ModelTriangle &modelTriangle : modelTriangles) {
         CanvasTriangle canvasTriangle;
         for (int i = 0; i < 3; i++) {
@@ -75,9 +76,11 @@ std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTr
             canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
         }
 
+        // populate 2-D triangles vector for rendering/keypress purposes
         twodTriangles.push_back(canvasTriangle);
+        // drawing of triangle(s) updates the depth matrix
         depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
-        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
+//        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
 
     }
     return twodTriangles;
