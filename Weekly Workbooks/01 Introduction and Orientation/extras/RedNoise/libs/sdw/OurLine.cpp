@@ -43,7 +43,7 @@ std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 t
     return vect;
 }
 
-void drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<int>> depthMatrix) {
+std::vector<std::vector<int>> drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<int>> depthMatrix) {
     from.x = std::round(from.x);
     to.x = std::round(to.x);
     float xDiff = to.x-from.x;
@@ -67,13 +67,18 @@ void drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour co
         float z = depths[i];
         int xval = static_cast<int>(std::round(x));
         int yval = static_cast<int>(std::round(y));
-        if (z > depthMatrix[xval][yval]) {
+        if (depthMatrix[xval][yval] == 0 || z > depthMatrix[xval][yval]) {
+            depthMatrix[xval][yval] = 1 / z;
             window.setPixelColour(xval, yval, fincolor);
-            depthMatrix[xval][yval] = 1/z;
-        } else {
-            continue;
+            std::cout<< "B " << depthMatrix[xval][yval]<<std::endl;
         }
+//        } else if (z > depthMatrix[xval][yval]) {
+//            window.setPixelColour(xval, yval, 0xFFFFFFFF);
+//            depthMatrix[xval][yval] = 1/z;
+//            continue;
+//        }
     }
+    return depthMatrix;
 }
 
 void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color) {

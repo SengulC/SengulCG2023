@@ -13,7 +13,7 @@
 #include <string>
 #include "OurLine.h"
 
-void drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color, std::vector<std::vector<int>> depthMatrix);
-void drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color, std::vector<std::vector<int>> depthMatrix);
+std::vector<std::vector<int>> drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color, std::vector<std::vector<int>> depthMatrix);
+std::vector<std::vector<int>> drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color, std::vector<std::vector<int>> depthMatrix);
 CanvasTriangle randomTriangle();
 Colour randomColor();

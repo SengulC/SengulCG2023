@@ -63,13 +63,6 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             std::cout << twodTriangles[indexcheck-1].v0().depth << ""
             << twodTriangles[indexcheck-1].v1().depth << ""
             << twodTriangles[indexcheck-1].v2().depth << std::endl;
-
-            /*
-            red: (-0.0546792, -0.439679, 0.116821)
-            blue: (-0.614679, -0.0537593, -0.613759
-
-             *
-             * */
         }
 
 	} else if (event.type == SDL_MOUSEBUTTONDOWN) {
@@ -87,15 +80,7 @@ int main(int argc, char *argv[]) {
 
     // RASTERIZER
     twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
-    indexcheck=0;
-
-    // Iterate through the matrix and print its elements
-//    for (int i = 0; i < WIDTH; ++i) {
-//        for (int j = 0; j < HEIGHT; ++j) {
-//            std::cout << depthMatrix[i][j] << " ";
-//        }
-//        std::cout << std::endl;
-//    }
+    indexcheck = 0;
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !

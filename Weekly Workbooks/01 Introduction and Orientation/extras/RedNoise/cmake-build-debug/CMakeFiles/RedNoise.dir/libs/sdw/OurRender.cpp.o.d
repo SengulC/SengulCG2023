@@ -1,5 +1,6 @@
-CMakeFiles/RedNoise.dir/src/RedNoise.cpp.o: \
-  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/src/RedNoise.cpp \
+CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o: \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurRender.cpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurRender.h \
   /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/CanvasTriangle.h \
   /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/CanvasPoint.h \
   /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/TexturePoint.h \
@@ -567,6 +568,7 @@ CMakeFiles/RedNoise.dir/src/RedNoise.cpp.o: \
   /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_version.h \
   /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_locale.h \
   /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_misc.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/Utils.h \
   /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/glm.hpp \
   /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/_fixes.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cmath \
@@ -662,13 +664,11 @@ CMakeFiles/RedNoise.dir/src/RedNoise.cpp.o: \
   /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_integer.inl \
   /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/Colour.h \
   /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/ModelTriangle.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurLine.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/map \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/is_transparent.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__node_handle \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/optional \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__tree \
   /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurTriangle.h \
-  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/Utils.h \
-  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurLine.h \
-  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurObject.h \
-  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurRender.h
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurObject.h
