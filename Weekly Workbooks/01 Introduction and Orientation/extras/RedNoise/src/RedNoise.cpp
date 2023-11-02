@@ -17,13 +17,26 @@
 std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
 glm::vec3 cameraPosition {0.0, 0.0, 4.0};
-float focalLength = 1;
-float scale = 200.0f;
+float focalLength = 1.0f;
+float scale = 150.0f;
 bool toggle = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 
+glm::mat3 rotateX(
+        1.0f, 0.0f, 0.0f,
+        0.0f, cos(0.1), -sin(0.1),
+        0.0f, sin(0.1), cos(0.1)
+);
+
+glm::mat3 rotateY(
+        cos(0.1), 0.0f, sin(0.1),
+        0.0f, 1.0f, 0.0f,
+        -sin(0.1), 0.0f, cos(0.1)
+);
+
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
+        // translation
         if (event.key.keysym.sym == SDLK_UP) {
             // y
             cameraPosition += glm::vec3{0,0.1,0};
@@ -40,16 +53,26 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             // x
             cameraPosition += glm::vec3{0.1,0,0};
         }
-        else if (event.key.keysym.sym == SDLK_0) {
+        else if (event.key.keysym.sym == SDLK_SEMICOLON) {
             // Z
             cameraPosition -= glm::vec3{0,0,0.1};
-            std::cout << "Z: " << cameraPosition.x << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
+            std::cout << "camera: " << cameraPosition.x << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
         }
-        else if (event.key.keysym.sym == SDLK_1) {
+        else if (event.key.keysym.sym == SDLK_QUOTE) {
             // Z
             cameraPosition += glm::vec3{0,0,0.1};
-            std::cout << "Z: " << cameraPosition.x  << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
+            std::cout << "camera: " << cameraPosition.x  << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
         }
+        // rotation </>
+        else if (event.key.keysym.sym == SDLK_COMMA) {
+            cameraPosition = rotateX * cameraPosition;
+            std::cout << "camera: " << cameraPosition.x  << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
+        }
+        else if (event.key.keysym.sym == SDLK_PERIOD) {
+            cameraPosition = rotateY * cameraPosition;
+            std::cout << "camera: " << cameraPosition.x  << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
+        }
+
 		else if (event.key.keysym.sym == 'u') {
 			drawStroked(window, randomTriangle(), randomColor(), depthMatrix);
 		}
@@ -62,6 +85,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 drawStroked(window, tri, {255,255,255}, depthMatrix);
             }
         }
+
         else if (event.key.keysym.sym == 't') {
             // toggle wireframe atop render
             window.clearPixels();
