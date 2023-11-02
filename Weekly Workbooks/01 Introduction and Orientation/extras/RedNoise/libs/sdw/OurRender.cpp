@@ -65,7 +65,7 @@ void rainbowDraw(DrawingWindow &window) {
     }
 }
 
-std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, float focalLength, float scale, std::vector<std::vector<int>> depthMatrix) {
+std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix) {
     std::vector<CanvasTriangle> twodTriangles;
 
     // conversion

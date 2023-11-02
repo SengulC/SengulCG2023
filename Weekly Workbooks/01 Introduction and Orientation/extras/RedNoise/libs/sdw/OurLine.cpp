@@ -43,7 +43,7 @@ std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 t
     return vect;
 }
 
-std::vector<std::vector<int>> drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<int>> depthMatrix) {
+std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<float>> depthMatrix) {
     from.x = std::round(from.x);
     to.x = std::round(to.x);
     float xDiff = to.x-from.x;
@@ -71,7 +71,7 @@ std::vector<std::vector<int>> drawLine(DrawingWindow &window, CanvasPoint from, 
         // green
 //        if (fincolor == 4278255360 || fincolor == 4294901760) {
             if (depthMatrix[xval][yval] == 0 || z > std::ceil(depthMatrix[xval][yval])) {
-                depthMatrix[xval][yval] = static_cast<int>(std::ceil(1 / z));
+                depthMatrix[xval][yval] = std::ceil(1 / z);
                 window.setPixelColour(xval, yval, fincolor);
             } else if (fincolor == 4294901760) {
                 std::cout << "curr mtx[x][y] z depth is: " <<  depthMatrix[xval][yval] << std::endl;

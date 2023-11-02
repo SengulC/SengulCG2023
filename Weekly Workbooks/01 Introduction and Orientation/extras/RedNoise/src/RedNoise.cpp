@@ -19,7 +19,7 @@ int indexcheck;
 glm::vec3 cameraPosition {0.0, 0.0, 4.0};
 float focalLength = 1.5;
 float scale = 240.0f;
-std::vector<std::vector<int>> depthMatrix(WIDTH, std::vector<int>(HEIGHT,0));
+std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {

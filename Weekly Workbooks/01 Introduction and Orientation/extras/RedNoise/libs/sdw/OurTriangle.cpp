@@ -1,6 +1,6 @@
 #include "OurTriangle.h"
 
-std::vector<std::vector<int>> drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color, std::vector<std::vector<int>> depthMatrix) {
+std::vector<std::vector<float>> drawStroked(DrawingWindow &window, CanvasTriangle triangle, Colour color, std::vector<std::vector<float>> depthMatrix) {
     depthMatrix = drawLine(window, triangle.v0(), triangle.v1(), color, depthMatrix);
     depthMatrix = drawLine(window, triangle.v1(),triangle.v2(), color, depthMatrix);
     depthMatrix = drawLine(window, triangle.v0(), triangle.v2(), color, depthMatrix);
@@ -8,7 +8,7 @@ std::vector<std::vector<int>> drawStroked(DrawingWindow &window, CanvasTriangle 
 }
 
 // from and to canvaspoints passed to drawline need depth values (z)!!!
-std::vector<std::vector<int>> drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color, std::vector<std::vector<int>> depthMatrix) {
+std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color, std::vector<std::vector<float>> depthMatrix) {
     std::vector<CanvasPoint> points = {triangle.v0(), triangle.v1(), triangle.v2()};
     std::sort(points.begin(), points.end(), sortByY); // sorted in ascending order of Ys
     // split triangle into 2 from middle vertex
