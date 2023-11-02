@@ -41,11 +41,15 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         }
         else if (event.key.keysym.sym == 'x') {
             // draw triangles one by one
+            if (indexcheck == 0) {
+                window.clearPixels();
+            }
             if (indexcheck == twodTriangles.size()) {
                 indexcheck = 0;
                 window.clearPixels();
             }
-            drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
+            drawPoint(window, CanvasPoint(WIDTH/2, HEIGHT/2), {255,255,255});
+            depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
             indexcheck++;
         }
         else if (event.key.keysym.sym == 'c') {

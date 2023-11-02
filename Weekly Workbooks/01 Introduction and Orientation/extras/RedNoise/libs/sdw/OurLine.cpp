@@ -65,15 +65,19 @@ std::vector<std::vector<int>> drawLine(DrawingWindow &window, CanvasPoint from, 
         // numberOfValues in interpolation = magnitude ??
 
         float z = depths[i];
+        z = 1/z;
         int xval = static_cast<int>(std::round(x));
         int yval = static_cast<int>(std::round(y));
         // green
-        if (fincolor == 4278255360 || fincolor == 4294901760) {
-            if (depthMatrix[xval][yval] == 0 || z > depthMatrix[xval][yval]) {
-                depthMatrix[xval][yval] = 1 / z;
+//        if (fincolor == 4278255360 || fincolor == 4294901760) {
+            if (depthMatrix[xval][yval] == 0 || z > std::ceil(depthMatrix[xval][yval])) {
+                depthMatrix[xval][yval] = static_cast<int>(std::ceil(1 / z));
                 window.setPixelColour(xval, yval, fincolor);
+            } else if (fincolor == 4294901760) {
+                std::cout << "curr mtx[x][y] z depth is: " <<  depthMatrix[xval][yval] << std::endl;
+                std::cout << "curr pixel is of triangle : " << color.name << ". z :" << z <<std::endl;
             }
-        }
+//        }
 //        if (depthMatrix[xval][yval] == 0 ) {
 //            depthMatrix[xval][yval] = 1 / z;
 //            window.setPixelColour(xval, yval, fincolor);

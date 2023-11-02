@@ -25,15 +25,15 @@ std::vector<std::vector<int>> drawFilled(DrawingWindow &window, CanvasTriangle t
     std::vector<float> leftDepths = interpolateSingleFloats(points[0].depth, points[2].depth, topHeight + bottomHeight);
     std::vector<float> rightDepths = interpolateSingleFloats(points[0].depth, points[1].depth, topHeight + bottomHeight);
 
-//    if (debug) {
-//        std::cout << "left depths-------";
+//    if (debug && (color.name=="Red" || color.name=="Green")) {
+//        std::cout << "left depths for color: " << color.name;
 //        std::cout << "interpolating from: " << points[0].depth << " to: " << points[2].depth << std::endl;
 //        for (float &depth: leftDepths) {
 //            std::cout << depth << " ";
 //        }
 //        std::cout << "\n" << std::endl;
 //
-//        std::cout << "right depths-------";
+//        std::cout << "right depths for color: " << color.name;
 //        std::cout << "interpolating from: " << points[0].depth << " to: " << points[1].depth << std::endl;
 //        for (float &depth: rightDepths) {
 //            std::cout << depth << " ";
