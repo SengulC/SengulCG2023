@@ -40,13 +40,15 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             // x
             cameraPosition += glm::vec3{0.1,0,0};
         }
-        else if (event.key.keysym.sym == SDLK_LESS) {
+        else if (event.key.keysym.sym == SDLK_0) {
             // Z
             cameraPosition -= glm::vec3{0,0,0.1};
+            std::cout << "Z: " << cameraPosition.x << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
         }
-        else if (event.key.keysym.sym == SDLK_GREATER) {
+        else if (event.key.keysym.sym == SDLK_1) {
             // Z
             cameraPosition += glm::vec3{0,0,0.1};
+            std::cout << "Z: " << cameraPosition.x  << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
         }
 		else if (event.key.keysym.sym == 'u') {
 			drawStroked(window, randomTriangle(), randomColor(), depthMatrix);
