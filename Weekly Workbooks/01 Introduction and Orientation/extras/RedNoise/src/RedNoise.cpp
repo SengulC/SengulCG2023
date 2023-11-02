@@ -103,14 +103,15 @@ int main(int argc, char *argv[]) {
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
     // RASTERIZER
-    twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
     indexcheck = 0;
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
-
+        twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}
 }
+
+// SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/src/RedNoise.cpp
