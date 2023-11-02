@@ -19,6 +19,7 @@ int indexcheck;
 glm::vec3 cameraPosition {0.0, 0.0, 4.0};
 float focalLength = 1.5;
 float scale = 240.0f;
+bool toggle = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
@@ -37,6 +38,25 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             // draw wireframe
             for (const CanvasTriangle& tri : twodTriangles) {
                 drawStroked(window, tri, {255,255,255}, depthMatrix);
+            }
+        }
+        else if (event.key.keysym.sym == 't') {
+            // toggle wireframe atop render
+            window.clearPixels();
+            std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
+            std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
+            twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
+            indexcheck=0;
+            if (toggle){
+                toggle = false;
+                for (const CanvasTriangle &tri: twodTriangles) {
+                    drawStroked(window, tri, {255, 255, 255}, depthMatrix);
+                }
+            } else {
+                toggle = true;
+                window.clearPixels();
+                twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
+                indexcheck=0;
             }
         }
         else if (event.key.keysym.sym == 'x') {

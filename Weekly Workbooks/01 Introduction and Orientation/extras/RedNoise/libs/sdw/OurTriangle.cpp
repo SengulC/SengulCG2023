@@ -18,12 +18,20 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
     // interpolate from 1st point to last point to find extra vertex
     std::vector<float> extraVInterpolatedX = interpolateSingleFloats(points[0].x, points[2].x,topHeight + bottomHeight);
     float extraVx = extraVInterpolatedX[topHeight];
-    CanvasPoint extraV = {extraVx, middleV.y};
 
     // depth
     int debug = true;
     std::vector<float> leftDepths = interpolateSingleFloats(points[0].depth, points[2].depth, topHeight + bottomHeight);
     std::vector<float> rightDepths = interpolateSingleFloats(points[0].depth, points[1].depth, topHeight + bottomHeight);
+    float extraZ;
+    if (extraVx < points[0].x) {
+        extraZ = leftDepths[topHeight];
+    } else {
+        extraZ = rightDepths[topHeight];
+    }
+
+    // extra
+    CanvasPoint extraV = {extraVx, middleV.y, extraZ};
 
 //    if (debug && (color.name=="Red" || color.name=="Green")) {
 //        std::cout << "left depths for color: " << color.name;
