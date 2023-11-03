@@ -14,25 +14,24 @@
 
 #define WIDTH 320
 #define HEIGHT 240
+
 std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
+bool toggle = true;
+std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
+float focalLength = 1.0f;
+float scale = 150.0f;
 glm::vec3 cameraPosition {0.0, 0.0, 4.0};
 glm::mat3 cameraOrientation(
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 1.0f
         );
-float focalLength = 1.0f;
-float scale = 150.0f;
-bool toggle = true;
-std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
-
 glm::mat3 rotateX(
         1.0f, 0.0f, 0.0f,
         0.0f, cos(0.1), -sin(0.1),
         0.0f, sin(0.1), cos(0.1)
 );
-
 glm::mat3 rotateY(
         cos(0.1), 0.0f, sin(0.1),
         0.0f, 1.0f, 0.0f,
@@ -65,13 +64,12 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         }
         // rotation </>
         else if (event.key.keysym.sym == SDLK_COMMA) {
-            cameraPosition = rotateX * cameraPosition;
-            std::cout << "camera: " << cameraPosition.x  << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
+            cameraOrientation = rotateX * cameraOrientation;
         }
         else if (event.key.keysym.sym == SDLK_PERIOD) {
-            cameraPosition = rotateY * cameraPosition;
-            std::cout << "camera: " << cameraPosition.x  << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
+            cameraOrientation = rotateY * cameraOrientation;
         }
+        // triangle stuff
 		else if (event.key.keysym.sym == 'u') {
 			drawStroked(window, randomTriangle(), randomColor(), depthMatrix);
 		}
@@ -84,9 +82,8 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 drawStroked(window, tri, {255,255,255}, depthMatrix);
             }
         }
-
+        // toggle wireframe atop render
         else if (event.key.keysym.sym == 't') {
-            // toggle wireframe atop render
             window.clearPixels();
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
@@ -104,8 +101,8 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 indexcheck=0;
             }
         }
+        // draw triangles one by one
         else if (event.key.keysym.sym == 'x') {
-            // draw triangles one by one
             if (indexcheck == 0) {
                 window.clearPixels();
             }
@@ -117,9 +114,11 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
             indexcheck++;
         }
+        // clear
         else if (event.key.keysym.sym == 'c') {
             window.clearPixels();
         }
+        // rasterise
         else if (event.key.keysym.sym == 'r') {
             window.clearPixels();
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
@@ -127,8 +126,8 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             twodTriangles = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
             indexcheck=0;
         }
+        // print out depth of previously drawn triangle
         else if (event.key.keysym.sym == 'p') {
-            // print out depth of previously drawn triangle
             std::cout << twodTriangles[indexcheck-1].v0().depth << ""
             << twodTriangles[indexcheck-1].v1().depth << ""
             << twodTriangles[indexcheck-1].v2().depth << std::endl;
@@ -159,5 +158,3 @@ int main(int argc, char *argv[]) {
 		window.renderFrame();
 	}
 }
-
-// SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/src/RedNoise.cpp
