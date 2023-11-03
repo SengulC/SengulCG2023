@@ -18,6 +18,7 @@
 std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
 bool toggle = true;
+bool colorToggle = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 float focalLength = 1.0f;
 float scale = 150.0f;
@@ -101,6 +102,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         }
         // draw triangles one by one
         else if (event.key.keysym.sym == 'x') {
+            Colour color;
             if (indexcheck == 0) {
                 window.clearPixels();
             }
@@ -108,8 +110,15 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 indexcheck = 0;
                 window.clearPixels();
             }
-            drawPoint(window, CanvasPoint(WIDTH/2, HEIGHT/2), {255,255,255});
-            depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
+            if (colorToggle) {
+                color = {255,0,0};
+                colorToggle = false;
+            } else {
+                color = {0,0,255};
+                colorToggle = true;
+            }
+            depthMatrix = drawFilled(window, twodTriangles[indexcheck], color, depthMatrix);
+            drawStroked(window, twodTriangles[indexcheck], {255,255,255}, depthMatrix);
             indexcheck++;
         }
         // clear
@@ -150,6 +159,13 @@ int main(int argc, char *argv[]) {
 	SDL_Event event;
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
+
+    for (auto &pair : mtls) {
+        if (pair.first == "Blue") {
+            std::cout<< pack(unpack(pair.second)) << std::endl;
+        }
+    }
+
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
     // RASTERIZER
