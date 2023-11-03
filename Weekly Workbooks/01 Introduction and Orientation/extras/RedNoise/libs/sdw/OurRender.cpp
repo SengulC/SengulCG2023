@@ -84,13 +84,13 @@ std::pair<std::vector<CanvasTriangle>, glm::mat3> rasterize(DrawingWindow &windo
         depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
     }
 
-    cameraOrientation =
-    glm::mat3 (
-            cos(0.1), 0.0f, sin(0.1),
-            0.0f, 1.0f, 0.0f,
-            -sin(0.1), 0.0f, cos(0.1)
-    )
-    * cameraOrientation;
+//    cameraOrientation =
+//    glm::mat3 (
+//            cos(0.1), 0.0f, sin(0.1),
+//            0.0f, 1.0f, 0.0f,
+//            -sin(0.1), 0.0f, cos(0.1)
+//    )
+//    * cameraOrientation;
 
     return std::make_pair(twodTriangles, cameraOrientation);
 }
