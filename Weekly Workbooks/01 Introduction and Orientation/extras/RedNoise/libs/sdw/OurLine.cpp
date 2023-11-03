@@ -69,7 +69,7 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
         int yval = static_cast<int>(std::round(y));
 //        if (fincolor == 4278255360 || fincolor == 4294901760) {
             if (depthMatrix[xval][yval] == 0 || z > std::round(depthMatrix[xval][yval])) {
-                depthMatrix[xval][yval] = std::round(z);
+                depthMatrix[xval][yval] = std::round(z); 
                 window.setPixelColour(xval, yval, fincolor);
             } else if (fincolor == 4294901760) {
                 std::cout << "curr mtx[x][y] z depth is: " << depthMatrix[xval][yval] << std::endl;
