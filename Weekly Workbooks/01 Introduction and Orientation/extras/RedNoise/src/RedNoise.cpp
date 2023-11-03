@@ -56,11 +56,9 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         // translation: z axis: ;/'
         else if (event.key.keysym.sym == SDLK_SEMICOLON) {
             cameraPosition -= glm::vec3{0,0,0.1};
-            std::cout << "camera: " << cameraPosition.x << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
         }
         else if (event.key.keysym.sym == SDLK_QUOTE) {
             cameraPosition += glm::vec3{0,0,0.1};
-            std::cout << "camera: " << cameraPosition.x  << ", " << cameraPosition.y << ", " << cameraPosition.z << std::endl;
         }
         // rotation </>
         else if (event.key.keysym.sym == SDLK_COMMA) {
@@ -117,6 +115,14 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         // clear
         else if (event.key.keysym.sym == 'c') {
             window.clearPixels();
+            depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
+            indexcheck = 0;
+            cameraPosition = {0.0, 0.0, 4.0};
+            cameraOrientation = glm::mat3 (
+                1.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 1.0f
+            );
         }
         // rasterise
         else if (event.key.keysym.sym == 'r') {
