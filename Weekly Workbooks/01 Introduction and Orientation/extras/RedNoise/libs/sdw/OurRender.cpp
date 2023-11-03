@@ -65,7 +65,7 @@ void rainbowDraw(DrawingWindow &window) {
     }
 }
 
-std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix) {
+std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix) {
     window.clearPixels();
     std::vector<CanvasTriangle> twodTriangles;
 
@@ -74,7 +74,7 @@ std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTr
         CanvasTriangle canvasTriangle;
         for (int i = 0; i < 3; i++) {
             // populate each vertex - 0, 1, 2
-            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
+            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, cameraOrientation, focalLength, scale);
         }
 
         // populate 2-D triangles vector for rendering/keypress purposes

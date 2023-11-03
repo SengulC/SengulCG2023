@@ -67,10 +67,12 @@ std::map<std::string, Colour> readMaterial(const std::string& file) {
     return palette;
 }
 
-CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, float focalLength, float scale) {
+CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
     float x, y;
     CanvasPoint intersection;
+    glm::vec3 adjustedVector;
 
+    // First, calculate vector from cameraPos to artefact...
     // Calculate the 2D coordinates on the image plane
     x = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.x - cameraPosition.x) + cameraPosition.x;
     y = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.y - cameraPosition.y) + cameraPosition.y;
@@ -78,10 +80,17 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
     // Scaling and shifting
     x = x * scale + (320.0f / 2);
     y = y * -scale + (240.0f / 2); // negative scale bc y-axis was flipped
-    intersection.x = x;
-    intersection.y = y;
-    intersection.depth = vertexPosition.z;
-    // is this correct?
+    adjustedVector.x = x;
+    adjustedVector.y = y;
+    adjustedVector.z = vertexPosition.z;
+
+    //... Then, multiply this vector by orientation matrix
+    adjustedVector = adjustedVector * cameraOrientation;
+
+    // Populate and return intersection
+    intersection.x = adjustedVector.x;
+    intersection.y = adjustedVector.y;
+    intersection.depth = adjustedVector.z;
     return intersection;
 }
 

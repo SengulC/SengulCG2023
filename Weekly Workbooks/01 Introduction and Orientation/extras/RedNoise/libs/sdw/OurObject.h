@@ -15,4 +15,4 @@
 
 std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale);
 std::map<std::string, Colour> readMaterial(const std::string& file);
-CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, float focalLength, float scale);
+CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale);
