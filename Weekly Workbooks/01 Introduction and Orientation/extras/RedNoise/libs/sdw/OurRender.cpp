@@ -65,7 +65,7 @@ void rainbowDraw(DrawingWindow &window) {
     }
 }
 
-std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix) {
+std::pair<std::vector<CanvasTriangle>, glm::mat3> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix) {
     window.clearPixels();
     std::vector<CanvasTriangle> twodTriangles;
 
@@ -82,7 +82,15 @@ std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTr
         // drawing of triangle(s) updates the depth matrix
         depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
         depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
-
     }
-    return twodTriangles;
+
+    cameraOrientation =
+    glm::mat3 (
+            cos(0.1), 0.0f, sin(0.1),
+            0.0f, 1.0f, 0.0f,
+            -sin(0.1), 0.0f, cos(0.1)
+    )
+    * cameraOrientation;
+
+    return std::make_pair(twodTriangles, cameraOrientation);
 }
