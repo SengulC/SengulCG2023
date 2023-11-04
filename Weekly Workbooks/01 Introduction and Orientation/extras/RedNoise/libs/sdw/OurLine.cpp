@@ -74,7 +74,6 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
 
         int magnitude = static_cast<int>(sqrt(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff));
         std::vector<float> depths = interpolateSingleFloats(from.depth, to.depth, magnitude);
-        // numberOfValues in interpolation = magnitude ??
 
         float z = depths[i];
         int xval = static_cast<int>(std::ceil(x));
