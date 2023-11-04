@@ -44,6 +44,7 @@ std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 t
 }
 
 std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<float>> depthMatrix) {
+    // best rounding for entire function is just std::round.
     from.x = std::round(from.x);
     to.x = std::round(to.x);
     float xDiff = to.x-from.x;
@@ -65,18 +66,13 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
         // numberOfValues in interpolation = magnitude ??
 
         float z = depths[i];
-        int xval = static_cast<int>(std::round(x));
-        int yval = static_cast<int>(std::round(y));
-        // red / green / blue: 4294901760 / 4278255360 / 4278190335
-//        if (fincolor == 4278190335 || fincolor == 4294901760) {
-            if (depthMatrix[xval][yval] == 0 || z > std::round(depthMatrix[xval][yval])) {
-                depthMatrix[xval][yval] = std::round(z);
-                window.setPixelColour(xval, yval, fincolor);
-            } else {
-//                std::cout << "curr mtx[x][y] z depth is: " << depthMatrix[xval][yval] << std::endl;
-//                std::cout << "curr pixel is of triangle : " << color.name << ". z :" << z << std::endl;
-            }
-//        }
+        int xval = static_cast<int>(std::ceil(x));
+        int yval = static_cast<int>(std::floor(y));
+
+        if (depthMatrix[xval][yval] == 0 || z > std::round(depthMatrix[xval][yval])) {
+            depthMatrix[xval][yval] = std::round(z);
+            window.setPixelColour(xval, yval, fincolor);
+        }
     }
     return depthMatrix;
 }

@@ -123,10 +123,10 @@ int main(int argc, char *argv[]) {
 
     // RASTERIZER
     twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
-    window.clearPixels();
-    indexcheck = 6;
-    depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
-    bool renderNextTriangle = false;
+//    window.clearPixels();
+    indexcheck = 0;
+//    depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
+//    bool renderNextTriangle = false;
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
@@ -135,16 +135,16 @@ int main(int argc, char *argv[]) {
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 
-        if (!renderNextTriangle) {
-            SDL_Delay(500);
-            renderNextTriangle = true;
-            indexcheck++;
-        } else {
-            if (indexcheck < twodTriangles.size()) {
-                SDL_Delay(500);
-                depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
-                indexcheck++;
-            }
-        }
+//        if (!renderNextTriangle) {
+//            SDL_Delay(500);
+//            renderNextTriangle = true;
+//            indexcheck++;
+//        } else {
+//            if (indexcheck < twodTriangles.size()) {
+//                SDL_Delay(500);
+//                depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
+//                indexcheck++;
+//            }
+//        }
 	}
 }
