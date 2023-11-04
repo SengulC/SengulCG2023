@@ -21,8 +21,8 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
 
     // depth
     int debug = true;
-    std::vector<float> leftDepths = interpolateSingleFloats(points[0].depth, points[2].depth, topHeight + bottomHeight);
-    std::vector<float> rightDepths = interpolateSingleFloats(points[0].depth, points[1].depth, topHeight + bottomHeight);
+    std::vector<float> leftDepths = interpolateSingleFloats(points[0].depth, points[2].depth, topHeight + bottomHeight-1);
+    std::vector<float> rightDepths = interpolateSingleFloats(points[0].depth, points[1].depth, topHeight + bottomHeight-1);
     float extraZ;
     if (extraVx < points[0].x) {
         extraZ = leftDepths[topHeight];
