@@ -70,18 +70,22 @@ std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTr
 
     // conversion
     for (ModelTriangle &modelTriangle : modelTriangles) {
-        CanvasTriangle canvasTriangle;
-        for (int i = 0; i < 3; i++) {
-            // populate each vertex - 0, 1, 2
-            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
-        }
+        if (modelTriangle.colour.name == "Red" || modelTriangle.colour.name == "Blue") {
+//            std::cout << modelTriangle.colour.name << std::endl;
+            CanvasTriangle canvasTriangle;
+            for (int i = 0; i < 3; i++) {
+                // populate each vertex - 0, 1, 2
+                canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition,
+                                                                        focalLength, scale);
+            }
 
-        // populate 2-D triangles vector for rendering/keypress purposes
-        twodTriangles.push_back(canvasTriangle);
-        // drawing of triangle(s) updates the depth matrix
-        depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+            // populate 2-D triangles vector for rendering/keypress purposes
+            twodTriangles.push_back(canvasTriangle);
+            // drawing of triangle(s) updates the depth matrix
+            depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
 //        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
 
+        }
     }
     return twodTriangles;
 }
