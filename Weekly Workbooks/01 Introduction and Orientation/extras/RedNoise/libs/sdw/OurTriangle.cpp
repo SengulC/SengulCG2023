@@ -33,30 +33,31 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
     // extra
     CanvasPoint extraV = {extraVx, middleV.y, extraZ};
 
-//    if (debug && (color.name=="Red" || color.name=="Green")) {
-//        std::cout << "left depths for color: " << color.name;
-//        std::cout << "interpolating from: " << points[0].depth << " to: " << points[2].depth << std::endl;
-//        for (float &depth: leftDepths) {
-//            std::cout << depth << " ";
-//        }
-//        std::cout << "\n" << std::endl;
-//
-//        std::cout << "right depths for color: " << color.name;
-//        std::cout << "interpolating from: " << points[0].depth << " to: " << points[1].depth << std::endl;
-//        for (float &depth: rightDepths) {
-//            std::cout << depth << " ";
-//        }
-//        std::cout << "\n" << std::endl;
-//
-//        debug = false;
-//    }
+    /*
+    if (debug && (color.name=="Red" || color.name=="Green")) {
+        std::cout << "left depths for color: " << color.name;
+        std::cout << "interpolating from: " << points[0].depth << " to: " << points[2].depth << std::endl;
+        for (float &depth: leftDepths) {
+            std::cout << depth << " ";
+        }
+        std::cout << "\n" << std::endl;
+
+        std::cout << "right depths for color: " << color.name;
+        std::cout << "interpolating from: " << points[0].depth << " to: " << points[1].depth << std::endl;
+        for (float &depth: rightDepths) {
+            std::cout << depth << " ";
+        }
+        std::cout << "\n" << std::endl;
+
+        debug = false;
+    }
+     */
 
     // top triangle
     int count = 0;
+    std::vector<float> topTriangleLeft = interpolateSingleFloats(points[0].x, extraV.x, topHeight);
+    std::vector<float> topTriangleRight = interpolateSingleFloats(points[0].x, middleV.x, topHeight);
     for (int i = static_cast<int> (std::floor(points[0].y)); i < static_cast<int> (std::ceil(extraV.y)); i++) {
-        std::vector<float> topTriangleLeft = interpolateSingleFloats(points[0].x, extraV.x, topHeight);
-        std::vector<float> topTriangleRight = interpolateSingleFloats(points[0].x, middleV.x, topHeight);
-//        std::cout<<leftDepths[count]<<std::endl;
         depthMatrix = drawLine(window, CanvasPoint{topTriangleLeft[count], static_cast<float>(i), leftDepths[count]},
                  CanvasPoint{topTriangleRight[count], static_cast<float>(i),  rightDepths[count]},
                  color, depthMatrix);
@@ -65,10 +66,9 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
 
     // bottom triangle
     count = 0;
+    std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x, points[2].x, bottomHeight);
+    std::vector<float> bottomTriangleRight = interpolateSingleFloats(middleV.x, points[2].x, bottomHeight);
     for (int i = static_cast<int> (std::floor(middleV.y + 1)); i < static_cast<int> (std::ceil(points[2].y)); i++) {
-        std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x, points[2].x, bottomHeight);
-        std::vector<float> bottomTriangleRight = interpolateSingleFloats(middleV.x, points[2].x, bottomHeight);
-//        std::cout<<rightDepths[count]<<std::endl;
         depthMatrix = drawLine(window, CanvasPoint{bottomTriangleLeft[count], static_cast<float>(i), leftDepths[count]},
                  CanvasPoint{bottomTriangleRight[count], static_cast<float>(i), rightDepths[count]},
                  color, depthMatrix);

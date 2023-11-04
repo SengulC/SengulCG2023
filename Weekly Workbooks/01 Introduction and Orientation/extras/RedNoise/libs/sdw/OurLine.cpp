@@ -29,7 +29,18 @@ std::vector<float> interpolateSingleFloats(float from, float to, int numberOfVal
     vect.push_back(to);
     return vect;
 }
+/*
+from(1.0, 4.0, 9.2);
+to(4.0, 1.0, 9.8);
 
+(1.0, 4.0, 9.2)
+(2.0, 3.0, 9.4)
+(3.0, 2.0, 9.6)
+(4.0, 1.0, 9.8)'
+
+ result = vector of vec3s
+ 1.0-4.0: result[0-3][0]
+ */
 std::vector<glm::vec3> interpolateThreeElementValues(glm::vec3 from, glm::vec3 to, int numberOfValues) {
     std::vector<glm::vec3> vect;
     std::vector<float> zero = interpolateSingleFloats(from[0], to[0], numberOfValues);
