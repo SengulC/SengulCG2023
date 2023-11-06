@@ -35,9 +35,9 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
     float extraVz;
     if (extraVx < right.x) {
         // if the extra vertex is on the LHS, its depth lies in the leftDepths calc
-        extraVz = leftDepths[topHeight-1];
+        extraVz = leftDepths[topHeight];
     } else {
-        extraVz = rightDepths[0];
+        extraVz = rightDepths[topHeight];
     }
 
     // extra

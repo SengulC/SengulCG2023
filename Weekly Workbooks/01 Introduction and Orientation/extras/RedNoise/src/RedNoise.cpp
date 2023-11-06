@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
 
     for (auto &pair : mtls) {
-        if (pair.first == "Blue") {
+        if (pair.first == "Grey") {
 //            std::cout<< pack(unpack(pair.second)) << std::endl;
         }
     }

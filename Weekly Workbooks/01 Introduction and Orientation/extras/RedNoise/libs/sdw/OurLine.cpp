@@ -3,6 +3,24 @@
 #define WIDTH 320
 #define HEIGHT 240
 
+std::string colorName(const uint32_t color) {
+    std::string name;
+    switch (color) {
+        case 4278190335:
+            name = "blue";
+            break;
+        case 4294901760:
+            name = "red";
+            break;
+        case 4289901234:
+            name = "gray";
+            break;
+        default:
+            name = "unknown";
+    }
+    return name;
+}
+
 std::vector<int> unpack(const Colour& color) {
     std::vector<int> colour = {color.red, color.green, color.blue};
     return colour;
@@ -58,44 +76,58 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
     // best rounding for entire function is just std::round.
     from.x = std::round(from.x);
     to.x = std::round(to.x);
-    float xDiff = to.x-from.x;
-    float yDiff = to.y-from.y;
-    float zDiff = to.depth-from.depth;
+//    from.y = std::round(from.y);
+//    to.y = std::round(to.y);
+    float xDiff = to.x - from.x;
+    float yDiff = to.y - from.y;
+    float zDiff = to.depth - from.depth;
     float steps = std::max(std::abs(xDiff), std::abs(yDiff));
     float xSteps = xDiff / steps;
     float ySteps = yDiff / steps;
 
     std::vector<int> colorgb = unpack(color);
     uint32_t fincolor = pack(colorgb);
+// Define an output file stream
+    std::ofstream outputFile("output.txt", std::ios::app); // Open the file in append mode
 
-    for (int i = 0; i < static_cast<int>(std::round(steps)); i++) {
-        float x = from.x + (xSteps* static_cast<float>(i));
-        float y = from.y + (ySteps* static_cast<float>(i));
+// Check if the file was opened successfully
+    if (outputFile.is_open()) {
+        for (int i = 0; i < static_cast<int>(std::round(steps)); i++) {
+            float x = from.x + (xSteps * static_cast<float>(i));
+            float y = from.y + (ySteps * static_cast<float>(i));
 
-        int magnitude = static_cast<int>(sqrt(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff));
-        std::vector<float> depths = interpolateSingleFloats((from.depth), (to.depth), magnitude);
-//        std::cout << "from and to depth " << from.depth << " " << to.depth << std::endl;
+            int magnitude = static_cast<int>(sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff));
+            std::vector<float> depths = interpolateSingleFloats((from.depth), (to.depth), magnitude);
 
-        float z = (depths[i]);
-        int xval = static_cast<int>(std::round(x));
-        int yval = static_cast<int>(std::round(y));
+            float z = (depths[i]);
+            int xval = static_cast<int>(std::round(x));
+            int yval = static_cast<int>(std::round(y));
 
-        if (fincolor == 4278190335 || fincolor == 4294901760) {
-            if (z > std::round(depthMatrix[xval][yval])) {
+            if (depthMatrix[xval][yval] == 0.0f) {
                 depthMatrix[xval][yval] = z;
                 window.setPixelColour(xval, yval, fincolor);
-            } else {
-                std::cout<< "else: z: " << z << ". depth x: " << depthMatrix[xval][yval] <<std::endl;
+                //std::cout<< "initial: matrix[x][y] = " << depthMatrix[xval][yval] << " . z: " << z <<std::endl;
+                //std::cout<< "rounded: " << std::roundf(depthMatrix[xval][yval]) <<std::endl;
+            } else if (z > depthMatrix[xval][yval]) {
+                //std::cout<< "z > depthmatrix[x][y]: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". overwriting color: " << colorName(fincolor) <<std::endl;
+                depthMatrix[xval][yval] = z;
+                window.setPixelColour(xval, yval, fincolor);
             }
-        }
-
+            else {
+                outputFile << "else: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". color: "
+                           << colorName(fincolor) << std::endl;
+            }
         int temp = std::round(z * 255);
-        Colour col = Colour(temp,temp,temp);
-
+        Colour col = Colour(temp, temp, temp);
 //        window.setPixelColour(xval, yval, pack(unpack(col)));
+        outputFile.close();
+        }
+    } else {
+        std::cerr << "Error opening the file for writing." << std::endl;
     }
     return depthMatrix;
 }
+
 
 void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color) {
     window.setPixelColour(static_cast<size_t>(point.x), static_cast<size_t>(point.y), pack(unpack(color)));
