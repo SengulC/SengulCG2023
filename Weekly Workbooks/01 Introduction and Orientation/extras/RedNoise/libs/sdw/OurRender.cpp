@@ -2,6 +2,9 @@
 #include "OurTriangle.h"
 #include "OurObject.h"
 
+#define WIDTH 320
+#define HEIGHT 240
+
 void bAndWdraw(DrawingWindow &window) {
     window.clearPixels();
     std::vector<float> colors = interpolateSingleFloats(255.0, 0.0, window.width);
@@ -65,7 +68,7 @@ void rainbowDraw(DrawingWindow &window) {
     }
 }
 
-std::pair<std::vector<CanvasTriangle>, glm::vec3> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix) {
+std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix) {
     window.clearPixels();
     std::vector<CanvasTriangle> twodTriangles;
 
@@ -81,7 +84,7 @@ std::pair<std::vector<CanvasTriangle>, glm::vec3> rasterize(DrawingWindow &windo
         twodTriangles.push_back(canvasTriangle);
         // drawing of triangle(s) updates the depth matrix
         depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
-        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
+//        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
     }
 
     cameraPosition =
@@ -92,5 +95,31 @@ std::pair<std::vector<CanvasTriangle>, glm::vec3> rasterize(DrawingWindow &windo
     )
     * cameraPosition;
 
-    return std::make_pair(twodTriangles, cameraPosition);
+//    cameraOrientation = lookAt(cameraOrientation, glm::vec3(WIDTH/2,HEIGHT/2,0), cameraPosition, focalLength, scale);
+
+    return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
+}
+
+glm::mat3 lookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition, float focalLength, float scale) {
+    printMat3(cameraOrientation);
+    std::cout<<"in look at func"<<std::endl;
+    glm::vec3 forward;
+    glm::vec3 up;
+    glm::vec3 right;
+
+    // how????????
+//    CanvasPoint forwardPoint = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
+//    std::cout << "canvas point: " << forwardPoint << std::endl;
+//    forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.depth);
+    glm::vec3 forwardPoint(lookAtMe);
+    forwardPoint = forwardPoint * cameraOrientation;
+    forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.z);
+    glm::vec3 vertical(0.0f,1.0f,0.0f);
+    right = glm::cross(vertical, forward);
+    up = glm::cross(forward, right);
+
+    // [right up forward]
+    cameraOrientation = glm::mat3(right, up, forward);
+    printMat3(cameraOrientation);
+    return cameraOrientation;
 }

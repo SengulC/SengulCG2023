@@ -63,7 +63,8 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
         count++;
     }
 
-    // bottom triangle
+    // bottom
+    // triangle
     count = 0;
     for (int i = static_cast<int> (std::round(middleV.y + 1)); i <= static_cast<int> (std::round(points[2].y)); i++) {
         std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x + 1, points[2].x, bottomHeight);

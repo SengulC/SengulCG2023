@@ -20,5 +20,5 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
 void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color);
 std::vector<int> unpack(const Colour& color);
 uint32_t pack(std::vector<int> colorgb);
-
+void printMat3(const glm::mat3& matrix);
 
