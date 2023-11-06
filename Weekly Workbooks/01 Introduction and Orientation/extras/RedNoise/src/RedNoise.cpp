@@ -71,14 +71,14 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 indexcheck = 0;
                 window.clearPixels();
             }
-            if (colorToggle) {
-                color = {255,0,0};
-                colorToggle = false;
-            } else {
-                color = {0,0,255};
-                colorToggle = true;
-            }
-            depthMatrix = drawFilled(window, twodTriangles[indexcheck], color, depthMatrix);
+//            if (colorToggle) {
+//                color = {255,0,0};
+//                colorToggle = false;
+//            } else {
+//                color = {0,0,255};
+//                colorToggle = true;
+//            }
+            depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
             drawStroked(window, twodTriangles[indexcheck], {255,255,255}, depthMatrix);
             indexcheck++;
         }
