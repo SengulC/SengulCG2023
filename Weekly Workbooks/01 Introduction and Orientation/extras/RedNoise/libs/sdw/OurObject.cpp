@@ -88,9 +88,9 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
     adjustedVector = adjustedVector * cameraOrientation;
 
     // Populate and return intersection
-    intersection.x = adjustedVector.x;
-    intersection.y = adjustedVector.y;
-    intersection.depth = adjustedVector.z;
+    intersection.x = x;
+    intersection.y = y;
+    intersection.depth = 1/std::abs(cameraPosition.z - adjustedVector.z);
     return intersection;
 }
 

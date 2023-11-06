@@ -74,17 +74,18 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
 
     // conversion
     for (ModelTriangle &modelTriangle : modelTriangles) {
-        CanvasTriangle canvasTriangle;
-        for (int i = 0; i < 3; i++) {
-            // populate each vertex - 0, 1, 2
-            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, cameraOrientation, focalLength, scale);
-        }
+//        if (modelTriangle.colour.name == "Red" || modelTriangle.colour.name == "Blue") {
+            CanvasTriangle canvasTriangle;
+            for (int i = 0; i < 3; i++) {
+                canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
+            }
 
-        // populate 2-D triangles vector for rendering/keypress purposes
-        twodTriangles.push_back(canvasTriangle);
-        // drawing of triangle(s) updates the depth matrix
-        depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+            // populate 2-D triangles vector for rendering/keypress purposes
+            twodTriangles.push_back(canvasTriangle);
+            // drawing of triangle(s) updates the depth matrix
+            depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
 //        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
+//        }
     }
 
     cameraPosition =

@@ -12,6 +12,7 @@
 #include <OurObject.h>
 #include <OurRender.h>
 #include <OurLine.h>
+#include <unistd.h>
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -120,14 +121,14 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 indexcheck = 0;
                 window.clearPixels();
             }
-            if (colorToggle) {
-                color = {255,0,0};
-                colorToggle = false;
-            } else {
-                color = {0,0,255};
-                colorToggle = true;
-            }
-            depthMatrix = drawFilled(window, twodTriangles[indexcheck], color, depthMatrix);
+//            if (colorToggle) {
+//                color = {255,0,0};
+//                colorToggle = false;
+//            } else {
+//                color = {0,0,255};
+//                colorToggle = true;
+//            }
+            depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
             drawStroked(window, twodTriangles[indexcheck], {255,255,255}, depthMatrix);
             indexcheck++;
         }
@@ -175,8 +176,8 @@ int main(int argc, char *argv[]) {
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
 
     for (auto &pair : mtls) {
-        if (pair.first == "Blue") {
-            std::cout<< pack(unpack(pair.second)) << std::endl;
+        if (pair.first == "Grey") {
+//            std::cout<< pack(unpack(pair.second)) << std::endl;
         }
     }
 
@@ -186,7 +187,12 @@ int main(int argc, char *argv[]) {
     drawPoint(window, CanvasPoint(WIDTH/2, HEIGHT/2, 0), {255,0,0});
 //    cameraOrientation = lookAt(cameraOrientation, glm::vec3(WIDTH/2, HEIGHT/2, 0), cameraPosition, focalLength, scale);
 //    printMat3(cameraOrientation);
+    // RASTERIZER
+    twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
+//    window.clearPixels();
     indexcheck = 0;
+//    depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
+//    bool renderNextTriangle = false;
 
     // RASTERIZER
     std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
@@ -205,5 +211,17 @@ int main(int argc, char *argv[]) {
 //        cameraOrientation = std::get<2>(tuple);
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
+
+//        if (!renderNextTriangle) {
+//            SDL_Delay(500);
+//            renderNextTriangle = true;
+//            indexcheck++;
+//        } else {
+//            if (indexcheck < twodTriangles.size()) {
+//                SDL_Delay(500);
+//                depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
+//                indexcheck++;
+//            }
+//        }
 	}
 }
