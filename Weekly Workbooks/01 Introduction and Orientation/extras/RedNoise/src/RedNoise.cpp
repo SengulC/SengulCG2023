@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
 
     for (auto &pair : mtls) {
         if (pair.first == "Blue") {
-            std::cout<< pack(unpack(pair.second)) << std::endl;
+//            std::cout<< pack(unpack(pair.second)) << std::endl;
         }
     }
 

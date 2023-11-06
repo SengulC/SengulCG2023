@@ -80,8 +80,7 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
     y = y * -scale + (240.0f / 2); // negative scale bc y-axis was flipped
     intersection.x = x;
     intersection.y = y;
-    intersection.depth = vertexPosition.z;
-    // is this correct?
+    intersection.depth = 1/std::abs(cameraPosition.z - vertexPosition.z);
     return intersection;
 }
 
