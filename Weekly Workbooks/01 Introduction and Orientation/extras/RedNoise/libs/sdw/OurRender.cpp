@@ -77,7 +77,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
 //        if (modelTriangle.colour.name == "Red" || modelTriangle.colour.name == "Blue") {
             CanvasTriangle canvasTriangle;
             for (int i = 0; i < 3; i++) {
-                canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
+                canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, cameraOrientation, focalLength, scale);
             }
 
             // populate 2-D triangles vector for rendering/keypress purposes

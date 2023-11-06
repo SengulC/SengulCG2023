@@ -6,22 +6,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96c15aad-81d2-4105-a3ad-5b457ea79a6e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../output.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/OurLine.o" beforeDir="false" afterPath="$PROJECT_DIR$/../build/OurLine.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/OurObject.o" beforeDir="false" afterPath="$PROJECT_DIR$/../build/OurObject.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/OurTriangle.o" beforeDir="false" afterPath="$PROJECT_DIR$/../build/OurTriangle.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/RedNoise" beforeDir="false" afterPath="$PROJECT_DIR$/../build/RedNoise" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/RedNoise.o" beforeDir="false" afterPath="$PROJECT_DIR$/../build/RedNoise.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../libs/sdw/OurLine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../libs/sdw/OurLine.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../libs/sdw/OurObject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../libs/sdw/OurObject.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../libs/sdw/OurRender.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../libs/sdw/OurRender.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../libs/sdw/OurTriangle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../libs/sdw/OurTriangle.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../output.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/../output.bmp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../output.ppm" beforeDir="false" afterPath="$PROJECT_DIR$/../output.ppm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RedNoise.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/RedNoise.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="96c15aad-81d2-4105-a3ad-5b457ea79a6e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,7 +39,7 @@
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "Merging camera",
+    "git-widget-placeholder": "camera",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -67,7 +52,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699031092675</updated>
       <workItem from="1699031096010" duration="145000" />
-      <workItem from="1699290393794" duration="28000" />
+      <workItem from="1699290393794" duration="40000" />
     </task>
     <servers />
   </component>
