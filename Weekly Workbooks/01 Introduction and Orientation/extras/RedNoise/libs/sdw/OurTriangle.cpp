@@ -68,7 +68,7 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
     std::vector<float> topTriangleLeft = interpolateSingleFloats(points[0].x, extraV.x, topHeight);
     std::vector<float> topTriangleRight = interpolateSingleFloats(points[0].x, middleV.x, topHeight);
 
-    std::vector<float> topTriangleLeftDepths = interpolateSingleFloats((points[0].depth), extraVz, topHeight);
+    std::vector<float> topTriangleLeftDepths = interpolateSingleFloats((points[0].depth), extraV.depth, topHeight);
     std::vector<float> topTriangleRightDepths = interpolateSingleFloats((points[0].depth), (middleV.depth), topHeight);
 
     for (int i = static_cast<int> (std::floor(points[0].y)); i < static_cast<int> (std::ceil(extraV.y)); i++) {
@@ -83,7 +83,7 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
     std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x, points[2].x, bottomHeight);
     std::vector<float> bottomTriangleRight = interpolateSingleFloats(middleV.x, points[2].x, bottomHeight);
 
-    std::vector<float> bottomTriangleLeftDepths = interpolateSingleFloats(extraVz, (points[2].depth), bottomHeight);
+    std::vector<float> bottomTriangleLeftDepths = interpolateSingleFloats(extraV.depth, (points[2].depth), bottomHeight);
     std::vector<float> bottomTriangleRightDepths = interpolateSingleFloats((middleV.depth), (points[2].depth), bottomHeight);
 
     for (int i = static_cast<int> (std::floor(middleV.y + 1)); i < static_cast<int> (std::ceil(points[2].y)); i++) {

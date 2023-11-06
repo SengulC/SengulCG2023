@@ -25,6 +25,7 @@ std::vector<int> unpack(const Colour& color) {
     std::vector<int> colour = {color.red, color.green, color.blue};
     return colour;
 }
+
 uint32_t pack(std::vector<int> colorgb) {
     return (255 << 24) + (int(colorgb[0]) << 16) + (int(colorgb[1]) << 8) + int(colorgb[2]);
 }
@@ -108,12 +109,15 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
                 window.setPixelColour(xval, yval, fincolor);
                 //std::cout<< "initial: matrix[x][y] = " << depthMatrix[xval][yval] << " . z: " << z <<std::endl;
                 //std::cout<< "rounded: " << std::roundf(depthMatrix[xval][yval]) <<std::endl;
-            } else if (z > depthMatrix[xval][yval]) {
+            } else if (z >= depthMatrix[xval][yval]) {
                 //std::cout<< "z > depthmatrix[x][y]: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". overwriting color: " << colorName(fincolor) <<std::endl;
                 depthMatrix[xval][yval] = z;
                 window.setPixelColour(xval, yval, fincolor);
             }
             else {
+                if (colorName(fincolor) == "blue" || colorName(fincolor) == "red") {
+//                    std::cout<< "z < depthmatrix[x][y]: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". current color: " << colorName(fincolor) <<std::endl;
+                }
                 outputFile << "else: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". color: "
                            << colorName(fincolor) << std::endl;
             }
