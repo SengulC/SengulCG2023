@@ -72,6 +72,13 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         else if (event.key.keysym.sym == SDLK_PERIOD) {
             cameraPosition = rotateY * cameraPosition;
         }
+        // tilting/panning
+        else if (event.key.keysym.sym == 'o') {
+            cameraOrientation = rotateX * cameraOrientation;
+        }
+        else if (event.key.keysym.sym == 'p') {
+            cameraOrientation = rotateY * cameraOrientation;
+        }
         // triangle stuff
 		else if (event.key.keysym.sym == 'u') {
 			drawStroked(window, randomTriangle(), randomColor(), depthMatrix);
@@ -158,7 +165,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             indexcheck=0;
         }
         // print out depth of previously drawn triangle
-        else if (event.key.keysym.sym == 'p') {
+        else if (event.key.keysym.sym == 'e') {
             std::cout << twodTriangles[indexcheck-1].v0().depth << ""
             << twodTriangles[indexcheck-1].v1().depth << ""
             << twodTriangles[indexcheck-1].v2().depth << std::endl;
@@ -227,6 +234,7 @@ int main(int argc, char *argv[]) {
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
 
         std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+        depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
         tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
         twodTriangles = std::get<0>(tuple);
         cameraPosition = std::get<1>(tuple);
