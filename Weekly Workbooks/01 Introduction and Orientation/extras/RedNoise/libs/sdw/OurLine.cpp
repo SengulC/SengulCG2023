@@ -10,6 +10,7 @@ void printMat3(const glm::mat3& matrix) {
         }
         std::cout << std::endl;
     }
+}
 
 std::string colorName(const uint32_t color) {
     std::string name;

@@ -1,6 +1,7 @@
 #include "OurRender.h"
 #include "OurTriangle.h"
 #include "OurObject.h"
+#include "glm/ext.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -88,6 +89,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
 //        }
     }
 
+    cameraOrientation = lookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
     cameraPosition =
             glm::mat3 (
                     cos(0.01), 0.0f, sin(0.01),
@@ -95,8 +97,6 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
                     -sin(0.01), 0.0f, cos(0.01)
             )
             * cameraPosition;
-
-    cameraOrientation = lookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
     // look at crashes
 
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
@@ -111,14 +111,17 @@ glm::mat3 lookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
 
     CanvasPoint forwardPoint = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
     forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.depth);
-//    forward = glm::vec3(std::abs(lookAtMe.x-cameraPosition.x), std::abs(lookAtMe.y-cameraPosition.y), std::abs(lookAtMe.z-cameraPosition.z));
+    std::cout << "forward: " << forwardPoint << " " << std::endl;
 
     glm::vec3 vertical(0.0f,1.0f,0.0f);
     right = glm::cross(vertical, forward);
+    std::cout << "right: " << right.x << " " << right.y << " " << right.z << " " << std::endl;
     up = glm::cross(forward, right);
+    std::cout << "up: " << up.x << " " << up.y << " " << up.z << " " << std::endl;
 
     // [right up forward]
     cameraOrientation = glm::mat3(right, up, forward);
-    printMat3(cameraOrientation);
+    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
+
     return cameraOrientation;
 }
