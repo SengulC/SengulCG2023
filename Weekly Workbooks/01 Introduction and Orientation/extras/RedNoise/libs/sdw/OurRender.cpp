@@ -109,13 +109,14 @@ glm::mat3 lookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
 //    CanvasPoint forwardPoint = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
 //    forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.depth);
 
-    CanvasPoint lookAtToCamera = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
-//    std::cout<< lookAtToCamera <<std::endl;
-    float xval = cameraPosition.x - lookAtToCamera.x;
-    float yval = cameraPosition.y - lookAtToCamera.y;
-    float zval = cameraPosition.z - lookAtToCamera.depth;
-//    std::cout<< xval << " " << yval << " " << zval <<std::endl;
-    forward = glm::vec3(xval, yval, zval);
+//    CanvasPoint lookAtToCamera = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
+////    std::cout<< lookAtToCamera <<std::endl;
+//    float xval = cameraPosition.x - lookAtToCamera.x;
+//    float yval = cameraPosition.y - lookAtToCamera.y;
+//    float zval = cameraPosition.z - lookAtToCamera.depth;
+////    std::cout<< xval << " " << yval << " " << zval <<std::endl;
+//    forward = glm::vec3(xval, yval, zval);
+    forward = cameraPosition - lookAtMe;
 
     glm::vec3 vertical(0.0f,1.0f,0.0f);
     right = glm::cross(vertical, forward);
