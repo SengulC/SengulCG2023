@@ -13,6 +13,7 @@
 #include <OurRender.h>
 #include <OurLine.h>
 #include <unistd.h>
+#include "glm/ext.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -230,6 +231,7 @@ int main(int argc, char *argv[]) {
         twodTriangles = std::get<0>(tuple);
         cameraPosition = std::get<1>(tuple);
         cameraOrientation = std::get<2>(tuple);
+        std::cout<<glm::to_string(cameraOrientation)<<std::endl;
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();

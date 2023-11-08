@@ -1,7 +1,6 @@
 #include "OurRender.h"
 #include "OurTriangle.h"
 #include "OurObject.h"
-#include "glm/ext.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -89,6 +88,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
 //        }
     }
 
+    // ORBIT
     cameraPosition =
             glm::mat3 (
                     cos(0.01), 0.0f, sin(0.01),
@@ -96,33 +96,34 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
                     -sin(0.01), 0.0f, cos(0.01)
             )
             * cameraPosition;
-    // look at crashes
     cameraOrientation = lookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
-
 
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
 }
 
 glm::mat3 lookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition, float focalLength, float scale) {
-    printMat3(cameraOrientation);
-    std::cout<<"in look at func"<<std::endl;
     glm::vec3 forward;
     glm::vec3 up;
     glm::vec3 right;
 
-    CanvasPoint forwardPoint = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
-    forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.depth);
-    std::cout << "forward: " << forwardPoint << " " << std::endl;
+//    CanvasPoint forwardPoint = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
+//    forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.depth);
+
+    CanvasPoint lookAtToCamera = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
+//    std::cout<< lookAtToCamera <<std::endl;
+    float xval = cameraPosition.x - lookAtToCamera.x;
+    float yval = cameraPosition.y - lookAtToCamera.y;
+    float zval = cameraPosition.z - lookAtToCamera.depth;
+//    std::cout<< xval << " " << yval << " " << zval <<std::endl;
+    forward = glm::vec3(xval, yval, zval);
 
     glm::vec3 vertical(0.0f,1.0f,0.0f);
     right = glm::cross(vertical, forward);
-    std::cout << "right: " << right.x << " " << right.y << " " << right.z << " " << std::endl;
     up = glm::cross(forward, right);
-    std::cout << "up: " << up.x << " " << up.y << " " << up.z << " " << std::endl;
 
     // [right up forward]
-    cameraOrientation = glm::mat3(right, up, forward);
-    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
+    cameraOrientation = glm::mat3(glm::normalize(right), glm::normalize(up), glm::normalize(forward));
+//    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
 
     return cameraOrientation;
 }
