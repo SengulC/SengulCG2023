@@ -96,7 +96,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
             )
             * cameraPosition;
 
-    cameraOrientation = lookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
+    cameraOrientation = lookAt(cameraOrientation, glm::vec3(WIDTH/2, HEIGHT/2, 0), cameraPosition, focalLength, scale);
     // look at crashes
 
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
