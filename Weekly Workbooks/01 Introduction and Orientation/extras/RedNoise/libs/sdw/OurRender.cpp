@@ -75,28 +75,27 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
     // conversion
     for (ModelTriangle &modelTriangle : modelTriangles) {
 //        if (modelTriangle.colour.name == "Red" || modelTriangle.colour.name == "Blue") {
-            CanvasTriangle canvasTriangle;
-            for (int i = 0; i < 3; i++) {
-                canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, cameraOrientation, focalLength, scale);
-            }
+        CanvasTriangle canvasTriangle;
+        for (int i = 0; i < 3; i++) {
+            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, cameraOrientation, focalLength, scale);
+        }
 
-            // populate 2-D triangles vector for rendering/keypress purposes
-            twodTriangles.push_back(canvasTriangle);
-            // drawing of triangle(s) updates the depth matrix
-            depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+        // populate 2-D triangles vector for rendering/keypress purposes
+        twodTriangles.push_back(canvasTriangle);
+        // drawing of triangle(s) updates the depth matrix
+        depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
 //        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
 //        }
     }
 
+    cameraOrientation = lookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
     cameraPosition =
-    glm::mat3 (
-            cos(0.01), 0.0f, sin(0.01),
-            0.0f, 1.0f, 0.0f,
-            -sin(0.01), 0.0f, cos(0.01)
-    )
-    * cameraPosition;
-
-//    cameraOrientation = lookAt(cameraOrientation, glm::vec3(WIDTH/2,HEIGHT/2,0), cameraPosition, focalLength, scale);
+            glm::mat3 (
+                    cos(0.01), 0.0f, sin(0.01),
+                    0.0f, 1.0f, 0.0f,
+                    -sin(0.01), 0.0f, cos(0.01)
+            )
+            * cameraPosition;
 
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
 }
@@ -108,13 +107,10 @@ glm::mat3 lookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
     glm::vec3 up;
     glm::vec3 right;
 
-    // how????????
-//    CanvasPoint forwardPoint = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
-//    std::cout << "canvas point: " << forwardPoint << std::endl;
-//    forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.depth);
-    glm::vec3 forwardPoint(lookAtMe);
-    forwardPoint = forwardPoint * cameraOrientation;
-    forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.z);
+    CanvasPoint forwardPoint = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
+    forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.depth);
+//    forward = cameraPosition - lookAtMe;
+
     glm::vec3 vertical(0.0f,1.0f,0.0f);
     right = glm::cross(vertical, forward);
     up = glm::cross(forward, right);

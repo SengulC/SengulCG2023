@@ -146,7 +146,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         }
         // rasterise
         else if (event.key.keysym.sym == 'r') {
-            window.clearPixels();
+            depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
@@ -197,11 +197,13 @@ int main(int argc, char *argv[]) {
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
+
         std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
         tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
         twodTriangles = std::get<0>(tuple);
         cameraPosition = std::get<1>(tuple);
         cameraOrientation = std::get<2>(tuple);
+
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 
