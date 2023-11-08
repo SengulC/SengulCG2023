@@ -96,7 +96,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
             )
             * cameraPosition;
 
-    cameraOrientation = lookAt(cameraOrientation, glm::vec3(WIDTH/2, HEIGHT/2, 0), cameraPosition, focalLength, scale);
+    cameraOrientation = lookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
     // look at crashes
 
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
@@ -111,7 +111,7 @@ glm::mat3 lookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
 
     CanvasPoint forwardPoint = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
     forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.depth);
-//    forward = cameraPosition - lookAtMe;
+//    forward = glm::vec3(std::abs(lookAtMe.x-cameraPosition.x), std::abs(lookAtMe.y-cameraPosition.y), std::abs(lookAtMe.z-cameraPosition.z));
 
     glm::vec3 vertical(0.0f,1.0f,0.0f);
     right = glm::cross(vertical, forward);

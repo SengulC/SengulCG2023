@@ -194,15 +194,42 @@ int main(int argc, char *argv[]) {
 //    cameraPosition = std::get<1>(tuple);
 //    cameraOrientation = std::get<2>(tuple);
 
+//    DEBUUUUG
+//    CanvasPoint forward = getCanvasIntersectionPoint(glm::vec3(0, 0, 0), cameraPosition, cameraOrientation, focalLength, scale);
+//    std::cout << "intersection of origin/forward: " << forward << std::endl;
+//
+//    glm::vec3 right = glm::cross(glm::vec3(0,1,0), glm::vec3(forward.x, forward.y, forward.depth));
+//    std::cout << "right: " << right.x << " " << right.y << " " << right.z << " " << std::endl;
+//
+//    glm::vec3 up = glm::cross(glm::vec3(forward.x, forward.y, forward.depth), right);
+//    std::cout << "up: " << up.x << " " << up.y << " " << up.z << " " << std::endl;
+//
+//    cameraPosition =
+//            glm::mat3 (
+//                    cos(0.01), 0.0f, sin(0.01),
+//                    0.0f, 1.0f, 0.0f,
+//                    -sin(0.01), 0.0f, cos(0.01)
+//            )
+//            * cameraPosition;
+//
+//    forward = getCanvasIntersectionPoint(glm::vec3(0, 0, 0), cameraPosition, cameraOrientation, focalLength, scale);
+//    std::cout << "intersection of origin/forward: " << forward << std::endl;
+//
+//    right = glm::cross(glm::vec3(0,1,0), glm::vec3(forward.x, forward.y, forward.depth));
+//    std::cout << "right: " << right.x << " " << right.y << " " << right.z << " " << std::endl;
+//
+//    up = glm::cross(glm::vec3(forward.x, forward.y, forward.depth), right);
+//    std::cout << "up: " << up.x << " " << up.y << " " << up.z << " " << std::endl;
+
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
 
-        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
-        twodTriangles = std::get<0>(tuple);
-        cameraPosition = std::get<1>(tuple);
-        cameraOrientation = std::get<2>(tuple);
+//        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+//        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
+//        twodTriangles = std::get<0>(tuple);
+//        cameraPosition = std::get<1>(tuple);
+//        cameraOrientation = std::get<2>(tuple);
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
