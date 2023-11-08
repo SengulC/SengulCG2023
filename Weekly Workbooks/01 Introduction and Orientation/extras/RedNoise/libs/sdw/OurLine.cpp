@@ -98,10 +98,10 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
     std::vector<int> colorgb = unpack(color);
     uint32_t fincolor = pack(colorgb);
 // Define an output file stream
-    std::ofstream outputFile("output.txt", std::ios::app); // Open the file in append mode
+//    std::ofstream outputFile("output.txt", std::ios::app); // Open the file in append mode
 
 // Check if the file was opened successfully
-    if (outputFile.is_open()) {
+//    if (outputFile.is_open()) {
         for (int i = 0; i < static_cast<int>(std::round(steps)); i++) {
             float x = from.x + (xSteps * static_cast<float>(i));
             float y = from.y + (ySteps * static_cast<float>(i));
@@ -127,17 +127,17 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
                 if (colorName(fincolor) == "blue" || colorName(fincolor) == "red") {
 //                    std::cout<< "z < depthmatrix[x][y]: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". current color: " << colorName(fincolor) <<std::endl;
                 }
-                outputFile << "else: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". color: "
-                           << colorName(fincolor) << std::endl;
+//                outputFile << "else: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". color: "
+//                           << colorName(fincolor) << std::endl;
             }
         int temp = std::round(z * 255);
         Colour col = Colour(temp, temp, temp);
 //        window.setPixelColour(xval, yval, pack(unpack(col)));
-        outputFile.close();
+//        outputFile.close();
         }
-    } else {
-        std::cerr << "Error opening the file for writing." << std::endl;
-    }
+//    } else {
+//        std::cerr << "Error opening the file for writing." << std::endl;
+//    }
     return depthMatrix;
 }
 
