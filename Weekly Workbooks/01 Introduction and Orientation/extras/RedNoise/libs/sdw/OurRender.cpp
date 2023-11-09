@@ -90,16 +90,13 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
 
     // ORBIT
     if (orbit) {
-        cameraPosition =
-                glm::mat3(
-                        cos(0.01), 0.0f, sin(0.01),
-                        0.0f, 1.0f, 0.0f,
-                        -sin(0.01), 0.0f, cos(0.01)
-                )
-                * cameraPosition;
+        cameraPosition = glm::mat3(
+        cos(0.01), 0.0f, sin(0.01),
+        0.0f, 1.0f, 0.0f,
+        -sin(0.01), 0.0f, cos(0.01)
+        ) * cameraPosition;
         cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
     }
-
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
 }
 
@@ -108,24 +105,14 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
     glm::vec3 up;
     glm::vec3 right;
 
-//    CanvasPoint forwardPoint = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
-//    forward = glm::vec3(forwardPoint.x, forwardPoint.y, forwardPoint.depth);
-
-//    CanvasPoint lookAtToCamera = getCanvasIntersectionPoint(lookAtMe, cameraPosition, cameraOrientation, focalLength, scale);
-////    std::cout<< lookAtToCamera <<std::endl;
-//    float xval = cameraPosition.x - lookAtToCamera.x;
-//    float yval = cameraPosition.y - lookAtToCamera.y;
-//    float zval = cameraPosition.z - lookAtToCamera.depth;
-////    std::cout<< xval << " " << yval << " " << zval <<std::endl;
-//    forward = glm::vec3(xval, yval, zval);
-    forward = cameraPosition - lookAtMe;
+    forward = glm::normalize(cameraPosition - lookAtMe);
 
     glm::vec3 vertical(0.0f,1.0f,0.0f);
-    right = glm::cross(vertical, forward);
-    up = glm::cross(forward, right);
+    right = glm::cross(glm::normalize(vertical), glm::normalize(forward));
+    up = glm::cross(glm::normalize(forward), glm::normalize(right));
 
     // [right up forward]
-    cameraOrientation = glm::mat3(glm::normalize(right), glm::normalize(up), glm::normalize(forward));
+    cameraOrientation = glm::mat3((right), (up), (forward));
 //    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
 
     return cameraOrientation;
