@@ -68,7 +68,7 @@ void rainbowDraw(DrawingWindow &window) {
     }
 }
 
-std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix) {
+std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
     window.clearPixels();
     std::vector<CanvasTriangle> twodTriangles;
 
@@ -89,19 +89,21 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
     }
 
     // ORBIT
-    cameraPosition =
-            glm::mat3 (
-                    cos(0.01), 0.0f, sin(0.01),
-                    0.0f, 1.0f, 0.0f,
-                    -sin(0.01), 0.0f, cos(0.01)
-            )
-            * cameraPosition;
-    cameraOrientation = lookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
+    if (orbit) {
+        cameraPosition =
+                glm::mat3(
+                        cos(0.01), 0.0f, sin(0.01),
+                        0.0f, 1.0f, 0.0f,
+                        -sin(0.01), 0.0f, cos(0.01)
+                )
+                * cameraPosition;
+        cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
+    }
 
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
 }
 
-glm::mat3 lookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition, float focalLength, float scale) {
+glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition, float focalLength, float scale) {
     glm::vec3 forward;
     glm::vec3 up;
     glm::vec3 right;

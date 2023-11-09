@@ -22,6 +22,7 @@ std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
 bool toggle = true;
 bool colorToggle = true;
+bool orbit = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 float focalLength = 1.0f;
 float scale = 150.0f;
@@ -72,8 +73,16 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         else if (event.key.keysym.sym == SDLK_PERIOD) {
             cameraPosition = rotateY * cameraPosition;
         }
-        // tilting/panning
+        // toggle orbit
         else if (event.key.keysym.sym == 'o') {
+            if (orbit) { orbit = false; } else { orbit = true; }
+        }
+        // lookAt origin
+        else if (event.key.keysym.sym == 'l') {
+            cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
+        }
+        // tilting/panning
+        else if (event.key.keysym.sym == 't') {
             cameraOrientation = rotateX * cameraOrientation;
         }
         else if (event.key.keysym.sym == 'p') {
@@ -93,12 +102,12 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             }
         }
         // toggle wireframe atop render
-        else if (event.key.keysym.sym == 't') {
+        else if (event.key.keysym.sym == 'y') {
             window.clearPixels();
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-            tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
+            tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
             twodTriangles = std::get<0>(tuple);
             cameraPosition = std::get<1>(tuple);
             cameraOrientation = std::get<2>(tuple);
@@ -112,7 +121,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 toggle = true;
                 window.clearPixels();
                 std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-                tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
+                tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
                 twodTriangles = std::get<0>(tuple);
                 cameraPosition = std::get<1>(tuple);
                 cameraOrientation = std::get<2>(tuple);
@@ -158,7 +167,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-            tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
+            tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
             twodTriangles = std::get<0>(tuple);
             cameraPosition = std::get<1>(tuple);
             cameraOrientation = std::get<2>(tuple);
@@ -197,7 +206,7 @@ int main(int argc, char *argv[]) {
 
     // RASTERIZER
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-//    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
+//    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    twodTriangles = std::get<0>(tuple);
 //    cameraPosition = std::get<1>(tuple);
 //    cameraOrientation = std::get<2>(tuple);
@@ -235,7 +244,7 @@ int main(int argc, char *argv[]) {
 
         std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
         depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
-        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix);
+        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
         twodTriangles = std::get<0>(tuple);
         cameraPosition = std::get<1>(tuple);
         cameraOrientation = std::get<2>(tuple);
