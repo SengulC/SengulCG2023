@@ -90,7 +90,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
 
     // ORBIT
     if (orbit) {
-        cameraPosition = glm::mat3(
+        cameraPosition = glm::mat3 (
         cos(0.01), 0.0f, sin(0.01),
         0.0f, 1.0f, 0.0f,
         -sin(0.01), 0.0f, cos(0.01)
