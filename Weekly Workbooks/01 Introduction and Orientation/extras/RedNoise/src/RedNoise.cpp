@@ -30,7 +30,7 @@ bool colorToggle = true;
 bool orbit = false;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 float focalLength = 2.0f;
-float scale = 150.0f;
+float scale = 240.0f;
 glm::vec3 cameraPosition {0.0, 0.0, 4.0};
 glm::mat3 cameraOrientation(
         1.0f, 0.0f, 0.0f,
@@ -243,24 +243,24 @@ int main(int argc, char *argv[]) {
 //    up = glm::cross(glm::vec3(forward.x, forward.y, forward.depth), right);
 //    std::cout << "up: " << up.x << " " << up.y << " " << up.z << " " << std::endl;
 
-    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-    depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
-    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
-    twodTriangles = std::get<0>(tuple);
-    cameraPosition = std::get<1>(tuple);
-    cameraOrientation = std::get<2>(tuple);
+//    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+//    depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
+//    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//    twodTriangles = std::get<0>(tuple);
+//    cameraPosition = std::get<1>(tuple);
+//    cameraOrientation = std::get<2>(tuple);
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
 
-//        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
 //        depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
-//        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
-//        twodTriangles = std::get<0>(tuple);
-//        cameraPosition = std::get<1>(tuple);
-//        cameraOrientation = std::get<2>(tuple);
-//        std::cout<<glm::to_string(cameraOrientation)<<std::endl;
+        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+        twodTriangles = std::get<0>(tuple);
+        cameraPosition = std::get<1>(tuple);
+        cameraOrientation = std::get<2>(tuple);
+        std::cout<<glm::to_string(cameraOrientation)<<std::endl;
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();

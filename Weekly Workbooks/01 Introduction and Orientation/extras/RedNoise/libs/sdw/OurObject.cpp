@@ -70,27 +70,29 @@ std::map<std::string, Colour> readMaterial(const std::string& file) {
 CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
     float x, y;
     CanvasPoint intersection;
-    glm::vec3 adjustedVector;
 
-    // First, calculate vector from cameraPos to artefact...
+    // CameraPos - VertexPos
+    glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.z-cameraPosition.z);
+    //... Then, multiply this vector by orientation matrix
+    distance = distance * cameraOrientation;
+
+    // Calculate vector from cameraPos to artefact...
     // Calculate the 2D coordinates on the image plane
-    x = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.x - cameraPosition.x) + cameraPosition.x;
-    y = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.y - cameraPosition.y) + cameraPosition.y;
+    x = (focalLength/(cameraPosition.z-distance.z)) * (distance.x - cameraPosition.x) + cameraPosition.x;
+    y = (focalLength/(cameraPosition.z-distance.z)) * (distance.y - cameraPosition.y) + cameraPosition.y;
 
     // Scaling and shifting
     x = x * scale + (320.0f / 2);
     y = y * -scale + (240.0f / 2); // negative scale bc y-axis was flipped
+    glm::vec3 adjustedVector;
     adjustedVector.x = x;
     adjustedVector.y = y;
-    adjustedVector.z = vertexPosition.z;
-
-    //... Then, multiply this vector by orientation matrix
-    adjustedVector = adjustedVector * cameraOrientation;
+    adjustedVector.z = distance.z;
 
     // Populate and return intersection
     intersection.x = x;
     intersection.y = y;
-    intersection.depth = 1/std::abs(cameraPosition.z - adjustedVector.z);
+    intersection.depth = 1/std::abs(adjustedVector.z);
     return intersection;
 }
 

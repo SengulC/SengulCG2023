@@ -118,8 +118,8 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
                 window.setPixelColour(xval, yval, fincolor);
                 //std::cout<< "initial: matrix[x][y] = " << depthMatrix[xval][yval] << " . z: " << z <<std::endl;
                 //std::cout<< "rounded: " << std::roundf(depthMatrix[xval][yval]) <<std::endl;
-            } else if (z >= depthMatrix[xval][yval]) {
-                //std::cout<< "z > depthmatrix[x][y]: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". overwriting color: " << colorName(fincolor) <<std::endl;
+            } else if (z > depthMatrix[xval][yval]) {
+//                std::cout<< "z > depthmatrix[x][y]: z: " << z << ". depth x: " << depthMatrix[xval][yval] << ". overwriting color: " << colorName(fincolor) <<std::endl;
                 depthMatrix[xval][yval] = z;
                 window.setPixelColour(xval, yval, fincolor);
             }
