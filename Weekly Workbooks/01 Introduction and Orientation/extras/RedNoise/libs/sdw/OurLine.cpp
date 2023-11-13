@@ -132,8 +132,8 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
             }
         int temp = std::round(z * 255);
         Colour col = Colour(temp, temp, temp);
-        window.setPixelColour(xval, yval, pack(unpack(col)));
-        outputFile.close();
+//        window.setPixelColour(xval, yval, pack(unpack(col)));
+//        outputFile.close();
         }
 //    } else {
 //        std::cerr << "Error opening the file for writing." << std::endl;

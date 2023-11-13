@@ -32,13 +32,8 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
     }
     std::vector<float> leftDepths = interpolateSingleFloats((points[0].depth), (left.depth), topHeight+bottomHeight);
     std::vector<float> rightDepths = interpolateSingleFloats((points[0].depth), (right.depth), topHeight+bottomHeight);
-    float extraVz;
-    if (extraVx < right.x) {
-        // if the extra vertex is on the LHS, its depth lies in the leftDepths calc
-        extraVz = leftDepths[topHeight];
-    } else {
-        extraVz = rightDepths[topHeight];
-    }
+    float ratio = (points[1].y - points[0].y)/(points[2].y-points[0].y);
+    float extraVz = ratio * (points[2].depth - points[0].depth) + points[0].depth;
 
     // extra
     CanvasPoint extraV = {extraVx, middleV.y, extraVz};
