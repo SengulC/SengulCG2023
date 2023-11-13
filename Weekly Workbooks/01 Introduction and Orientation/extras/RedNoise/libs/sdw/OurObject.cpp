@@ -1,4 +1,6 @@
 #include "OurObject.h"
+#include <glm/glm.hpp>
+#include "glm/ext.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -75,6 +77,7 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
     glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.z-cameraPosition.z);
     //... Then, multiply this vector by orientation matrix
     distance = distance * cameraOrientation;
+//    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
 
     // Calculate vector from cameraPos to artefact...
     // Calculate the 2D coordinates on the image plane
@@ -84,15 +87,11 @@ CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 camer
     // Scaling and shifting
     x = x * scale + (320.0f / 2);
     y = y * -scale + (240.0f / 2); // negative scale bc y-axis was flipped
-    glm::vec3 adjustedVector;
-    adjustedVector.x = x;
-    adjustedVector.y = y;
-    adjustedVector.z = distance.z;
 
     // Populate and return intersection
     intersection.x = x;
     intersection.y = y;
-    intersection.depth = 1/std::abs(adjustedVector.z);
+    intersection.depth = 1/std::abs(distance.z);
     return intersection;
 }
 

@@ -12,7 +12,6 @@
 #include <OurObject.h>
 #include <OurRender.h>
 #include <OurLine.h>
-#include <unistd.h>
 #include "glm/ext.hpp"
 
 #define WIDTH 320
@@ -207,42 +206,7 @@ int main(int argc, char *argv[]) {
 
     drawPoint(window, CanvasPoint(WIDTH/2, HEIGHT/2, 0), {255,0,0});
 
-//    bool renderNextTriangle = false;
-
     // RASTERIZER
-//    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-//    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
-//    twodTriangles = std::get<0>(tuple);
-//    cameraPosition = std::get<1>(tuple);
-//    cameraOrientation = std::get<2>(tuple);
-
-//    DEBUUUUG
-//    CanvasPoint forward = getCanvasIntersectionPoint(glm::vec3(0, 0, 0), cameraPosition, cameraOrientation, focalLength, scale);
-//    std::cout << "intersection of origin/forward: " << forward << std::endl;
-//
-//    glm::vec3 right = glm::cross(glm::vec3(0,1,0), glm::vec3(forward.x, forward.y, forward.depth));
-//    std::cout << "right: " << right.x << " " << right.y << " " << right.z << " " << std::endl;
-//
-//    glm::vec3 up = glm::cross(glm::vec3(forward.x, forward.y, forward.depth), right);
-//    std::cout << "up: " << up.x << " " << up.y << " " << up.z << " " << std::endl;
-//
-//    cameraPosition =
-//            glm::mat3 (
-//                    cos(0.01), 0.0f, sin(0.01),
-//                    0.0f, 1.0f, 0.0f,
-//                    -sin(0.01), 0.0f, cos(0.01)
-//            )
-//            * cameraPosition;
-//
-//    forward = getCanvasIntersectionPoint(glm::vec3(0, 0, 0), cameraPosition, cameraOrientation, focalLength, scale);
-//    std::cout << "intersection of origin/forward: " << forward << std::endl;
-//
-//    right = glm::cross(glm::vec3(0,1,0), glm::vec3(forward.x, forward.y, forward.depth));
-//    std::cout << "right: " << right.x << " " << right.y << " " << right.z << " " << std::endl;
-//
-//    up = glm::cross(glm::vec3(forward.x, forward.y, forward.depth), right);
-//    std::cout << "up: " << up.x << " " << up.y << " " << up.z << " " << std::endl;
-
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
 //    depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
 //    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
@@ -256,25 +220,14 @@ int main(int argc, char *argv[]) {
 
         std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
 //        depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
+        std::cout<<glm::to_string(cameraOrientation)<<std::endl;
         tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
         twodTriangles = std::get<0>(tuple);
         cameraPosition = std::get<1>(tuple);
         cameraOrientation = std::get<2>(tuple);
-        std::cout<<glm::to_string(cameraOrientation)<<std::endl;
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 
-//        if (!renderNextTriangle) {
-//            SDL_Delay(500);
-//            renderNextTriangle = true;
-//            indexcheck++;
-//        } else {
-//            if (indexcheck < twodTriangles.size()) {
-//                SDL_Delay(500);
-//                depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
-//                indexcheck++;
-//            }
-//        }
 	}
 }
