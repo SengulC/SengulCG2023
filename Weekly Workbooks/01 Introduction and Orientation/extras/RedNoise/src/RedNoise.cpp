@@ -26,7 +26,7 @@ std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
 bool toggle = true;
 bool colorToggle = true;
-bool orbit = false;
+bool orbit = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 float focalLength = 2.0f;
 float scale = 240.0f;
@@ -228,6 +228,5 @@ int main(int argc, char *argv[]) {
 
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
-
 	}
 }

@@ -88,7 +88,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
 //        }
     }
 
-    // ORBIT = false
+    // ORBIT
     if (orbit) {
         cameraPosition = glm::mat3 (
         cos(0.01), 0.0f, sin(0.01),
@@ -108,8 +108,8 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
     forward = glm::normalize(cameraPosition - lookAtMe);
 
     glm::vec3 vertical(0.0f,1.0f,0.0f);
-    right = glm::cross(glm::normalize(vertical), glm::normalize(forward));
-    up = glm::cross(glm::normalize(forward), glm::normalize(right));
+    right = glm::cross(vertical, forward);
+    up = glm::cross(forward, glm::normalize(right));
 
     // [right up forward]
     cameraOrientation = glm::mat3((right), (up), (forward));
