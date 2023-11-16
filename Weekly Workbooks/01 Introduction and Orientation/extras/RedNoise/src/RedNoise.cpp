@@ -208,7 +208,6 @@ int main(int argc, char *argv[]) {
 
     // RASTERIZER
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-//    depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
 //    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    twodTriangles = std::get<0>(tuple);
 //    cameraPosition = std::get<1>(tuple);
@@ -219,8 +218,8 @@ int main(int argc, char *argv[]) {
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
 
         std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-//        depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
-        std::cout<<glm::to_string(cameraOrientation)<<std::endl;
+        depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
+//        std::cout<<glm::to_string(cameraOrientation)<<std::endl;
         tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
         twodTriangles = std::get<0>(tuple);
         cameraPosition = std::get<1>(tuple);
