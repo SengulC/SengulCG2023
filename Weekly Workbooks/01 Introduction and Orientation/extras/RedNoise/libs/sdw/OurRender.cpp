@@ -1,4 +1,5 @@
 #include "OurRender.h"
+#include "glm/ext.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -108,7 +109,7 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
 
     // [right up forward]
     cameraOrientation = glm::mat3(glm::normalize(right), (up), (forward));
-//    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
+    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
 
     return cameraOrientation;
 }

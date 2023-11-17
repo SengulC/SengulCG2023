@@ -21,7 +21,7 @@ std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
 bool toggle = true;
 bool colorToggle = true;
-bool orbit = false;
+bool orbit = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 float focalLength = 1.5f;
 float scale = 240.0f;
@@ -198,22 +198,22 @@ int main(int argc, char *argv[]) {
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
 //    // // RASTERIZER
-    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
-    twodTriangles = std::get<0>(tuple);
-    cameraPosition = std::get<1>(tuple);
-    cameraOrientation = std::get<2>(tuple);
+//    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+//    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//    twodTriangles = std::get<0>(tuple);
+//    cameraPosition = std::get<1>(tuple);
+//    cameraOrientation = std::get<2>(tuple);
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
-//        // // RASTERIZER
-//        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-//        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
-//        twodTriangles = std::get<0>(tuple);
-//        cameraPosition = std::get<1>(tuple);
-//        cameraOrientation = std::get<2>(tuple);
-		// Need to render the frame at the end, or nothing actually gets shown on the screen !
+        // // RASTERIZER
+        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+        twodTriangles = std::get<0>(tuple);
+        cameraPosition = std::get<1>(tuple);
+        cameraOrientation = std::get<2>(tuple);
+//		 Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}
 }
