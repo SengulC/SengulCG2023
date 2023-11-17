@@ -110,10 +110,10 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
             int yval = static_cast<int>(std::round(y));
 
             if (xval < 320 && yval < 240 && xval > 0 && yval > 0) {
-//                if (z > depthMatrix[xval][yval] || depthMatrix[xval][yval] == 0.0f) {
-//                    depthMatrix[xval][yval] = z;
+                if (z > depthMatrix[xval][yval] || depthMatrix[xval][yval] == 0.0f) {
+                    depthMatrix[xval][yval] = z;
                     window.setPixelColour(xval, yval, fincolor);
-//                }
+                }
             }
         int temp = std::round(z * 255);
         Colour col = Colour(temp, temp, temp);

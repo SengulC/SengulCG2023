@@ -80,6 +80,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
         }
         twodTriangles.push_back(canvasTriangle);
         depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+        drawStroked(window, canvasTriangle, modelTriangle.colour, depthMatrix);
     }
 
     // ORBIT
