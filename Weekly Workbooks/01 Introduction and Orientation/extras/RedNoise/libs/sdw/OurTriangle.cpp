@@ -16,60 +16,30 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
     CanvasPoint middleV = points[1];
     int topHeight = static_cast<int> (std::abs(middleV.y - points[0].y));
     int bottomHeight = static_cast<int> (std::abs(points[2].y - middleV.y));
+
     // interpolate from 1st point to last point to find extra vertex
     std::vector<float> extraVInterpolatedX = interpolateSingleFloats(points[0].x, points[2].x,topHeight + bottomHeight);
     float extraVx = extraVInterpolatedX[topHeight];
-
-    // depth
-    int debug = true;
-    CanvasPoint left; CanvasPoint right;
-    if (points[1].x < points[2].x) {
-        left = points[1];
-        right = points[2];
-    } else {
-        right = points[1];
-        left = points[2];
-    }
-
-    // extra
     float ratio = (points[1].y - points[0].y)/(points[2].y-points[0].y);
     float extraVz = ratio * (points[2].depth - points[0].depth) + points[0].depth;
-//    float extraVx = (points[2].x-points[0].x) * ratio + points[0].x;
     CanvasPoint extraV = {extraVx, middleV.y, extraVz};
 
     // top triangle
-    int count = 0;
-    std::vector<float> topTriangleLeft = interpolateSingleFloats(points[0].x, extraV.x, topHeight);
-    std::vector<float> topTriangleRight = interpolateSingleFloats(points[0].x, middleV.x, topHeight);
-
-    std::vector<float> topTriangleLeftDepths = interpolateSingleFloats((points[0].depth), extraV.depth, topHeight);
-    std::vector<float> topTriangleRightDepths = interpolateSingleFloats((points[0].depth), middleV.depth, topHeight);
-
-    for (int i = static_cast<int> (std::floor(points[0].y)); i < static_cast<int> (std::ceil(extraV.y)); i++) {
-        depthMatrix = drawLine(window, CanvasPoint{topTriangleLeft[count], static_cast<float>(i), (topTriangleLeftDepths[count])},
-                 CanvasPoint{topTriangleRight[count], static_cast<float>(i),  (topTriangleRightDepths[count])},
-                 color, depthMatrix);
-        count++;
+    std::vector<CanvasPoint> topStart = interpolateCanvasPoint(points[0], extraV, topHeight+1);
+    std::vector<CanvasPoint> topEnd = interpolateCanvasPoint(points[0], middleV, topHeight+1);
+    for (int i = 0; i <= topHeight; i++) {
+        depthMatrix = drawLine(window,topStart[i], topEnd[i], color, depthMatrix);
     }
 
     // bottom triangle
-    count = 0;
-    std::vector<float> bottomTriangleLeft = interpolateSingleFloats(extraV.x, points[2].x, bottomHeight);
-    std::vector<float> bottomTriangleRight = interpolateSingleFloats(middleV.x, points[2].x, bottomHeight);
-
-    std::vector<float> bottomTriangleLeftDepths = interpolateSingleFloats(extraV.depth, (points[2].depth), bottomHeight);
-    std::vector<float> bottomTriangleRightDepths = interpolateSingleFloats((middleV.depth), (points[2].depth), bottomHeight);
-
-    for (int i = static_cast<int> (std::floor(middleV.y + 1)); i < static_cast<int> (std::ceil(points[2].y)); i++) {
-        depthMatrix = drawLine(window, CanvasPoint{bottomTriangleLeft[count], static_cast<float>(i), (bottomTriangleLeftDepths[count])},
-                 CanvasPoint{bottomTriangleRight[count], static_cast<float>(i), (bottomTriangleRightDepths[count])},
-                 color, depthMatrix);
-        count++;
+    std::vector<CanvasPoint> bottomStart = interpolateCanvasPoint(extraV, points[2], bottomHeight+1);
+    std::vector<CanvasPoint> bottomEnd = interpolateCanvasPoint(middleV, points[2], bottomHeight+1);
+    for (int i = 0; i <= bottomHeight; i++) {
+        depthMatrix = drawLine(window, bottomStart[i], bottomEnd[i], color, depthMatrix);
     }
 
-//    depthMatrix = drawLine(window, CanvasPoint{std::min(extraVx, middleV.x), extraV.y},
-//                           CanvasPoint{std::max(extraVx, middleV.x), extraV.y},
-//                           color, depthMatrix);
+    depthMatrix = drawLine(window, CanvasPoint{std::min(extraVx, middleV.x), extraV.y},
+                           CanvasPoint{std::max(extraVx, middleV.x), extraV.y}, color, depthMatrix);
     return depthMatrix;
 }
 
@@ -84,4 +54,16 @@ CanvasTriangle randomTriangle() {
 Colour randomColor() {
     Colour color = {rand()%256, rand()%256, rand()%256};
     return color;
+}
+
+CanvasTriangle modelToCanvasTriangle(ModelTriangle mTri) {
+    // model = vec3
+    // canvas = canvaspoint
+    CanvasTriangle cTri;
+    std::array<glm::vec3,3> vecTices {mTri.vertices[0],mTri.vertices[1], mTri.vertices[2]};
+    std::array<CanvasPoint,3> points {CanvasPoint(vecTices[0].x,vecTices[0].y,vecTices[0].z),
+                                      CanvasPoint(vecTices[1].x,vecTices[1].y,vecTices[1].z),
+                                      CanvasPoint(vecTices[2].x,vecTices[2].y,vecTices[2].z)};
+    cTri.vertices = points;
+    return cTri;
 }

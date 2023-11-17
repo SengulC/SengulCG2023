@@ -1,6 +1,4 @@
 #include "OurRender.h"
-#include "OurTriangle.h"
-#include "OurObject.h"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -73,27 +71,23 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
     depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
     std::vector<CanvasTriangle> twodTriangles;
 
-    // conversion
+    // conversion and projection onto canvas
     for (ModelTriangle &modelTriangle : modelTriangles) {
 //        if (modelTriangle.colour.name == "Red" || modelTriangle.colour.name == "Blue") {
-        CanvasTriangle canvasTriangle;
+        CanvasTriangle canvasTriangle = modelToCanvasTriangle(modelTriangle);
         for (int i = 0; i < 3; i++) {
-            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, cameraOrientation, focalLength, scale);
+            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(canvasTriangle.vertices[i], cameraPosition, cameraOrientation, focalLength, scale);
         }
-        // populate 2-D triangles vector for rendering/keypress purposes
         twodTriangles.push_back(canvasTriangle);
-        // drawing of triangle(s) updates the depth matrixx
         depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
-//        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
-//        }
     }
 
     // ORBIT
     if (orbit) {
         cameraPosition = glm::mat3 (
-        cos(0.01), 0.0f, -sin(0.01),
+        cos(0.1), 0.0f, -sin(0.1),
         0.0f, 1.0f, 0.0f,
-        sin(0.01), 0.0f, cos(0.01)
+        sin(0.1), 0.0f, cos(0.1)
         ) * cameraPosition;
         cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
     }
@@ -118,25 +112,22 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
     return cameraOrientation;
 }
 
-
-CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
+CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
     float x, y;
     CanvasPoint intersection;
 
     // CameraPos - VertexPos
-    glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.z-cameraPosition.z);
+    glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.depth-cameraPosition.z);
     //... Then, multiply this vector by orientation matrix
-    distance = distance * cameraOrientation;
-//    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
+//    distance = distance * cameraOrientation;
 
-    // Calculate vector from cameraPos to artefact...
     // Calculate the 2D coordinates on the image plane
-    x = (focalLength/(cameraPosition.z-distance.z)) * (distance.x - cameraPosition.x) + cameraPosition.x;
-    y = (focalLength/(cameraPosition.z-distance.z)) * (distance.y - cameraPosition.y) + cameraPosition.y;
+    x = (focalLength/(distance.z)) * (distance.x);
+    y = (focalLength/(distance.z)) * (distance.y);
 
     // Scaling and shifting
-    x = x * scale + (320.0f / 2);
-    y = y * -scale + (240.0f / 2); // negative scale bc y-axis was flipped
+    x = x * -scale + (320.0f / 2);
+    y = y * scale + (240.0f / 2); // negative scale bc y-axis was flipped
 
     // Populate and return intersection
     intersection.x = x;

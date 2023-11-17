@@ -17,3 +17,4 @@ std::vector<std::vector<float>> drawStroked(DrawingWindow &window, CanvasTriangl
 std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle triangle, Colour color, std::vector<std::vector<float>> depthMatrix);
 CanvasTriangle randomTriangle();
 Colour randomColor();
+CanvasTriangle modelToCanvasTriangle(ModelTriangle mTri);
