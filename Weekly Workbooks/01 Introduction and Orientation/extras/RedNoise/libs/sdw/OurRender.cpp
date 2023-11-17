@@ -91,12 +91,12 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
         0.0f, 1.0f, 0.0f,
         sin(0.1), 0.0f, cos(0.1)
         ) * cameraPosition;
-        cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
+        cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition);
     }
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
 }
 
-glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition, float focalLength, float scale) {
+glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition) {
     glm::vec3 forward;
     glm::vec3 up;
     glm::vec3 right;
@@ -104,11 +104,11 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
     forward = glm::normalize(cameraPosition - lookAtMe);
 
     glm::vec3 vertical(0.0f,1.0f,0.0f);
-    right = glm::cross(vertical, forward);
-    up = glm::cross(forward, glm::normalize(right));
+    right = glm::normalize((glm::cross(vertical, forward)));
+    up = glm::normalize(glm::cross(forward, right));
 
     // [right up forward]
-    cameraOrientation = glm::mat3(glm::normalize(right), (up), (forward));
+    cameraOrientation = glm::mat3(right, up, forward);
     std::cout<<glm::to_string(cameraOrientation)<<std::endl;
 
     return cameraOrientation;

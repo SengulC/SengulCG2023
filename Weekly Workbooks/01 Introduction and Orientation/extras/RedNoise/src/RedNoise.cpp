@@ -77,9 +77,9 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             if (orbit) { orbit = false; } else { orbit = true; }
         }
         // lookAt origin
-        else if (event.key.keysym.sym == 'l') {
-            cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
-        }
+//        else if (event.key.keysym.sym == 'l') {
+//            cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition);
+//        }
         // tilting/panning
         else if (event.key.keysym.sym == 't') {
             cameraOrientation = rotateX * cameraOrientation;
