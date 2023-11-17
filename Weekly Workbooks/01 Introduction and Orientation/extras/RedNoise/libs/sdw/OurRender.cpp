@@ -117,28 +117,3 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
 
     return cameraOrientation;
 }
-
-CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
-    float x, y;
-    CanvasPoint intersection;
-
-    // CameraPos - VertexPos
-    glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.z-cameraPosition.z);
-    //... Then, multiply this vector by orientation matrix
-    distance = distance * cameraOrientation;
-
-    // Calculate vector from cameraPos to artefact...
-    // Calculate the 2D coordinates on the image plane
-    x = (focalLength/(cameraPosition.z-distance.z)) * (distance.x - cameraPosition.x) + cameraPosition.x;
-    y = (focalLength/(cameraPosition.z-distance.z)) * (distance.y - cameraPosition.y) + cameraPosition.y;
-
-    // Scaling and shifting
-//    x = x * scale + (320.0f / 2);
-//    y = y * -scale + (240.0f / 2); // negative scale bc y-axis was flipped
-
-    // Populate and return intersection
-    intersection.x = x;
-    intersection.y = y;
-    intersection.depth = 1/std::abs(distance.z);
-    return intersection;
-}
