@@ -109,8 +109,6 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
 
     // [right up forward]
     cameraOrientation = glm::mat3(right, up, forward);
-    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
-
     return cameraOrientation;
 }
 
@@ -121,7 +119,7 @@ CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cam
     // CameraPos - VertexPos
     glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.depth-cameraPosition.z);
     //... Then, multiply this vector by orientation matrix
-//    distance = distance * cameraOrientation;
+    distance = distance * cameraOrientation;
 
     // Calculate the 2D coordinates on the image plane
     x = (focalLength/(distance.z)) * (distance.x);
