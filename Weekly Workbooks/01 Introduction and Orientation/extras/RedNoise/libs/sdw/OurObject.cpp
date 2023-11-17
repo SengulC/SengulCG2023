@@ -1,4 +1,6 @@
 #include "OurObject.h"
+#include <glm/glm.hpp>
+#include "glm/ext.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -65,22 +67,5 @@ std::map<std::string, Colour> readMaterial(const std::string& file) {
 
     theObjFile.close();
     return palette;
-}
-
-CanvasPoint getCanvasIntersectionPoint(glm::vec3 vertexPosition, glm::vec3 cameraPosition, float focalLength, float scale) {
-    float x, y;
-    CanvasPoint intersection;
-
-    // Calculate the 2D coordinates on the image plane
-    x = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.x - cameraPosition.x) + cameraPosition.x;
-    y = (focalLength/(cameraPosition.z-vertexPosition.z)) * (vertexPosition.y - cameraPosition.y) + cameraPosition.y;
-
-    // Scaling and shifting
-    x = x * scale + (320.0f / 2);
-    y = y * -scale + (240.0f / 2); // negative scale bc y-axis was flipped
-    intersection.x = x;
-    intersection.y = y;
-    intersection.depth = 1/std::abs(cameraPosition.z - vertexPosition.z);
-    return intersection;
 }
 

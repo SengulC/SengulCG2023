@@ -11,25 +11,83 @@
 #include <OurTriangle.h>
 #include <OurObject.h>
 #include <OurRender.h>
-#include <unistd.h>
+#include <OurLine.h>
+#include "glm/ext.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
+
 std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
-glm::vec3 cameraPosition {0.0, 0.0, 4.0};
-float focalLength = 1.5;
-float scale = 240.0f;
 bool toggle = true;
 bool colorToggle = true;
+bool orbit = false;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
+float focalLength = 1.5f;
+float scale = 240.0f;
+glm::vec3 cameraPosition {0.0, 0.0, 4.0};
+glm::mat3 cameraOrientation(
+        1.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f
+        );
+// [right up forward]
+glm::mat3 rotateX(
+        1.0f, 0.0f, 0.0f,
+        0.0f, cos(0.1), -sin(0.1),
+        0.0f, sin(0.1), cos(0.1)
+);
+glm::mat3 rotateY(
+        cos(0.1), 0.0f, sin(0.1),
+        0.0f, 1.0f, 0.0f,
+        -sin(0.1), 0.0f, cos(0.1)
+);
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
-		if (event.key.keysym.sym == SDLK_LEFT) std::cout << "LEFT" << std::endl;
-		else if (event.key.keysym.sym == SDLK_RIGHT) std::cout << "RIGHT" << std::endl;
-		else if (event.key.keysym.sym == SDLK_UP) std::cout << "UP" << std::endl;
-		else if (event.key.keysym.sym == SDLK_DOWN) std::cout << "DOWN" << std::endl;
+        // translation: up/down/left/right
+        if (event.key.keysym.sym == SDLK_UP) {
+            cameraPosition += glm::vec3{0,0.1,0};
+        }
+        else if (event.key.keysym.sym == SDLK_DOWN) {
+            cameraPosition -= glm::vec3{0,0.1,0};
+        }
+        else if (event.key.keysym.sym == SDLK_LEFT) {
+            cameraPosition -= glm::vec3{0.1,0,0};
+        }
+		else if (event.key.keysym.sym == SDLK_RIGHT) {
+            cameraPosition += glm::vec3{0.1,0,0};
+        }
+        // translation: z axis: ;/'
+        else if (event.key.keysym.sym == SDLK_SEMICOLON) {
+            cameraPosition -= glm::vec3{0,0,0.1};
+        }
+        else if (event.key.keysym.sym == SDLK_QUOTE) {
+            cameraPosition += glm::vec3{0,0,0.1};
+        }
+        // rotation </>
+        else if (event.key.keysym.sym == SDLK_COMMA) {
+            cameraPosition = rotateX * cameraPosition;
+        }
+        else if (event.key.keysym.sym == SDLK_PERIOD) {
+            cameraPosition = rotateY * cameraPosition;
+        }
+        // toggle orbit
+        else if (event.key.keysym.sym == 'o') {
+            if (orbit) { orbit = false; } else { orbit = true; }
+        }
+        // lookAt origin
+        else if (event.key.keysym.sym == 'l') {
+            cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
+        }
+        // tilting/panning
+        else if (event.key.keysym.sym == 't') {
+            cameraOrientation = rotateX * cameraOrientation;
+        }
+        else if (event.key.keysym.sym == 'p') {
+            cameraOrientation = rotateY * cameraOrientation;
+        }
+        // triangle stuff
 		else if (event.key.keysym.sym == 'u') {
 			drawStroked(window, randomTriangle(), randomColor(), depthMatrix);
 		}
@@ -42,12 +100,16 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 drawStroked(window, tri, {255,255,255}, depthMatrix);
             }
         }
-        else if (event.key.keysym.sym == 't') {
-            // toggle wireframe atop render
+        // toggle wireframe atop render
+        else if (event.key.keysym.sym == 'y') {
             window.clearPixels();
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
-            twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
+            std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+            tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+            twodTriangles = std::get<0>(tuple);
+            cameraPosition = std::get<1>(tuple);
+            cameraOrientation = std::get<2>(tuple);
             indexcheck=0;
             if (toggle){
                 toggle = false;
@@ -57,13 +119,17 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             } else {
                 toggle = true;
                 window.clearPixels();
-                twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
+                std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+                tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+                twodTriangles = std::get<0>(tuple);
+                cameraPosition = std::get<1>(tuple);
+                cameraOrientation = std::get<2>(tuple);
                 indexcheck=0;
             }
         }
+        // draw triangles one by one
         else if (event.key.keysym.sym == 'x') {
             Colour color;
-            // draw triangles one by one
             if (indexcheck == 0) {
                 window.clearPixels();
             }
@@ -79,23 +145,34 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 //                colorToggle = true;
 //            }
             depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
-            drawStroked(window, twodTriangles[indexcheck], {255,255,255}, depthMatrix);
             indexcheck++;
         }
+        // clear
         else if (event.key.keysym.sym == 'c') {
             window.clearPixels();
-            depthMatrix = std::vector<std::vector<float>>(WIDTH, std::vector<float>(HEIGHT, 0.0f));
+            depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
             indexcheck = 0;
+            cameraPosition = {0.0, 0.0, 4.0};
+            cameraOrientation = glm::mat3 (
+                1.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 1.0f
+            );
         }
+        // rasterise
         else if (event.key.keysym.sym == 'r') {
-            window.clearPixels();
+            depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
-            twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
+            std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+            tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+            twodTriangles = std::get<0>(tuple);
+            cameraPosition = std::get<1>(tuple);
+            cameraOrientation = std::get<2>(tuple);
             indexcheck=0;
         }
-        else if (event.key.keysym.sym == 'p') {
-            // print out depth of previously drawn triangle
+        // print out depth of previously drawn triangle
+        else if (event.key.keysym.sym == 'e') {
             std::cout << twodTriangles[indexcheck-1].v0().depth << ""
             << twodTriangles[indexcheck-1].v1().depth << ""
             << twodTriangles[indexcheck-1].v2().depth << std::endl;
@@ -112,7 +189,6 @@ int main(int argc, char *argv[]) {
 	SDL_Event event;
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-
     for (auto &pair : mtls) {
         if (pair.first == "Grey") {
 //            std::cout<< pack(unpack(pair.second)) << std::endl;
@@ -121,30 +197,23 @@ int main(int argc, char *argv[]) {
 
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
-    // RASTERIZER
-    twodTriangles = rasterize(window, modelTriangles, cameraPosition, focalLength, scale, depthMatrix);
-//    window.clearPixels();
-    indexcheck = 0;
-//    depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
-//    bool renderNextTriangle = false;
+//    // // RASTERIZER
+    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+    twodTriangles = std::get<0>(tuple);
+    cameraPosition = std::get<1>(tuple);
+    cameraOrientation = std::get<2>(tuple);
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
-
+//        // // RASTERIZER
+//        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+//        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//        twodTriangles = std::get<0>(tuple);
+//        cameraPosition = std::get<1>(tuple);
+//        cameraOrientation = std::get<2>(tuple);
 		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
-
-//        if (!renderNextTriangle) {
-//            SDL_Delay(500);
-//            renderNextTriangle = true;
-//            indexcheck++;
-//        } else {
-//            if (indexcheck < twodTriangles.size()) {
-//                SDL_Delay(500);
-//                depthMatrix = drawFilled(window, twodTriangles[indexcheck], randomColor(), depthMatrix);
-//                indexcheck++;
-//            }
-//        }
 	}
 }

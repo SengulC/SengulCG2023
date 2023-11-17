@@ -12,9 +12,14 @@
 #include <iostream>
 #include <string>
 #include "OurLine.h"
+#include "OurTriangle.h"
 
 void bAndWdraw(DrawingWindow &window);
 
 void rainbowDraw(DrawingWindow &window);
 
-std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix);
+std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit);
+
+glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition, float focalLength, float scale);
+
+CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale);

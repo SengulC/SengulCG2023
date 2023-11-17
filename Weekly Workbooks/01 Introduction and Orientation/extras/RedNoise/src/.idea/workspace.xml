@@ -23,9 +23,9 @@
     <option name="majorVersion" value="2023" />
     <option name="minorVersion" value="2.2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2Xfrh9F1nJJlveTlBChs0mDbu9l" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -52,6 +52,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699031092675</updated>
       <workItem from="1699031096010" duration="145000" />
+      <workItem from="1699290393794" duration="40000" />
     </task>
     <servers />
   </component>

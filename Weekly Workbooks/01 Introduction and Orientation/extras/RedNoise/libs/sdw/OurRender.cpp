@@ -1,6 +1,7 @@
 #include "OurRender.h"
-#include "OurTriangle.h"
-#include "OurObject.h"
+
+#define WIDTH 320
+#define HEIGHT 240
 
 void bAndWdraw(DrawingWindow &window) {
     window.clearPixels();
@@ -65,23 +66,72 @@ void rainbowDraw(DrawingWindow &window) {
     }
 }
 
-std::vector<CanvasTriangle> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix) {
+std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
+    window.clearPixels();
+    depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
     std::vector<CanvasTriangle> twodTriangles;
 
-    // conversion
+    // conversion and projection onto canvas
     for (ModelTriangle &modelTriangle : modelTriangles) {
 //        if (modelTriangle.colour.name == "Red" || modelTriangle.colour.name == "Blue") {
-            CanvasTriangle canvasTriangle;
-            for (int i = 0; i < 3; i++) {
-                canvasTriangle.vertices[i] = getCanvasIntersectionPoint(modelTriangle.vertices[i], cameraPosition, focalLength, scale);
-            }
-
-            // populate 2-D triangles vector for rendering/keypress purposes
-            twodTriangles.push_back(canvasTriangle);
-            // drawing of triangle(s) updates the depth matrix
-            depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
-//        depthMatrix = drawStroked(window, canvasTriangle, {255,255,255}, depthMatrix);
-//        }
+        CanvasTriangle canvasTriangle = modelToCanvasTriangle(modelTriangle);
+        for (int i = 0; i < 3; i++) {
+            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(canvasTriangle.vertices[i], cameraPosition, cameraOrientation, focalLength, scale);
+        }
+        twodTriangles.push_back(canvasTriangle);
+        depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
     }
-    return twodTriangles;
+
+    // ORBIT
+    if (orbit) {
+        cameraPosition = glm::mat3 (
+        cos(0.1), 0.0f, -sin(0.1),
+        0.0f, 1.0f, 0.0f,
+        sin(0.1), 0.0f, cos(0.1)
+        ) * cameraPosition;
+        cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition, focalLength, scale);
+    }
+    return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
+}
+
+glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition, float focalLength, float scale) {
+    glm::vec3 forward;
+    glm::vec3 up;
+    glm::vec3 right;
+
+    forward = glm::normalize(cameraPosition - lookAtMe);
+
+    glm::vec3 vertical(0.0f,1.0f,0.0f);
+    right = glm::cross(vertical, forward);
+    up = glm::cross(forward, glm::normalize(right));
+
+    // [right up forward]
+    cameraOrientation = glm::mat3(glm::normalize(right), (up), (forward));
+//    std::cout<<glm::to_string(cameraOrientation)<<std::endl;
+
+    return cameraOrientation;
+}
+
+CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
+    float x, y;
+    CanvasPoint intersection;
+
+    // CameraPos - VertexPos
+    glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.depth-cameraPosition.z);
+    //... Then, multiply this vector by orientation matrix
+//    distance = distance * cameraOrientation;
+
+    // Calculate the 2D coordinates on the image plane
+    x = (focalLength/(distance.z)) * (distance.x);
+    y = (focalLength/(distance.z)) * (distance.y);
+
+    // Scaling and shifting
+    x = x * -scale + (320.0f / 2);
+    y = y * scale + (240.0f / 2); // negative scale bc y-axis was flipped
+
+    // Populate and return intersection
+    intersection.x = x;
+    intersection.y = y;
+    intersection.depth = 1/std::abs(distance.z);
+    return intersection;
 }
