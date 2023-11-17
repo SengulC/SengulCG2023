@@ -87,8 +87,8 @@ std::vector<CanvasPoint> interpolateCanvasPoint(CanvasPoint from, CanvasPoint to
 }
 
 std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<float>> depthMatrix) {
-    from.x = std::round(from.x);
-    to.x = std::round(to.x);
+    from.x = std::ceil(from.x);
+    to.x = std::ceil(to.x);
     float xDiff = to.x - from.x;
     float yDiff = to.y - from.y;
     float zDiff = to.depth - from.depth;
@@ -98,7 +98,7 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
 
     std::vector<int> colorgb = unpack(color);
     uint32_t fincolor = pack(colorgb);
-        for (int i = 0; i < static_cast<int>(std::round(steps)); i++) {
+        for (int i = 0; i < static_cast<int>(std::ceil(steps))+1; i++) {
             float x = from.x + (xSteps * static_cast<float>(i));
             float y = from.y + (ySteps * static_cast<float>(i));
 
@@ -109,11 +109,11 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
             int xval = static_cast<int>(std::round(x));
             int yval = static_cast<int>(std::round(y));
 
-            if (xval < 320 && yval < 240) {
-                if (z > depthMatrix[xval][yval] || depthMatrix[xval][yval] == 0.0f) {
-                    depthMatrix[xval][yval] = z;
+            if (xval < 320 && yval < 240 && xval > 0 && yval > 0) {
+//                if (z > depthMatrix[xval][yval] || depthMatrix[xval][yval] == 0.0f) {
+//                    depthMatrix[xval][yval] = z;
                     window.setPixelColour(xval, yval, fincolor);
-                }
+//                }
             }
         int temp = std::round(z * 255);
         Colour col = Colour(temp, temp, temp);

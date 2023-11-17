@@ -25,21 +25,21 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
     CanvasPoint extraV = {extraVx, middleV.y, extraVz};
 
     // top triangle
-    std::vector<CanvasPoint> topStart = interpolateCanvasPoint(points[0], extraV, topHeight+1);
-    std::vector<CanvasPoint> topEnd = interpolateCanvasPoint(points[0], middleV, topHeight+1);
-    for (int i = 0; i <= topHeight; i++) {
+    std::vector<CanvasPoint> topStart = interpolateCanvasPoint(points[0], extraV, topHeight+2);
+    std::vector<CanvasPoint> topEnd = interpolateCanvasPoint(points[0], middleV, topHeight+2);
+    for (int i = 0; i <= topHeight+1; i++) {
         depthMatrix = drawLine(window,topStart[i], topEnd[i], color, depthMatrix);
     }
 
     // bottom triangle
-    std::vector<CanvasPoint> bottomStart = interpolateCanvasPoint(extraV, points[2], bottomHeight+1);
-    std::vector<CanvasPoint> bottomEnd = interpolateCanvasPoint(middleV, points[2], bottomHeight+1);
-    for (int i = 0; i <= bottomHeight; i++) {
+    std::vector<CanvasPoint> bottomStart = interpolateCanvasPoint(extraV, points[2], bottomHeight+2);
+    std::vector<CanvasPoint> bottomEnd = interpolateCanvasPoint(middleV, points[2], bottomHeight+2);
+    for (int i = 0; i <= bottomHeight+1; i++) {
         depthMatrix = drawLine(window, bottomStart[i], bottomEnd[i], color, depthMatrix);
     }
 
-    depthMatrix = drawLine(window, CanvasPoint{std::min(extraVx, middleV.x), extraV.y},
-                           CanvasPoint{std::max(extraVx, middleV.x), extraV.y}, color, depthMatrix);
+//    depthMatrix = drawLine(window, CanvasPoint{std::min(extraVx, middleV.x), extraV.y},
+//                           CanvasPoint{std::max(extraVx, middleV.x), extraV.y}, color, depthMatrix);
     return depthMatrix;
 }
 
