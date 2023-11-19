@@ -74,22 +74,25 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
 
     // conversion and projection onto canvas
     for (ModelTriangle &modelTriangle : modelTriangles) {
-//        if (modelTriangle.colour.name == "Red" || modelTriangle.colour.name == "Blue") {
-        CanvasTriangle canvasTriangle = modelToCanvasTriangle(modelTriangle);
-        for (int i = 0; i < 3; i++) {
-            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(canvasTriangle.vertices[i], cameraPosition, cameraOrientation, focalLength, scale);
-        }
-        twodTriangles.push_back(canvasTriangle);
-        depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
-        drawStroked(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+//        if (modelTriangle.colour.name == "Cyan" || modelTriangle.colour.name == "White") {
+            CanvasTriangle canvasTriangle = modelToCanvasTriangle(modelTriangle);
+            for (int i = 0; i < 3; i++) {
+                canvasTriangle.vertices[i] = getCanvasIntersectionPoint(canvasTriangle.vertices[i], cameraPosition,
+                                                                        cameraOrientation, focalLength, scale);
+            }
+            twodTriangles.push_back(canvasTriangle);
+            depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+            drawStroked(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+//        }
     }
 
     // ORBIT
+    float angle = 0.5f;
     if (orbit) {
         cameraPosition = glm::mat3 (
-        cos(0.1), 0.0f, -sin(0.1),
+        cos(angle), 0.0f, -sin(angle),
         0.0f, 1.0f, 0.0f,
-        sin(0.1), 0.0f, cos(0.1)
+        sin(angle), 0.0f, cos(angle)
         ) * cameraPosition;
         cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition);
     }

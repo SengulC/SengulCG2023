@@ -22,4 +22,4 @@ std::vector<int> unpack(const Colour& color);
 uint32_t pack(std::vector<int> colorgb);
 void printMat3(const glm::mat3& matrix);
 std::vector<CanvasPoint> interpolateCanvasPoint(CanvasPoint from, CanvasPoint to, int numberOfValues);
-
+float roundToThreeSF(float num);

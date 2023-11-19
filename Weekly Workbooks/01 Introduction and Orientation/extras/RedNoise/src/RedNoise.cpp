@@ -189,11 +189,13 @@ int main(int argc, char *argv[]) {
 	SDL_Event event;
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-    for (auto &pair : mtls) {
-        if (pair.first == "Grey") {
-//            std::cout<< pack(unpack(pair.second)) << std::endl;
-        }
-    }
+//    for (auto &pair : mtls) {
+//        if (pair.first == "Cyan") {
+//            std::cout<< "Cyan" << pack(unpack(pair.second)) << std::endl;
+//        } else if (pair.first == "White") {
+//            std::cout<< "White" << pack(unpack(pair.second)) << std::endl;
+//        }
+//    }
 
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 

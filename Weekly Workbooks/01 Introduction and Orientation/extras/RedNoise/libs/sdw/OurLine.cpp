@@ -24,6 +24,12 @@ std::string colorName(const uint32_t color) {
         case 4289901234:
             name = "gray";
             break;
+        case 4278255615:
+            name = "cyan";
+            break;
+        case 4294967295:
+            name = "white";
+            break;
         default:
             name = "unknown";
     }
@@ -86,6 +92,28 @@ std::vector<CanvasPoint> interpolateCanvasPoint(CanvasPoint from, CanvasPoint to
     return vect;
 }
 
+float roundToThreeSF(float num) {
+    if (num == 0.0) {
+        return 0.0;  // Avoid division by zero
+    }
+
+    // Calculate the order of magnitude
+    float magnitude = std::pow(10.0, std::floor(std::log10(std::fabs(num))));
+
+    // Extract the first three non-zero digits
+    int firstDigit = static_cast<int>(std::fabs(num) / magnitude);
+    int secondDigit = static_cast<int>((std::fabs(num) / magnitude * 10) - (firstDigit * 10));
+    int thirdDigit = static_cast<int>((std::fabs(num) / magnitude * 100) - (firstDigit * 100) - (secondDigit * 10));
+
+    // Combine the three digits and multiply by the magnitude
+    float rounded = (firstDigit * 100 + secondDigit * 10 + thirdDigit) * magnitude / 1000.0;
+
+    // Preserve the sign of the original number
+    rounded *= (num < 0) ? -1 : 1;
+
+    return rounded;
+}
+
 std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<float>> depthMatrix) {
     from.x = std::ceil(from.x);
     to.x = std::ceil(to.x);
@@ -98,27 +126,37 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
 
     std::vector<int> colorgb = unpack(color);
     uint32_t fincolor = pack(colorgb);
-        for (int i = 0; i < static_cast<int>(std::ceil(steps))+1; i++) {
-            float x = from.x + (xSteps * static_cast<float>(i));
-            float y = from.y + (ySteps * static_cast<float>(i));
+    for (int i = 0; i < static_cast<int>(std::ceil(steps)) + 1; i++) {
+        float x = from.x + (xSteps * static_cast<float>(i));
+        float y = from.y + (ySteps * static_cast<float>(i));
 
-            int magnitude = static_cast<int>(sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff));
-            std::vector<float> depths = interpolateSingleFloats((from.depth), (to.depth), magnitude);
+        int magnitude = static_cast<int>(sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff));
+        std::vector<float> depths = interpolateSingleFloats((from.depth), (to.depth), magnitude);
 
-            float z = (depths[i]);
-            int xval = static_cast<int>(std::round(x));
-            int yval = static_cast<int>(std::round(y));
+        float z = (depths[i]);
+        int xval = static_cast<int>(std::round(x));
+        int yval = static_cast<int>(std::round(y));
 
-            if (xval < 320 && yval < 240 && xval > 0 && yval > 0) {
-                if (z > depthMatrix[xval][yval] || depthMatrix[xval][yval] == 0.0f) {
-                    depthMatrix[xval][yval] = z;
-                    window.setPixelColour(xval, yval, fincolor);
-                }
+        if (xval < 320 && yval < 240 && xval > 0 && yval > 0) {
+            // within drawing bounds
+            if (depthMatrix[xval][yval] == 0.0f && colorName(fincolor) == "cyan") {
+                // if trying to draw ceiling cyan and coordinate depth is 0 (so init. state), paint it, otherwise dont.
+                depthMatrix[xval][yval] = z;
+                window.setPixelColour(xval, yval, fincolor);
+            } else if (colorName(fincolor) == "cyan") {
+                continue;
+            } else if (z > depthMatrix[xval][yval]) {
+                // casual depth check
+                depthMatrix[xval][yval] = z;
+                window.setPixelColour(xval, yval, fincolor);
             }
+        }
+        /*
         int temp = std::round(z * 255);
         Colour col = Colour(temp, temp, temp);
-//        window.setPixelColour(xval, yval, pack(unpack(col)));
-        }
+        window.setPixelColour(xval, yval, pack(unpack(col)));
+         */
+    }
     return depthMatrix;
 }
 
