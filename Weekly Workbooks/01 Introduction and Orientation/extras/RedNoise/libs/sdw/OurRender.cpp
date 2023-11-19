@@ -1,5 +1,4 @@
 #include "OurRender.h"
-#include "glm/ext.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -138,3 +137,87 @@ CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cam
     intersection.depth = 1/std::abs(distance.z);
     return intersection;
 }
+
+RayTriangleIntersection getClosestIntersection(glm::vec3 cameraPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles) {
+    rayDirection = glm::normalize(rayDirection);
+    glm::vec3 e0, e1, SPVector, possibleSolution;
+    std::vector<RayTriangleIntersection> possibleSolutions, convertedSolutions1, convertedSolutions2;
+
+    // calculate an array of possibleSolutions,
+    // convert them to (t,u,v),
+    // return one with smallest t as a RayTriangleIntersection:
+    //    glm::vec3 intersectionPoint;
+    //    float distanceFromCamera;
+    //    ModelTriangle intersectedTriangle;
+    //    size_t triangleIndex;
+
+    int index = 0;
+    for (ModelTriangle triangle : triangles) {
+        e0 = triangle.vertices[1] - triangle.vertices[0];
+        e1 = triangle.vertices[2] - triangle.vertices[0];
+        SPVector = cameraPosition - triangle.vertices[0];
+        glm::mat3 DEMatrix(-rayDirection, e0, e1);
+        possibleSolution = glm::inverse(DEMatrix) * SPVector;
+        possibleSolutions.emplace_back(possibleSolution, glm::length(cameraPosition - possibleSolution), triangle,
+                                       index);
+
+        glm::vec3 convertedPoint, position;
+        RayTriangleIntersection convertedIntersection;
+        // conversion #1: r = p0 + u(p1-p0) + v(p2-p0)
+        // conversion #2: position = startpoint + scalar * dir
+        // = cameraPosition + t * rayDirection;
+
+        //    t the absolute distance along the ray from the camera to the intersection1 point
+        //    u the proportional distance along the triangle's first edge that the intersection1 point occurs
+        //    v the proportional distance along the triangle's second edge that the intersection1 point occurs
+        for (const RayTriangleIntersection &tuv: possibleSolutions) {
+            convertedIntersection = tuv;
+            convertedPoint = triangle.vertices[0] + tuv.intersectionPoint.y * e0 + tuv.intersectionPoint.z * e1;
+            convertedIntersection.intersectionPoint = convertedPoint;
+            convertedSolutions1.push_back(convertedIntersection);
+
+            convertedIntersection = tuv;
+            position = cameraPosition + tuv.intersectionPoint.x * rayDirection;
+            convertedIntersection.intersectionPoint = position;
+            convertedSolutions2.push_back(convertedIntersection);
+        }
+        index++;
+    }
+
+    // lamba func to find smallest t val in convertedSolutions1
+    auto intersection1 = std::min_element(
+            convertedSolutions1.begin(), convertedSolutions1.end(),
+            [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return a.intersectionPoint.x < b.intersectionPoint.x;});
+
+    auto intersection2 = std::min_element(
+            convertedSolutions2.begin(), convertedSolutions2.end(),
+            [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return a.intersectionPoint.x < b.intersectionPoint.x;});
+
+    // -> is some wrap-iter thing apparently (source: CLion)
+    RayTriangleIntersection closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromCamera, intersection1->intersectedTriangle, intersection1->triangleIndex);
+    RayTriangleIntersection closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromCamera, intersection2->intersectedTriangle, intersection2->triangleIndex);
+
+    std::cout<<closestIntersection<<std::endl;
+    std::cout<<closestIntersection2<<std::endl;
+    return closestIntersection;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

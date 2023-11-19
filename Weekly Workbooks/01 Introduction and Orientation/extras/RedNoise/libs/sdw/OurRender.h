@@ -7,12 +7,15 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include "CanvasPoint.h"
+#include "RayTriangleIntersection.h"
 #include "Colour.h"
 #include "ModelTriangle.h"
 #include <iostream>
 #include <string>
 #include "OurLine.h"
 #include "OurTriangle.h"
+#include "glm/ext.hpp"
+#include <algorithm>
 
 void bAndWdraw(DrawingWindow &window);
 
@@ -23,3 +26,5 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingW
 CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale);
 
 glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition);
+
+RayTriangleIntersection getClosestIntersection(glm::vec3 cameraPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles);
