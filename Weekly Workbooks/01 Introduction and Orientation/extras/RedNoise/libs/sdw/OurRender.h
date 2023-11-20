@@ -30,3 +30,5 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
 RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles);
 
 void drawRaytracedScene(const std::vector<ModelTriangle>& triangles, glm::vec3 cameraPosition);
+
+bool validTUV(glm::vec3 tuv);

@@ -193,12 +193,13 @@ int main(int argc, char *argv[]) {
 
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
-//    // // RASTERIZER
+    // // RASTERIZER
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
 //    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    twodTriangles = std::get<0>(tuple);
 //    cameraPosition = std::get<1>(tuple);
 //    cameraOrientation = std::get<2>(tuple);
+//
 //
 //    for (int x=0; x<WIDTH; x++) {
 //        for (int y=0; y<HEIGHT; y++) {
@@ -206,13 +207,7 @@ int main(int argc, char *argv[]) {
 //        }
 //    }
 
-    // drawRaytracedScene();
-    /* array of triangles
-     * fire a ray into first pixel, loop through array of triangles, use intersection formula
-    */
-    glm::vec3 rayDir(WIDTH/2,HEIGHT/2,0);
-    RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, rayDir, modelTriangles);
-    std::cout<<"intersection: " <<intersection<< " color is: " << intersection.intersectedTriangle.colour<< std::endl;
+     drawRaytracedScene(modelTriangles, cameraPosition);
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
