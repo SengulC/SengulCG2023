@@ -105,7 +105,8 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-            tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+            tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
+                                        depthMatrix, orbit);
             twodTriangles = std::get<0>(tuple);
             cameraPosition = std::get<1>(tuple);
             cameraOrientation = std::get<2>(tuple);
@@ -119,7 +120,8 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 toggle = true;
                 window.clearPixels();
                 std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-                tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+                tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength,
+                                            scale, depthMatrix, orbit);
                 twodTriangles = std::get<0>(tuple);
                 cameraPosition = std::get<1>(tuple);
                 cameraOrientation = std::get<2>(tuple);
@@ -157,7 +159,8 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-            tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+            tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
+                                        depthMatrix, orbit);
             twodTriangles = std::get<0>(tuple);
             cameraPosition = std::get<1>(tuple);
             cameraOrientation = std::get<2>(tuple);
@@ -169,7 +172,6 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             << twodTriangles[indexcheck-1].v1().depth << ""
             << twodTriangles[indexcheck-1].v2().depth << std::endl;
         }
-
 	} else if (event.type == SDL_MOUSEBUTTONDOWN) {
 		window.savePPM("output.ppm");
 		window.saveBMP("output.bmp");
@@ -181,32 +183,43 @@ int main(int argc, char *argv[]) {
 	SDL_Event event;
 
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-//    for (auto &pair : mtls) {
-//        if (pair.first == "Cyan") {
-//            std::cout<< "Cyan" << pack(unpack(pair.second)) << std::endl;
-//        } else if (pair.first == "White") {
-//            std::cout<< "White" << pack(unpack(pair.second)) << std::endl;
-//        }
-//    }
+/*    for (auto &pair : mtls) {
+        if (pair.first == "Cyan") {
+            std::cout<< "Cyan" << pack(unpack(pair.second)) << std::endl;
+        } else if (pair.first == "White") {
+            std::cout<< "White" << pack(unpack(pair.second)) << std::endl;
+        }
+    }*/
 
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
 //    // // RASTERIZER
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-//    tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    twodTriangles = std::get<0>(tuple);
 //    cameraPosition = std::get<1>(tuple);
 //    cameraOrientation = std::get<2>(tuple);
+//
+//    for (int x=0; x<WIDTH; x++) {
+//        for (int y=0; y<HEIGHT; y++) {
+//            glm::vec3 rayDir(0,0,0)
+//        }
+//    }
 
-    glm::vec3 rayDir(0,0,0);
-    getClosestIntersection(cameraPosition, rayDir, modelTriangles);
+    // drawRaytracedScene();
+    /* array of triangles
+     * fire a ray into first pixel, loop through array of triangles, use intersection formula
+    */
+    glm::vec3 rayDir(WIDTH/2,HEIGHT/2,0);
+    RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, rayDir, modelTriangles);
+    std::cout<<"intersection: " <<intersection<< " color is: " << intersection.intersectedTriangle.colour<< std::endl;
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
         // // RASTERIZER
 //        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
-//        tuple = rasterize(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//        tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //        twodTriangles = std::get<0>(tuple);
 //        cameraPosition = std::get<1>(tuple);
 //        cameraOrientation = std::get<2>(tuple);

@@ -66,7 +66,7 @@ void rainbowDraw(DrawingWindow &window) {
     }
 }
 
-std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> rasterize(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
+std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> drawRasterizedScene(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
     window.clearPixels();
     depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
     std::vector<CanvasTriangle> twodTriangles;
@@ -138,18 +138,46 @@ CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cam
     return intersection;
 }
 
-RayTriangleIntersection getClosestIntersection(glm::vec3 cameraPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles) {
+bool validTUV(glm::vec3 tuv) {
+    /*
+    t = the absolute distance along the ray from the camera to the intersection point
+    u = the proportional distance along the triangle's first edge that the intersection1 point occurs
+    v = the proportional distance along the triangle's second edge that the intersection1 point occurs
+    (u >= 0.0) && (u <= 1.0)
+    (v >= 0.0) && (v <= 1.0)
+    (u + v) <= 1.0
+    You should also check that the distance t from the camera to the intersection is positive
+     */
+    float t=tuv.x, u=tuv.y, v=tuv.z;
+    bool uTest = (u >= 0.0) && (u <= 1.0);
+    bool vTest = (v >= 0.0) && (v <= 1.0);
+    bool addTest = (u + v) <= 1.0;
+    bool tPos = t >= 0.0;
+
+    if (uTest && vTest && addTest && tPos) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void drawRaytracedScene(const std::vector<ModelTriangle>& triangles, glm::vec3 cameraPosition) {
+    /* array of triangles
+     * loop through sdl window pixels,
+     * fire a ray into first pixel, use intersection formula to loop through array of triangles,
+     * find closest intersection
+     * convert that to canvas2D
+     * set pixels
+    */
+    glm::vec3 rayDir(WIDTH/2,HEIGHT/2,0);
+    RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, rayDir, triangles);
+    std::cout<<"intersection: " <<intersection<< " color is: " << intersection.intersectedTriangle.colour<< std::endl;
+}
+
+RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles) {
     rayDirection = glm::normalize(rayDirection);
     glm::vec3 e0, e1, SPVector, possibleSolution;
     std::vector<RayTriangleIntersection> possibleSolutions, convertedSolutions1, convertedSolutions2;
-
-    // calculate an array of possibleSolutions,
-    // convert them to (t,u,v),
-    // return one with smallest t as a RayTriangleIntersection:
-    //    glm::vec3 intersectionPoint;
-    //    float distanceFromCamera;
-    //    ModelTriangle intersectedTriangle;
-    //    size_t triangleIndex;
 
     int index = 0;
     for (ModelTriangle triangle : triangles) {
@@ -164,22 +192,21 @@ RayTriangleIntersection getClosestIntersection(glm::vec3 cameraPosition, glm::ve
         glm::vec3 convertedPoint, position;
         RayTriangleIntersection convertedIntersection;
         // conversion #1: r = p0 + u(p1-p0) + v(p2-p0)
-        // conversion #2: position = startpoint + scalar * dir
-        // = cameraPosition + t * rayDirection;
-
-        //    t the absolute distance along the ray from the camera to the intersection1 point
-        //    u the proportional distance along the triangle's first edge that the intersection1 point occurs
-        //    v the proportional distance along the triangle's second edge that the intersection1 point occurs
+        // conversion #2: position = cameraPosition + t * rayDirection;
         for (const RayTriangleIntersection &tuv: possibleSolutions) {
-            convertedIntersection = tuv;
-            convertedPoint = triangle.vertices[0] + tuv.intersectionPoint.y * e0 + tuv.intersectionPoint.z * e1;
-            convertedIntersection.intersectionPoint = convertedPoint;
-            convertedSolutions1.push_back(convertedIntersection);
+            if (validTUV(tuv.intersectionPoint)) {
+                convertedIntersection = tuv;
+                convertedPoint = triangle.vertices[0] + tuv.intersectionPoint.y * e0 + tuv.intersectionPoint.z * e1;
+                convertedIntersection.intersectionPoint = convertedPoint;
+                convertedSolutions1.push_back(convertedIntersection);
 
-            convertedIntersection = tuv;
-            position = cameraPosition + tuv.intersectionPoint.x * rayDirection;
-            convertedIntersection.intersectionPoint = position;
-            convertedSolutions2.push_back(convertedIntersection);
+                convertedIntersection = tuv;
+                position = cameraPosition + tuv.intersectionPoint.x * rayDirection;
+                convertedIntersection.intersectionPoint = position;
+                convertedSolutions2.push_back(convertedIntersection);
+            } else {
+                continue;
+            }
         }
         index++;
     }
@@ -197,27 +224,14 @@ RayTriangleIntersection getClosestIntersection(glm::vec3 cameraPosition, glm::ve
     RayTriangleIntersection closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromCamera, intersection1->intersectedTriangle, intersection1->triangleIndex);
     RayTriangleIntersection closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromCamera, intersection2->intersectedTriangle, intersection2->triangleIndex);
 
-    std::cout<<closestIntersection<<std::endl;
-    std::cout<<closestIntersection2<<std::endl;
+    if (convertedSolutions1.empty() && convertedSolutions2.empty()) {
+        // return index as -1 for error code
+        RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 0, triangles[0], -1);
+        return erroneous;
+    }
+
+    std::cout<< "1: " << closestIntersection<<std::endl;
+    std::cout<< "2: " << closestIntersection2<<std::endl;
+    // outputs NaNs !!! could this be a wrap-iter issue or just bc im not doing the t,u,v <<=>> checks yet...?
     return closestIntersection;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
