@@ -154,9 +154,10 @@ bool validTUV(glm::vec3 tuv) {
     bool vTest = (v >= 0.0) && (v <= 1.0);
     bool addTest = (u + v) <= 1.0;
     bool tPos = t >= 0.0;
+//    std::cout<< uTest << " " << vTest << " " << addTest << " " << tPos<<std::endl;
 
     if (uTest && vTest && addTest && tPos) {
-        std::cout<<"it's true"<<std::endl;
+//        std::cout<<"it's ACTUALLY TRUE!!"<<std::endl;
         return true;
     } else {
         return false;
@@ -171,16 +172,16 @@ void drawRaytracedScene(const std::vector<ModelTriangle>& triangles, glm::vec3 c
      * convert that to canvas2D
      * set pixels
     */
-    glm::vec3 rayDir(WIDTH/2,HEIGHT/2,0);
+    glm::vec3 rayDir(0,0,0);
     RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, rayDir, triangles);
-    /*if (intersection.triangleIndex!= INT_MAX) {
+    if (intersection.triangleIndex!= INT_MAX) {
         // not the erroneous intersection...
         // convert and set pixel
-    }*/
+    }
 }
 
 RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles) {
-    rayDirection = glm::normalize(rayDirection);
+    rayDirection = glm::normalize(rayDirection - cameraPosition);
     glm::vec3 e0, e1, SPVector, possibleSolution;
     std::vector<RayTriangleIntersection> possibleSolutions, convertedSolutions1, convertedSolutions2;
 
@@ -202,7 +203,7 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
         // tuv = intersectionPoint.xyz
         for (const RayTriangleIntersection &tuv: possibleSolutions) {
             if (validTUV(tuv.intersectionPoint)) {
-                std::cout<<"called validTUV it returned true"<<std::endl;
+//                std::cout<<"called validTUV it returned true"<<std::endl;
                 convertedIntersection = tuv; // retain all other data for RayTriangleIntersection struct just overwrite the vec3 w/ conversion
                 // conversion #1: r = p0 + u(p1-p0) + v(p2-p0)
                 convertedPoint = triangle.vertices[0] + (tuv.intersectionPoint.y * e0) + (tuv.intersectionPoint.z * e1);
@@ -227,11 +228,11 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
         // lamba func to find smallest t val in convertedSolutions1/2
         auto intersection1 = std::min_element(
                 convertedSolutions1.begin(), convertedSolutions1.end(),
-                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return a.intersectionPoint.x < b.intersectionPoint.x;});
+                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return a.distanceFromCamera < b.distanceFromCamera;});
 
         auto intersection2 = std::min_element(
                 convertedSolutions2.begin(), convertedSolutions2.end(),
-                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return a.intersectionPoint.x < b.intersectionPoint.x;});
+                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return a.distanceFromCamera < b.distanceFromCamera;});
 
         // -> is some wrap-iter thing apparently (source: CLion)
         closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromCamera, intersection1->intersectedTriangle, intersection1->triangleIndex);
@@ -243,5 +244,5 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
         return erroneous;
     }
 
-    return closestIntersection2;
+    return closestIntersection;
 }
