@@ -152,7 +152,7 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
         // tuv = intersectionPoint.xyz
         for (const RayTriangleIntersection &tuv: possibleSolutions) {
             if (validTUV(tuv.intersectionPoint)) {
-                std::cout<<"in conversion"<<std::endl;
+//                std::cout<<"in conversion"<<std::endl;
 //                std::cout<<"called validTUV it returned true"<<std::endl;
                 convertedIntersection = tuv; // retain all other data for RayTriangleIntersection struct just overwrite the vec3 w/ conversion
                 // conversion #1: r = p0 + u(p1-p0) + v(p2-p0)
@@ -192,7 +192,6 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
         RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 0, triangles[0], INT_MAX);
         return erroneous;
     }
-
     return closestIntersection;
 }
 
@@ -223,13 +222,14 @@ CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cam
 
 glm::vec3 convertToDirectionVector(CanvasPoint point, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation) {
     // Reverse the scaling and shifting
-    float x = (point.x - (WIDTH / 2)) / scale; // flip the negative scale?
-    float y = (point.y - (HEIGHT / 2)) / -scale;
+//    float x = (point.x)/scale - (WIDTH / 2);
+//    float y = (point.y)/scale - (HEIGHT / 2);
+//    float z = point.depth-cameraPosition.z;
 
     // Calculate the 3D rays
-    glm::vec3 vertexPosition (x, y, point.depth);
-    vertexPosition.x = (focalLength * vertexPosition.z) / vertexPosition.x;
-    vertexPosition.y = (focalLength * vertexPosition.z) / vertexPosition.y;
+    glm::vec3 vertexPosition (point.x, point.y, point.depth);
+    vertexPosition.x = focalLength * (vertexPosition.z / vertexPosition.x);
+    vertexPosition.y = focalLength * (vertexPosition.z / vertexPosition.y);
 
     // Reverse the addition/multiplication of camera
     vertexPosition = glm::inverse(cameraOrientation) * vertexPosition;
@@ -245,22 +245,21 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
      * find closest intersection
      * if valid, set pixel
     */
+    std::cout<<"in raytracer"<<std::endl;
     window.clearPixels();
-    for (int x=0; x<WIDTH; x++) {
-        for (int y=0; y<HEIGHT; y++) {
+    for (int x=0; x<WIDTH/2; x+=2) {
+        for (int y=0; y<HEIGHT/2; y+=2) {
             float depth = focalLength;
             CanvasPoint point(x, y, depth);
             glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
-//            std::cout << rayDirection.x << " " << rayDirection.y << " " << rayDirection.z <<std::endl;
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, rayDirection, triangles);
             if (intersection.triangleIndex!= INT_MAX) {
-                // valid intersection! set pixel...
-                std::cout<<"setting pixel to color: " << x << " "<< y<< " " << intersection.intersectedTriangle.colour<<std::endl;
                 window.setPixelColour(x, y, pack(unpack(intersection.intersectedTriangle.colour)));
             } else {
                 continue;
             }
         }
     }
+    std::cout<<"end of ray trace"<<std::endl;
 }
 
