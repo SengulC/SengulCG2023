@@ -3,6 +3,7 @@
 #define WIDTH 320
 #define HEIGHT 240
 
+// rednoise
 void bAndWdraw(DrawingWindow &window) {
     window.clearPixels();
     std::vector<float> colors = interpolateSingleFloats(255.0, 0.0, window.width);
@@ -16,7 +17,6 @@ void bAndWdraw(DrawingWindow &window) {
         }
     }
 }
-
 void rainbowDraw(DrawingWindow &window) {
     window.clearPixels();
     glm::vec3 red(255, 0, 0);
@@ -66,38 +66,7 @@ void rainbowDraw(DrawingWindow &window) {
     }
 }
 
-std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> drawRasterizedScene(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
-    window.clearPixels();
-    depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
-    std::vector<CanvasTriangle> twodTriangles;
-
-    // conversion and projection onto canvas
-    for (ModelTriangle &modelTriangle : modelTriangles) {
-//        if (modelTriangle.colour.name == "Cyan" || modelTriangle.colour.name == "White") {
-            CanvasTriangle canvasTriangle = modelToCanvasTriangle(modelTriangle);
-            for (int i = 0; i < 3; i++) {
-                canvasTriangle.vertices[i] = getCanvasIntersectionPoint(canvasTriangle.vertices[i], cameraPosition,
-                                                                        cameraOrientation, focalLength, scale);
-            }
-            twodTriangles.push_back(canvasTriangle);
-            depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
-            drawStroked(window, canvasTriangle, modelTriangle.colour, depthMatrix);
-//        }
-    }
-
-    // ORBIT
-    float angle = 0.5f;
-    if (orbit) {
-        cameraPosition = glm::mat3 (
-        cos(angle), 0.0f, -sin(angle),
-        0.0f, 1.0f, 0.0f,
-        sin(angle), 0.0f, cos(angle)
-        ) * cameraPosition;
-        cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition);
-    }
-    return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation);
-}
-
+// rasterized render
 glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 cameraPosition) {
     glm::vec3 forward;
     glm::vec3 up;
@@ -113,75 +82,55 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
     cameraOrientation = glm::mat3(right, up, forward);
     return cameraOrientation;
 }
+std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> drawRasterizedScene(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
+    window.clearPixels();
+    depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
+    std::vector<CanvasTriangle> twodTriangles;
 
-CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
-    float x, y;
-    CanvasPoint intersection;
+    // conversion and projection onto canvas
+    for (ModelTriangle &modelTriangle : modelTriangles) {
+//        if (modelTriangle.colour.name == "Cyan" || modelTriangle.colour.name == "White") {
+        CanvasTriangle canvasTriangle = modelToCanvasTriangle(modelTriangle);
+        for (int i = 0; i < 3; i++) {
+            canvasTriangle.vertices[i] = getCanvasIntersectionPoint(canvasTriangle.vertices[i], cameraPosition,
+                                                                    cameraOrientation, focalLength, scale);
+        }
+        twodTriangles.push_back(canvasTriangle);
+        depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+        drawStroked(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+//        }
+    }
 
-    // CameraPos - VertexPos
-    glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.depth-cameraPosition.z);
-    //... Then, multiply this vector by orientation matrix
-    distance = distance * cameraOrientation;
-
-    // Calculate the 2D coordinates on the image plane
-    x = (focalLength/(distance.z)) * (distance.x);
-    y = (focalLength/(distance.z)) * (distance.y);
-
-    // Scaling and shifting
-    x = x * -scale + (320.0f / 2);
-    y = y * scale + (240.0f / 2); // negative scale bc y-axis was flipped
-
-    // Populate and return intersection
-    intersection.x = x;
-    intersection.y = y;
-    intersection.depth = 1/std::abs(distance.z);
-    return intersection;
+    // ORBIT
+    float angle = 0.5f;
+    if (orbit) {
+        cameraPosition = glm::mat3 (
+                cos(angle), 0.0f, -sin(angle),
+                0.0f, 1.0f, 0.0f,
+                sin(angle), 0.0f, cos(angle)
+        ) * cameraPosition;
+        cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition);
+    }
+    return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation, depthMatrix);
 }
 
+// ray-traced render
 bool validTUV(glm::vec3 tuv) {
-    /*
-    t = the absolute distance along the ray from the camera to the intersection point
-    u = the proportional distance along the triangle's first edge that the intersection1 point occurs
-    v = the proportional distance along the triangle's second edge that the intersection1 point occurs
-    (u >= 0.0) && (u <= 1.0)
-    (v >= 0.0) && (v <= 1.0)
-    (u + v) <= 1.0
-    You should also check that the distance t from the camera to the intersection is positive
-     */
     float t=tuv.x; float u=tuv.y; float v=tuv.z;
-//    std::cout<<"t: " << t << " u: " << u << " v: " << v << std::endl;
     bool uTest = (u >= 0.0) && (u <= 1.0);
     bool vTest = (v >= 0.0) && (v <= 1.0);
     bool addTest = (u + v) <= 1.0;
     bool tPos = t >= 0.0;
-//    std::cout<< uTest << " " << vTest << " " << addTest << " " << tPos<<std::endl;
 
     if (uTest && vTest && addTest && tPos) {
-//        std::cout<<"it's ACTUALLY TRUE!!"<<std::endl;
         return true;
     } else {
         return false;
     }
 }
 
-void drawRaytracedScene(const std::vector<ModelTriangle>& triangles, glm::vec3 cameraPosition) {
-    /* array of triangles
-     * loop through sdl window pixels,
-     * fire a ray into first pixel, use intersection formula to loop through array of triangles,
-     * find closest intersection
-     * convert that to canvas2D
-     * set pixels
-    */
-    glm::vec3 rayDir(0,0,0);
-    RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, rayDir, triangles);
-    if (intersection.triangleIndex!= INT_MAX) {
-        // not the erroneous intersection...
-        // convert and set pixel
-    }
-}
-
 RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles) {
-    rayDirection = glm::normalize(rayDirection - cameraPosition);
+    rayDirection = glm::normalize(rayDirection-cameraPosition);
     glm::vec3 e0, e1, SPVector, possibleSolution;
     std::vector<RayTriangleIntersection> possibleSolutions, convertedSolutions1, convertedSolutions2;
 
@@ -203,6 +152,7 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
         // tuv = intersectionPoint.xyz
         for (const RayTriangleIntersection &tuv: possibleSolutions) {
             if (validTUV(tuv.intersectionPoint)) {
+                std::cout<<"in conversion"<<std::endl;
 //                std::cout<<"called validTUV it returned true"<<std::endl;
                 convertedIntersection = tuv; // retain all other data for RayTriangleIntersection struct just overwrite the vec3 w/ conversion
                 // conversion #1: r = p0 + u(p1-p0) + v(p2-p0)
@@ -228,21 +178,89 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
         // lamba func to find smallest t val in convertedSolutions1/2
         auto intersection1 = std::min_element(
                 convertedSolutions1.begin(), convertedSolutions1.end(),
-                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return a.distanceFromCamera < b.distanceFromCamera;});
+                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return abs(a.intersectionPoint.x) < abs(b.intersectionPoint.x);});
 
         auto intersection2 = std::min_element(
                 convertedSolutions2.begin(), convertedSolutions2.end(),
-                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return a.distanceFromCamera < b.distanceFromCamera;});
+                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return abs(a.intersectionPoint.x) < abs(b.intersectionPoint.x);});
 
         // -> is some wrap-iter thing apparently (source: CLion)
         closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromCamera, intersection1->intersectedTriangle, intersection1->triangleIndex);
         closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromCamera, intersection2->intersectedTriangle, intersection2->triangleIndex);
     } else {
         // return index as -1 for error code
-        std::cout<<"emptyyy"<<std::endl;
         RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 0, triangles[0], INT_MAX);
         return erroneous;
     }
 
     return closestIntersection;
 }
+
+CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
+    // converting from a 3D vertex position into a 2D canvas position...
+    float x, y;
+    CanvasPoint intersection;
+
+    // VertexPos - CameraPos
+    glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.depth-cameraPosition.z);
+    //... Then, multiply this vector by orientation matrix
+    distance = distance * cameraOrientation;
+
+    // Calculate the 2D coordinates on the image plane
+    x = (focalLength/(distance.z)) * (distance.x);
+    y = (focalLength/(distance.z)) * (distance.y);
+
+    // Scaling and shifting
+    x = x * -scale + (WIDTH / 2); // negative scale bc x-axis was flipped
+    y = y * scale + (HEIGHT/ 2);
+
+    // Populate and return intersection
+    intersection.x = x;
+    intersection.y = y;
+    intersection.depth = 1/std::abs(distance.z);
+    return intersection;
+}
+
+glm::vec3 convertToDirectionVector(CanvasPoint point, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation) {
+    // Reverse the scaling and shifting
+    float x = (point.x - (WIDTH / 2)) / scale; // flip the negative scale?
+    float y = (point.y - (HEIGHT / 2)) / -scale;
+
+    // Calculate the 3D rays
+    glm::vec3 vertexPosition (x, y, point.depth);
+    vertexPosition.x = (focalLength * vertexPosition.z) / vertexPosition.x;
+    vertexPosition.y = (focalLength * vertexPosition.z) / vertexPosition.y;
+
+    // Reverse the addition/multiplication of camera
+    vertexPosition = glm::inverse(cameraOrientation) * vertexPosition;
+    vertexPosition += cameraPosition;
+
+    return vertexPosition;
+}
+
+void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation) {
+    /* given an array of triangles
+     * loop through sdl window pixels,
+     * fire a ray into first pixel, use intersection formula to loop through array of triangles,
+     * find closest intersection
+     * if valid, set pixel
+    */
+    window.clearPixels();
+    for (int x=0; x<WIDTH; x++) {
+        for (int y=0; y<HEIGHT; y++) {
+            float depth = focalLength;
+            CanvasPoint point(x, y, depth);
+            glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
+//            std::cout << rayDirection.x << " " << rayDirection.y << " " << rayDirection.z <<std::endl;
+            RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, rayDirection, triangles);
+            if (intersection.triangleIndex!= INT_MAX) {
+                // valid intersection! set pixel...
+                std::cout<<"setting pixel to color: " << x << " "<< y<< " " << intersection.intersectedTriangle.colour<<std::endl;
+                window.setPixelColour(x, y, pack(unpack(intersection.intersectedTriangle.colour)));
+            } else {
+                continue;
+            }
+        }
+    }
+}
+

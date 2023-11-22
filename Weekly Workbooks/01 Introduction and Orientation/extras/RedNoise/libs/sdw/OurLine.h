@@ -24,3 +24,4 @@ void printMat3(const glm::mat3& matrix);
 std::vector<CanvasPoint> interpolateCanvasPoint(CanvasPoint from, CanvasPoint to, int numberOfValues);
 float roundToThreeSF(float num);
 std::string colorName(const uint32_t color);
+void printDepthMatrix(const std::vector<std::vector<float>>& depthMatrix);

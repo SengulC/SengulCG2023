@@ -12,6 +12,15 @@ void printMat3(const glm::mat3& matrix) {
     }
 }
 
+void printDepthMatrix(const std::vector<std::vector<float>>& depthMatrix) {
+    for (const auto& row : depthMatrix) {
+        for (float depth : row) {
+            std::cout << depth << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
 std::string colorName(const uint32_t color) {
     std::string name;
     switch (color) {

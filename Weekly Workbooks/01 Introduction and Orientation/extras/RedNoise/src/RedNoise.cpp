@@ -104,12 +104,13 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             window.clearPixels();
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
-            std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+            std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
             tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
                                         depthMatrix, orbit);
             twodTriangles = std::get<0>(tuple);
             cameraPosition = std::get<1>(tuple);
             cameraOrientation = std::get<2>(tuple);
+            depthMatrix = std::get<3>(tuple);
             indexcheck=0;
             if (toggle){
                 toggle = false;
@@ -119,12 +120,13 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             } else {
                 toggle = true;
                 window.clearPixels();
-                std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+                std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
                 tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength,
                                             scale, depthMatrix, orbit);
                 twodTriangles = std::get<0>(tuple);
                 cameraPosition = std::get<1>(tuple);
                 cameraOrientation = std::get<2>(tuple);
+                depthMatrix = std::get<3>(tuple);
                 indexcheck=0;
             }
         }
@@ -158,12 +160,13 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
             std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
-            std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+            std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
             tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
                                         depthMatrix, orbit);
             twodTriangles = std::get<0>(tuple);
             cameraPosition = std::get<1>(tuple);
             cameraOrientation = std::get<2>(tuple);
+            depthMatrix = std::get<3>(tuple);
             indexcheck=0;
         }
         // print out depth of previously drawn triangle
@@ -193,27 +196,26 @@ int main(int argc, char *argv[]) {
 
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
 
-    // // RASTERIZER
-//    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+     // RASTERIZER
+//    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
 //    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    twodTriangles = std::get<0>(tuple);
 //    cameraPosition = std::get<1>(tuple);
 //    cameraOrientation = std::get<2>(tuple);
-//
-//
-//    for (int x=0; x<WIDTH; x++) {
-//        for (int y=0; y<HEIGHT; y++) {
-//            glm::vec3 rayDir(0,0,0)
-//        }
-//    }
+//    depthMatrix = std::get<3>(tuple);
 
-     drawRaytracedScene(modelTriangles, cameraPosition);
+//    printDepthMatrix(depthMatrix);
+
+    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
+//    RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(0,0,0), modelTriangles);
+//    std::cout << (intersection) << std::endl;
+//    std::cout << (intersection.intersectedTriangle.colour) << std::endl;
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
         // // RASTERIZER
-//        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3> tuple;
+//        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
 //        tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //        twodTriangles = std::get<0>(tuple);
 //        cameraPosition = std::get<1>(tuple);
