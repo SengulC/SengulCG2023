@@ -229,13 +229,18 @@ CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cam
 }
 
 glm::vec3 convertToDirectionVector(CanvasPoint point, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation) {
-    float z = focalLength - cameraPosition.z;
-    float x = ((((point.x) - (WIDTH/2)) / (-scale))) / (focalLength / z);
-    float y = ((((point.y) - (HEIGHT/2)) / (scale))) / (focalLength / z);
+    // Reversed scaling and shifting
+    float x = ((point.x) - (WIDTH/2)) / (-scale);
+    float y = ((point.y) - (HEIGHT/2)) / (scale);
+
+    // Calculate direction vector
+    float zDiff = point.depth - cameraPosition.z;
+    x = x / (focalLength / zDiff);
+    y = y / (focalLength / zDiff);
     glm::vec3 direction (x, y, -focalLength);
 
-//    direction = glm::inverse(cameraOrientation) * direction;
-//    direction += cameraPosition;
+    direction = glm::inverse(cameraOrientation) * direction;
+    // direction += cameraPosition;
 
     return direction;
 }
