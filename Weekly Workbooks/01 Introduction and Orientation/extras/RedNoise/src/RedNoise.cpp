@@ -206,7 +206,7 @@ int main(int argc, char *argv[]) {
 
 //    printDepthMatrix(depthMatrix);
 
-//    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
+    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
 //    RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(0,0,-4), modelTriangles);
 //    std::cout << (intersection) << std::endl;
 //    std::cout << (intersection.intersectedTriangle.colour) << std::endl;
@@ -221,7 +221,7 @@ int main(int argc, char *argv[]) {
 //        cameraPosition = std::get<1>(tuple);
 //        cameraOrientation = std::get<2>(tuple);
 
-        drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
+//        drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
 //		 Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}

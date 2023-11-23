@@ -17,6 +17,7 @@ void bAndWdraw(DrawingWindow &window) {
         }
     }
 }
+
 void rainbowDraw(DrawingWindow &window) {
     window.clearPixels();
     glm::vec3 red(255, 0, 0);
@@ -82,6 +83,32 @@ glm::mat3 LookAt(glm::mat3 cameraOrientation, glm::vec3 lookAtMe, glm::vec3 came
     cameraOrientation = glm::mat3(right, up, forward);
     return cameraOrientation;
 }
+
+CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
+    // converting from a 3D vertex position into a 2D canvas position...
+    float x, y;
+    CanvasPoint intersection;
+
+    // VertexPos - CameraPos
+    glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.depth-cameraPosition.z);
+    //... Then, multiply this vector by orientation matrix
+    distance = distance * cameraOrientation;
+
+    // Calculate the 2D coordinates on the image plane
+    x = (focalLength/(distance.z)) * (distance.x);
+    y = (focalLength/(distance.z)) * (distance.y);
+
+    // Scaling and shifting
+    x = x * -scale + (WIDTH / 2); // negative scale bc x-axis was flipped
+    y = y * scale + (HEIGHT/ 2);
+
+    // Populate and return intersection
+    intersection.x = x;
+    intersection.y = y;
+    intersection.depth = 1/std::abs(distance.z);
+    return intersection;
+}
+
 std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> drawRasterizedScene(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
     window.clearPixels();
     depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
@@ -129,7 +156,7 @@ bool validTUV(glm::vec3 tuv) {
     }
 }
 
-RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles) {
+RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm::vec3 endPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles) {
     rayDirection = glm::normalize(rayDirection);
     glm::vec3 e0, e1, SPVector, possibleSolution;
     std::vector<RayTriangleIntersection> possibleSolutions, convertedSolutions1, convertedSolutions2;
@@ -139,11 +166,11 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
     for (ModelTriangle triangle : triangles) {
         e0 = triangle.vertices[1] - triangle.vertices[0];
         e1 = triangle.vertices[2] - triangle.vertices[0];
-        SPVector = cameraPosition - triangle.vertices[0];
+        SPVector = startPosition - triangle.vertices[0];
         glm::mat3 DEMatrix(-rayDirection, e0, e1);
         possibleSolution = glm::inverse(DEMatrix) * SPVector;
 
-        possibleSolutions.emplace_back(possibleSolution, possibleSolution.x, triangle, index);
+        possibleSolutions.emplace_back(possibleSolution, glm::distance(startPosition, endPosition),possibleSolution.x, triangle, index);
         index++;
     }
 
@@ -164,8 +191,8 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
 
             convertedIntersection = tuv;
             // use the direction of the projected ray and distance t (to find the intersection point relative to the camera) or
-            // conversion #2: position = cameraPosition + t * rayDirection;
-            position = cameraPosition + tuv.intersectionPoint.x * rayDirection;
+            // conversion #2: position = startPosition + t * rayDirection;
+            position = startPosition + tuv.intersectionPoint.x * rayDirection;
             convertedIntersection.intersectionPoint = position;
             convertedSolutions2.push_back(convertedIntersection);
         } else {
@@ -179,18 +206,18 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
         // lamba func to find smallest t val in convertedSolutions1/2
         auto intersection1 = std::min_element(
                 convertedSolutions1.begin(), convertedSolutions1.end(),
-                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return abs(a.distanceFromCamera) < abs(b.distanceFromCamera);});
+                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return (a.t) < (b.t);});
 
         auto intersection2 = std::min_element(
                 convertedSolutions2.begin(), convertedSolutions2.end(),
-                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return abs(a.distanceFromCamera) < abs(b.distanceFromCamera);});
+                [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return (a.t) < (b.t);});
 
         // -> is some wrap-iter thing apparently (source: CLion)
-        closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromCamera, intersection1->intersectedTriangle, intersection1->triangleIndex);
-        closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromCamera, intersection2->intersectedTriangle, intersection2->triangleIndex);
+        closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromStart, intersection1->t, intersection1->intersectedTriangle, intersection1->triangleIndex);
+        closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromStart, intersection1->t, intersection2->intersectedTriangle, intersection2->triangleIndex);
     } else {
         // return index as -1 for error code
-        RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 0, triangles[0], INT_MAX);
+        RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 0, 0, triangles[0], INT_MAX);
         // std::cout<<"No valid intersections"<<std::endl;
         return erroneous;
     }
@@ -203,38 +230,13 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 cameraPosition, gl
     return closestIntersection;
 }
 
-CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale) {
-    // converting from a 3D vertex position into a 2D canvas position...
-    float x, y;
-    CanvasPoint intersection;
-
-    // VertexPos - CameraPos
-    glm::vec3 distance = glm::vec3(vertexPosition.x-cameraPosition.x, vertexPosition.y-cameraPosition.y, vertexPosition.depth-cameraPosition.z);
-    //... Then, multiply this vector by orientation matrix
-    distance = distance * cameraOrientation;
-
-    // Calculate the 2D coordinates on the image plane
-    x = (focalLength/(distance.z)) * (distance.x);
-    y = (focalLength/(distance.z)) * (distance.y);
-
-    // Scaling and shifting
-    x = x * -scale + (WIDTH / 2); // negative scale bc x-axis was flipped
-    y = y * scale + (HEIGHT/ 2);
-
-    // Populate and return intersection
-    intersection.x = x;
-    intersection.y = y;
-    intersection.depth = 1/std::abs(distance.z);
-    return intersection;
-}
-
-glm::vec3 convertToDirectionVector(CanvasPoint point, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation) {
+glm::vec3 convertToDirectionVector(CanvasPoint startPoint, float scale, float focalLength, glm::vec3 endPoint, glm::mat3 cameraOrientation) {
     // Reversed scaling and shifting
-    float x = ((point.x) - (WIDTH/2)) / (-scale);
-    float y = ((point.y) - (HEIGHT/2)) / (scale);
+    float x = ((startPoint.x) - (WIDTH/2)) / (-scale);
+    float y = ((startPoint.y) - (HEIGHT/2)) / (scale);
 
     // Calculate direction vector
-    float zDiff = point.depth - cameraPosition.z;
+    float zDiff = startPoint.depth - endPoint.z;
     x = x / (focalLength / zDiff);
     y = y / (focalLength / zDiff);
     glm::vec3 direction (x, y, -focalLength);
@@ -252,17 +254,36 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
      * find closest intersection
      * if valid, set pixel
     */
-    std::cout<<"in raytracer"<<std::endl;
+
+    /*
+     * you shoot a ray from the camera, through a pixel in the image plane and into the model,
+     * then (if you hit something) you then shoot another ray from the surface that was hit (you can calculate its location in 3D space) towards the light.
+     * if that second ray hits something closer than the light, the point on the surface is in shadow
+    */
+
+    std::cout <<"in raytracer"<< std::endl;
     window.clearPixels();
+    glm::vec3 lightPosition (0,2,0);
     for (int x=0; x<WIDTH; x++) {
         for (int y=0; y<HEIGHT; y++) {
             CanvasPoint point(x, y, focalLength);
             glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
             // std::cout<< "raydir: "<<rayDirection.x<<" "<<rayDirection.y<<" "<<rayDirection.z<<std::endl;
-            RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, rayDirection, triangles);
+            RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles);
             if (intersection.triangleIndex!= INT_MAX) {
-                // std::cout<<"setting pixel"<<std::endl;
-                window.setPixelColour(x, y, pack(unpack(intersection.intersectedTriangle.colour)));
+                // ray has intersected with a triangle in the model
+                // shoot another ray at the light from this pos to see if it intersects with anything else on the way...
+                // make sure your shadow ray is being fired from the intersected surface to the light position (rather than the other way around !).
+                // don't forget to normalise this direction vector
+                glm::vec3 objToLightDirection = glm::normalize(lightPosition-intersection.intersectionPoint);
+                float objToLightDistance = glm::distance(intersection.intersectionPoint, lightPosition);
+                RayTriangleIntersection closestObjIntersection = getClosestValidIntersection(intersection.intersectionPoint, lightPosition, objToLightDirection, triangles);
+//                if (closestObjIntersection.distanceFromStart > objToLightDistance) {
+//                    // there is some object that is closer to the obj than the light; set a shadow!
+//                    window.setPixelColour(x, y, pack(unpack(Colour(255, 192, 203))));
+//                } else {
+                    window.setPixelColour(x, y, pack(unpack(intersection.intersectedTriangle.colour)));
+//                }
             } else {
                 continue;
             }
