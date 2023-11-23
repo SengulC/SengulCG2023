@@ -284,8 +284,6 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
 //                } else {
                     window.setPixelColour(x, y, pack(unpack(intersection.intersectedTriangle.colour)));
 //                }
-            } else {
-                continue;
             }
         }
     }
