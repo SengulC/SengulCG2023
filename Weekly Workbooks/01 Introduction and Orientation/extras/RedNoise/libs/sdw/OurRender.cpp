@@ -170,7 +170,7 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm
         glm::mat3 DEMatrix(-rayDirection, e0, e1);
         possibleSolution = glm::inverse(DEMatrix) * SPVector;
 
-        possibleSolutions.emplace_back(possibleSolution, glm::distance(startPosition, endPosition),possibleSolution.x, triangle, index);
+        possibleSolutions.emplace_back(possibleSolution, glm::distance(startPosition, endPosition),possibleSolution.x, triangle, index, true);
         index++;
     }
 
@@ -213,11 +213,11 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm
                 [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return (a.t) < (b.t);});
 
         // -> is some wrap-iter thing apparently (source: CLion)
-        closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromStart, intersection1->t, intersection1->intersectedTriangle, intersection1->triangleIndex);
-        closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromStart, intersection1->t, intersection2->intersectedTriangle, intersection2->triangleIndex);
+        closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromStart, intersection1->t, intersection1->intersectedTriangle, intersection1->triangleIndex, intersection1->valid);
+        closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromStart, intersection1->t, intersection2->intersectedTriangle, intersection2->triangleIndex, intersection2->valid);
     } else {
         // return index as -1 for error code
-        RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 0, 0, triangles[0], INT_MAX);
+        RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 0, 0, triangles[0], INT_MAX, false);
         // std::cout<<"No valid intersections"<<std::endl;
         return erroneous;
     }
@@ -270,7 +270,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
             // std::cout<< "raydir: "<<rayDirection.x<<" "<<rayDirection.y<<" "<<rayDirection.z<<std::endl;
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles);
-            if (intersection.triangleIndex!= INT_MAX) {
+            if (intersection.valid) {
                 // ray has intersected with a triangle in the model
                 // shoot another ray at the light from this pos to see if it intersects with anything else on the way...
                 // make sure your shadow ray is being fired from the intersected surface to the light position (rather than the other way around !).
@@ -278,8 +278,11 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 glm::vec3 objToLightDirection = glm::normalize(lightPosition-intersection.intersectionPoint);
                 float objToLightDistance = glm::distance(intersection.intersectionPoint, lightPosition);
                 RayTriangleIntersection closestObjIntersection = getClosestValidIntersection(intersection.intersectionPoint, lightPosition, objToLightDirection, triangles);
-//                if (closestObjIntersection.distanceFromStart > objToLightDistance) {
-//                    // there is some object that is closer to the obj than the light; set a shadow!
+//                if (closestObjIntersection.distanceFromStart < objToLightDistance) {
+                    // distance from obj-obj is SMALLER than obj-light...
+                    // there is some object that is closer to the obj than the light; set a shadow!
+//                    std::cout<< "distance btwn obj to its closest inntersection of color:" << closestObjIntersection.intersectedTriangle.colour << " is: " << closestObjIntersection.distanceFromStart <<std::endl;
+//                    std::cout<< "however distance from obj to light is: " << objToLightDistance<<std::endl;
 //                    window.setPixelColour(x, y, pack(unpack(Colour(255, 192, 203))));
 //                } else {
                     window.setPixelColour(x, y, pack(unpack(intersection.intersectedTriangle.colour)));
