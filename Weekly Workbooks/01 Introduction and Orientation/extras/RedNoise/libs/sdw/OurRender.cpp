@@ -229,10 +229,16 @@ CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cam
 }
 
 glm::vec3 convertToDirectionVector(CanvasPoint point, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation) {
-//    glm::vec3 vertexPosition (((point.x)/(scale/4)), ((-point.y)/(scale/4)), -z); // works but whyyy
-    glm::vec3 vertexPosition (point.x, point.y, z);
+    float z = focalLength - cameraPosition.z;
+    glm::vec3 direction (((((point.x) - (WIDTH/2)) / (-scale))) / (focalLength/z), ((((point.y) - (HEIGHT/2))/(scale))) / (focalLength/z), -focalLength); // works but whyyy
+//    float x = (point.x - (WIDTH/2) / scale) / (focalLength / z) ;
+//    float y = (point.y - (HEIGHT/2) / scale) / (focalLength / z);
+//
+//    glm::vec3 direction(x, y, z);
+//    direction = direction * glm::inverse(cameraOrientatioxn);
+//    direction += cameraPosition;
 
-    return glm::normalize(vertexPosition);
+    return direction;
 }
 
 void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation) {
@@ -248,8 +254,10 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
         for (int y=0; y<HEIGHT; y++) {
             CanvasPoint point(x, y, focalLength);
             glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
+            // std::cout<< "raydir: "<<rayDirection.x<<" "<<rayDirection.y<<" "<<rayDirection.z<<std::endl;
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, rayDirection, triangles);
             if (intersection.triangleIndex!= INT_MAX) {
+                // std::cout<<"setting pixel"<<std::endl;
                 window.setPixelColour(x, y, pack(unpack(intersection.intersectedTriangle.colour)));
             } else {
                 continue;

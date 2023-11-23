@@ -22,7 +22,7 @@ int indexcheck;
 bool toggle = true;
 bool orbit = false;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
-float focalLength = 2.0f;
+float focalLength = 1.8f;
 float scale = 240.0f;
 glm::vec3 cameraPosition {0.0, 0.0, 4.0};
 glm::mat3 cameraOrientation(
