@@ -22,7 +22,7 @@ int indexcheck;
 bool toggle = true;
 bool orbit = false;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
-float focalLength = 1.5f;
+float focalLength = 2.0f;
 float scale = 240.0f;
 glm::vec3 cameraPosition {0.0, 0.0, 4.0};
 glm::mat3 cameraOrientation(
@@ -207,7 +207,7 @@ int main(int argc, char *argv[]) {
 //    printDepthMatrix(depthMatrix);
 
     drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
-//    RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(0,0,0), modelTriangles);
+//    RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(0,0,-4), modelTriangles);
 //    std::cout << (intersection) << std::endl;
 //    std::cout << (intersection.intersectedTriangle.colour) << std::endl;
 
