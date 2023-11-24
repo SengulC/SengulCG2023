@@ -31,6 +31,6 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm
 
 void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation);
 
-bool validTUV(glm::vec3 tuv, float dist, bool shadow);
+bool validTUV(const RayTriangleIntersection& intersect, float dist, bool shadow, size_t currIndex);
 
 glm::vec3 convertToDirectionVector(CanvasPoint point);

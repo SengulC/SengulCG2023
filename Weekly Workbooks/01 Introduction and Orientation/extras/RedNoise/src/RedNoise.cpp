@@ -215,9 +215,10 @@ int main(int argc, char *argv[]) {
     }*/
 
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
-//    Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
-//    std::vector<Colour> colors {red, blue, cyan, white};
-//    std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
+    Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
+    Colour gray(179,179,179), yellow(255,255,0);
+    std::vector<Colour> colors {red, blue, cyan, white, yellow, gray};
+    std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
 
      // RASTERIZER
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
