@@ -156,7 +156,7 @@ bool validTUV(glm::vec3 tuv, float dist, bool shadow) {
     return (uTest && vTest && addTest && tPos && shadowT);
 }
 
-RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm::vec3 endPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles, bool shadow, size_t intersection_index) {
+RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm::vec3 endPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles, bool shadow, size_t currIndex) {
     rayDirection = glm::normalize(rayDirection);
     glm::vec3 e0, e1, SPVector, possibleSolution;
     std::vector<RayTriangleIntersection> possibleSolutions, convertedSolutions1, convertedSolutions2;
@@ -165,7 +165,7 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm
     // loop through all triangles for given ray direction
     for (ModelTriangle triangle : triangles) {
         // don't compare the same triangle to itself for intersection!
-//        if (index != intersection_index) {
+//        if (index != currIndex) {
             e0 = triangle.vertices[1] - triangle.vertices[0];
             e1 = triangle.vertices[2] - triangle.vertices[0];
             SPVector = startPosition - triangle.vertices[0];
@@ -250,12 +250,15 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
-                glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint+0.0001f));
-                RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint)+0.0001f, lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
+                intersection.intersectionPoint = glm::vec3(intersection.intersectionPoint.x+0.001f, intersection.intersectionPoint.y+0.001f, intersection.intersectionPoint.z+0.001f);
+                glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
+                RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
                 if (closestObjIntersection.valid) {
                     // IF THE SURFACE HAS SOME INTERSECTION.. THAT IS NOT THE LIGHT. SET SHADOW
-//                    std::cout<< "me: " << intersection.intersectedTriangle.colour<<std::endl;
-//                    std::cout<< "my intersection: " << closestObjIntersection.intersectedTriangle.colour<<std::endl;
+//                    if (intersection.intersectedTriangle.colour.name=="Cyan" || intersection.intersectedTriangle.colour.name=="Yellow") {
+//                        std::cout<< "me: " << intersection.intersectedTriangle.colour << ". index: " << intersection.triangleIndex <<std::endl;
+//                        std::cout<< "my intersection: " << closestObjIntersection.intersectedTriangle.colour << ". index: " << closestObjIntersection.triangleIndex << std::endl;
+//                    }
                     uint32_t shadow = pack(unpack(Colour(0,0,0)));
                     window.setPixelColour(x, y, shadow);
                 } else {
