@@ -142,61 +142,59 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::v
 }
 
 // ray-traced render
-bool validTUV(glm::vec3 tuv) {
+bool validTUV(glm::vec3 tuv, float dist, bool shadow) {
     float t=tuv.x; float u=tuv.y; float v=tuv.z;
     bool uTest = (u >= 0.0) && (u <= 1.0);
     bool vTest = (v >= 0.0) && (v <= 1.0);
     bool addTest = (u + v) <= 1.0;
     bool tPos = t >= 0.0;
+    bool shadowT;
 
-    if (uTest && vTest && addTest && tPos) {
-        return true;
-    } else {
-        return false;
-    }
+    if (shadow) {shadowT = abs(t) < dist;}
+    else { shadowT = true; }
+
+    return (uTest && vTest && addTest && tPos && shadowT);
 }
 
-RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm::vec3 endPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles) {
+RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm::vec3 endPosition, glm::vec3 rayDirection, const std::vector<ModelTriangle>& triangles, bool shadow, size_t intersection_index) {
     rayDirection = glm::normalize(rayDirection);
     glm::vec3 e0, e1, SPVector, possibleSolution;
     std::vector<RayTriangleIntersection> possibleSolutions, convertedSolutions1, convertedSolutions2;
 
-    int index = 0;
+    size_t index = 0;
     // loop through all triangles for given ray direction
     for (ModelTriangle triangle : triangles) {
-        e0 = triangle.vertices[1] - triangle.vertices[0];
-        e1 = triangle.vertices[2] - triangle.vertices[0];
-        SPVector = startPosition - triangle.vertices[0];
-        glm::mat3 DEMatrix(-rayDirection, e0, e1);
-        possibleSolution = glm::inverse(DEMatrix) * SPVector;
+        // don't compare the same triangle to itself for intersection!
+//        if (index != intersection_index) {
+            e0 = triangle.vertices[1] - triangle.vertices[0];
+            e1 = triangle.vertices[2] - triangle.vertices[0];
+            SPVector = startPosition - triangle.vertices[0];
+            glm::mat3 DEMatrix(-rayDirection, e0, e1);
+            possibleSolution = glm::inverse(DEMatrix) * SPVector;
 
-        possibleSolutions.emplace_back(possibleSolution, glm::distance(startPosition, endPosition),possibleSolution.x, triangle, index, true);
-        index++;
+            possibleSolutions.emplace_back(possibleSolution, glm::distance(startPosition, endPosition),
+                                           possibleSolution.x, triangle, index, true);
+            index++;
+//        }
     }
-
-    // std::cout<< possibleSolutions.size() << " possible solutions" <<std::endl;
 
     glm::vec3 convertedPoint, position;
     RayTriangleIntersection convertedIntersection;
     // loop through the possible solutions and check if they're valid
     // tuv = intersectionPoint.xyz
     for (const RayTriangleIntersection &tuv: possibleSolutions) {
-        if (validTUV(tuv.intersectionPoint)) {
-            // std::cout<< "valid!" <<std::endl;
+        if (validTUV(tuv.intersectionPoint, glm::distance(endPosition, startPosition), shadow)) {
             convertedIntersection = tuv; // retain all other data for RayTriangleIntersection struct just overwrite the vec3 w/ conversion
             // conversion #1: r = p0 + u(p1-p0) + v(p2-p0)
             convertedPoint = tuv.intersectedTriangle.vertices[0] + (tuv.intersectionPoint.y * e0) + (tuv.intersectionPoint.z * e1);
-            convertedIntersection.intersectionPoint = convertedPoint;
+            convertedIntersection.intersectionPoint = (convertedPoint);
             convertedSolutions1.push_back(convertedIntersection);
 
-            convertedIntersection = tuv;
-            // use the direction of the projected ray and distance t (to find the intersection point relative to the camera) or
+            convertedIntersection = tuv; // same reason as above^
             // conversion #2: position = startPosition + t * rayDirection;
             position = startPosition + tuv.intersectionPoint.x * rayDirection;
-            convertedIntersection.intersectionPoint = position;
+            convertedIntersection.intersectionPoint = (position);
             convertedSolutions2.push_back(convertedIntersection);
-        } else {
-            continue;
         }
     }
 
@@ -216,18 +214,12 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm
         closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromStart, intersection1->t, intersection1->intersectedTriangle, intersection1->triangleIndex, intersection1->valid);
         closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromStart, intersection1->t, intersection2->intersectedTriangle, intersection2->triangleIndex, intersection2->valid);
     } else {
-        // return index as -1 for error code
-        RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 0, 0, triangles[0], INT_MAX, false);
-        // std::cout<<"No valid intersections"<<std::endl;
+        // return error codes within RayTriangleIntersection (primarily valid: false)
+        RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 1000, 1000, triangles[0], INT_MAX, false);
         return erroneous;
     }
 
-//    std::cout<< "1: " << closestIntersection << std::endl;
-//    std::cout << (closestIntersection.intersectedTriangle.colour) << std::endl;
-//    std::cout<< "2: " << closestIntersection2 << std::endl;
-//    std::cout << (closestIntersection2.intersectedTriangle.colour) << std::endl;
-
-    return closestIntersection;
+    return closestIntersection2;
 }
 
 glm::vec3 convertToDirectionVector(CanvasPoint startPoint, float scale, float focalLength, glm::vec3 endPoint, glm::mat3 cameraOrientation) {
@@ -248,45 +240,27 @@ glm::vec3 convertToDirectionVector(CanvasPoint startPoint, float scale, float fo
 }
 
 void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation) {
-    /* given an array of triangles
-     * loop through sdl window pixels,
-     * fire a ray into first pixel, use intersection formula to loop through array of triangles,
-     * find closest intersection
-     * if valid, set pixel
-    */
-
-    /*
-     * you shoot a ray from the camera, through a pixel in the image plane and into the model,
-     * then (if you hit something) you then shoot another ray from the surface that was hit (you can calculate its location in 3D space) towards the light.
-     * if that second ray hits something closer than the light, the point on the surface is in shadow
-    */
-
     std::cout <<"in raytracer"<< std::endl;
     window.clearPixels();
-    glm::vec3 lightPosition (0,2,0);
-    for (int x=0; x<WIDTH; x++) {
-        for (int y=0; y<HEIGHT; y++) {
+    glm::vec3 lightPosition (0,0.8,0);
+//    float x =261, y=43;
+    for (int y=0; y<HEIGHT; y++) {
+        for (int x=0; x<WIDTH; x++) {
             CanvasPoint point(x, y, focalLength);
             glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
-            // std::cout<< "raydir: "<<rayDirection.x<<" "<<rayDirection.y<<" "<<rayDirection.z<<std::endl;
-            RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles);
+            RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
-                // ray has intersected with a triangle in the model
-                // shoot another ray at the light from this pos to see if it intersects with anything else on the way...
-                // make sure your shadow ray is being fired from the intersected surface to the light position (rather than the other way around !).
-                // don't forget to normalise this direction vector
-                glm::vec3 objToLightDirection = glm::normalize(lightPosition-intersection.intersectionPoint);
-                float objToLightDistance = glm::distance(intersection.intersectionPoint, lightPosition);
-                RayTriangleIntersection closestObjIntersection = getClosestValidIntersection(intersection.intersectionPoint, lightPosition, objToLightDirection, triangles);
-//                if (closestObjIntersection.distanceFromStart < objToLightDistance) {
-                    // distance from obj-obj is SMALLER than obj-light...
-                    // there is some object that is closer to the obj than the light; set a shadow!
-//                    std::cout<< "distance btwn obj to its closest inntersection of color:" << closestObjIntersection.intersectedTriangle.colour << " is: " << closestObjIntersection.distanceFromStart <<std::endl;
-//                    std::cout<< "however distance from obj to light is: " << objToLightDistance<<std::endl;
-//                    window.setPixelColour(x, y, pack(unpack(Colour(255, 192, 203))));
-//                } else {
+                glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint+0.0001f));
+                RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint)+0.0001f, lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
+                if (closestObjIntersection.valid) {
+                    // IF THE SURFACE HAS SOME INTERSECTION.. THAT IS NOT THE LIGHT. SET SHADOW
+//                    std::cout<< "me: " << intersection.intersectedTriangle.colour<<std::endl;
+//                    std::cout<< "my intersection: " << closestObjIntersection.intersectedTriangle.colour<<std::endl;
+                    uint32_t shadow = pack(unpack(Colour(0,0,0)));
+                    window.setPixelColour(x, y, shadow);
+                } else {
                     window.setPixelColour(x, y, pack(unpack(intersection.intersectedTriangle.colour)));
-//                }
+                }
             }
         }
     }

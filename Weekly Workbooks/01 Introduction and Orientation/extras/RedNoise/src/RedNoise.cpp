@@ -181,6 +181,26 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 	}
 }
 
+bool areColoursEqual(const Colour& c1, const Colour& c2) {
+    return c1.red == c2.red && c1.green == c2.green && c1.blue == c2.blue;
+}
+
+// Function to filter triangles by colour
+std::vector<ModelTriangle> filterTrianglesByColour(const std::vector<ModelTriangle>& triangles, const std::vector<Colour>& targetColours) {
+    std::vector<ModelTriangle> filteredTriangles;
+
+    for (const ModelTriangle& triangle : triangles) {
+        for (const Colour& targetColour : targetColours) {
+            if (areColoursEqual(triangle.colour, targetColour)) {
+                filteredTriangles.push_back(triangle);
+                break; // Break out of the inner loop once a match is found
+            }
+        }
+    }
+
+    return filteredTriangles;
+}
+
 int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, true);
 	SDL_Event event;
@@ -195,6 +215,9 @@ int main(int argc, char *argv[]) {
     }*/
 
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
+//    Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
+//    std::vector<Colour> colors {red, blue, cyan, white};
+//    std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
 
      // RASTERIZER
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
