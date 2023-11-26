@@ -21,6 +21,19 @@ void printDepthMatrix(const std::vector<std::vector<float>>& depthMatrix) {
     }
 }
 
+//std::vector<std::vector<uint32_t>> linearListTo2DMatrix(const std::vector<uint32_t>& linearList, size_t height, size_t width) {
+//    std::vector<std::vector<uint32_t>> matrix(height, std::vector<uint32_t>(width, 0));
+//
+//    // size_t bc height/width in texturemap r size_t
+//    for (size_t i = 0; i < height; ++i) {
+//        for (size_t j = 0; j < width; ++j) {
+//            matrix[i][j] = linearList[i * width + j];
+//        }
+//    }
+//
+//    return matrix;
+//}
+
 std::string colorName(const uint32_t color) {
     std::string name;
     switch (color) {
@@ -123,7 +136,7 @@ float roundToThreeSF(float num) {
     return rounded;
 }
 
-std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<float>> depthMatrix) {
+std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<float>> depthMatrix, bool depth) {
     from.x = std::ceil(from.x);
     to.x = std::ceil(to.x);
     float xDiff = to.x - from.x;
@@ -148,15 +161,19 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
 
         if (xval < 320 && yval < 240 && xval > 0 && yval > 0) {
             // within drawing bounds
-            if (depthMatrix[xval][yval] == 0.0f && colorName(fincolor) == "cyan") {
-                // if trying to draw ceiling cyan and coordinate depth is 0 (so init. state), paint it, otherwise dont.
-                depthMatrix[xval][yval] = z;
-                window.setPixelColour(xval, yval, fincolor);
-            } else if (colorName(fincolor) == "cyan") {
-                continue;
-            } else if (z > depthMatrix[xval][yval]) {
-                // casual depth check
-                depthMatrix[xval][yval] = z;
+            if (depth) {
+                if (depthMatrix[xval][yval] == 0.0f && colorName(fincolor) == "cyan") {
+                    // if trying to draw ceiling cyan and coordinate depth is 0 (so init. state), paint it, otherwise dont.
+                    depthMatrix[xval][yval] = z;
+                    window.setPixelColour(xval, yval, fincolor);
+                } else if (colorName(fincolor) == "cyan") {
+                    continue;
+                } else if (z > depthMatrix[xval][yval]) {
+                    // casual depth check
+                    depthMatrix[xval][yval] = z;
+                    window.setPixelColour(xval, yval, fincolor);
+                }
+            } else {
                 window.setPixelColour(xval, yval, fincolor);
             }
         }

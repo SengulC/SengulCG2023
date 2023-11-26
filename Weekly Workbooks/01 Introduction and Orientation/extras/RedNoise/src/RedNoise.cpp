@@ -221,19 +221,17 @@ int main(int argc, char *argv[]) {
     std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
 
      // RASTERIZER
-//    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
-//    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
-//    twodTriangles = std::get<0>(tuple);
-//    cameraPosition = std::get<1>(tuple);
-//    cameraOrientation = std::get<2>(tuple);
-//    depthMatrix = std::get<3>(tuple);
+    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
+    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+    twodTriangles = std::get<0>(tuple);
+    cameraPosition = std::get<1>(tuple);
+    cameraOrientation = std::get<2>(tuple);
+    depthMatrix = std::get<3>(tuple);
 
-//    printDepthMatrix(depthMatrix);
-
-    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
-//    RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(0,0,-4), modelTriangles);
-//    std::cout << (intersection) << std::endl;
-//    std::cout << (intersection.intersectedTriangle.colour) << std::endl;
+    // RAYTRACER
+    //drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
+//    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
+//    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"));
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
