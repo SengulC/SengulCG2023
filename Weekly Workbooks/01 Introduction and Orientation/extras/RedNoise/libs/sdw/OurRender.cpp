@@ -250,10 +250,10 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
                 if (closestObjIntersection.valid &&
                     glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
-                    uint32_t shadow = pack(unpack(Colour(0,0,0)));
+                    uint32_t shadow = convertColor(Colour(0,0,0));
                     window.setPixelColour(x, y, shadow);
                 } else {
-                    window.setPixelColour(x, y, pack(unpack(intersection.intersectedTriangle.colour)));
+                    window.setPixelColour(x, y, convertColor(intersection.intersectedTriangle.colour));
                 }
             }
         }

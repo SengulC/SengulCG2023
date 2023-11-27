@@ -67,6 +67,10 @@ uint32_t pack(std::vector<int> colorgb) {
     return (255 << 24) + (int(colorgb[0]) << 16) + (int(colorgb[1]) << 8) + int(colorgb[2]);
 }
 
+uint32_t convertColor(const Colour& color) {
+    return pack(unpack (color));
+}
+
 bool sortByY(const CanvasPoint& a, const CanvasPoint& b) {
     return a.y < b.y;
 }
@@ -177,15 +181,15 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
                 window.setPixelColour(xval, yval, fincolor);
             }
         }
-        /*
-        int temp = std::round(z * 255);
+
+        /* int temp = std::round(z * 255);
         Colour col = Colour(temp, temp, temp);
-        window.setPixelColour(xval, yval, pack(unpack(col)));
+        window.setPixelColour(xval, yval, convertColor(col));
          */
     }
     return depthMatrix;
 }
 
 void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color) {
-    window.setPixelColour(static_cast<size_t>(point.x), static_cast<size_t>(point.y), pack(unpack(color)));
+    window.setPixelColour(static_cast<size_t>(point.x), static_cast<size_t>(point.y), convertColor(color));
 }

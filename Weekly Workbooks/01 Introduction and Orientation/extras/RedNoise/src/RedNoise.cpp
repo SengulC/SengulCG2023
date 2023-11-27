@@ -208,9 +208,9 @@ int main(int argc, char *argv[]) {
     std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
 /*    for (auto &pair : mtls) {
         if (pair.first == "Cyan") {
-            std::cout<< "Cyan" << pack(unpack(pair.second)) << std::endl;
+            std::cout<< "Cyan" << convertColor(pair.second) << std::endl;
         } else if (pair.first == "White") {
-            std::cout<< "White" << pack(unpack(pair.second)) << std::endl;
+            std::cout<< "White" << convertColor(pair.second) << std::endl;
         }
     }*/
 
@@ -229,7 +229,7 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
+     drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
 
     // TEXTURING
 //    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));

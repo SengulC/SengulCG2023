@@ -26,3 +26,4 @@ std::string colorName(const uint32_t color);
 void printDepthMatrix(const std::vector<std::vector<float>>& depthMatrix);
 std::vector<std::vector<uint32_t>> linearListTo2DMatrix(const std::vector<uint32_t>& linearList, size_t height, size_t width);
 bool sortByY(const CanvasPoint& a, const CanvasPoint& b);
+uint32_t convertColor(const Colour& color);
