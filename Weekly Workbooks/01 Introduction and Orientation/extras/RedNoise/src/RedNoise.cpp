@@ -221,17 +221,20 @@ int main(int argc, char *argv[]) {
     std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
 
      // RASTERIZER
-    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
-    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
-    twodTriangles = std::get<0>(tuple);
-    cameraPosition = std::get<1>(tuple);
-    cameraOrientation = std::get<2>(tuple);
-    depthMatrix = std::get<3>(tuple);
+//    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
+//    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//    twodTriangles = std::get<0>(tuple);
+//    cameraPosition = std::get<1>(tuple);
+//    cameraOrientation = std::get<2>(tuple);
+//    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-    //drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
+    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation);
+
+    // TEXTURING
 //    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
-//    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"));
+//    std::vector<TexturePoint> textures {TexturePoint(195, 5), TexturePoint(395, 380), TexturePoint(65, 330)};
+//    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"), textures);
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !

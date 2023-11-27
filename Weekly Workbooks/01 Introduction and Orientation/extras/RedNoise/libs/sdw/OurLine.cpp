@@ -21,18 +21,18 @@ void printDepthMatrix(const std::vector<std::vector<float>>& depthMatrix) {
     }
 }
 
-//std::vector<std::vector<uint32_t>> linearListTo2DMatrix(const std::vector<uint32_t>& linearList, size_t height, size_t width) {
-//    std::vector<std::vector<uint32_t>> matrix(height, std::vector<uint32_t>(width, 0));
-//
-//    // size_t bc height/width in texturemap r size_t
-//    for (size_t i = 0; i < height; ++i) {
-//        for (size_t j = 0; j < width; ++j) {
-//            matrix[i][j] = linearList[i * width + j];
-//        }
-//    }
-//
-//    return matrix;
-//}
+std::vector<std::vector<uint32_t>> linearListTo2DMatrix(const std::vector<uint32_t>& linearList, size_t height, size_t width) {
+    std::vector<std::vector<uint32_t>> matrix(height, std::vector<uint32_t>(width, 0));
+
+    // size_t bc height/width in texturemap r size_t
+    for (size_t i = 0; i < height; ++i) {
+        for (size_t j = 0; j < width; ++j) {
+            matrix[i][j] = linearList[i * width + j];
+        }
+    }
+
+    return matrix;
+}
 
 std::string colorName(const uint32_t color) {
     std::string name;

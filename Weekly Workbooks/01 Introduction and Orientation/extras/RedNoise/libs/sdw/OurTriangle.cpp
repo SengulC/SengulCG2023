@@ -41,6 +41,22 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
     return depthMatrix;
 }
 
+std::array<CanvasPoint, 3> sortAndLinkTextures(std::array<CanvasPoint, 3> vertices, std::vector<TexturePoint> texturePoints) {
+
+    // sort
+    std::sort(vertices.begin(), vertices.end(), sortByY);
+    std::sort(texturePoints.begin(), texturePoints.end(), [](const TexturePoint &a, const TexturePoint &b) {
+        return a.y < b.y;
+    });
+
+    // link
+    for (int i=0; i <3; i++) {
+        vertices[i].texturePoint = texturePoints[i];
+    }
+
+    return vertices;
+}
+
 //void drawTextureFilled(DrawingWindow &window, CanvasTriangle triangle, const TextureMap& textureMap, const std::vector<TexturePoint>& texturePoints) {
 //    /*
 //     * Each TextureMap object has a publicly accessible pixels attribute that holds all of the pixel data loaded in from the PPM file.
@@ -59,15 +75,24 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
 //    // draw triangle via interpolation stuff
 //    // set texture pixels aka the colors via interpolation of the 3 texture points
 //
-//    std::vector<CanvasPoint> points = {triangle.v0(), triangle.v1(), triangle.v2()};
-//    std::sort(points.begin(), points.end(), sortByY); // sorted in ascending order of Ys
 //
-//    // split triangle into 2 from middle vertex
+//    // create canvas points and sort in terms of linked canvas points and texture points
+//    std::array<CanvasPoint, 3> points = sortAndLinkTextures(triangle.vertices, texturePoints);
+//
+////    std::cout<<"printing points"<<std::endl;
+////    for (CanvasPoint p : points) {
+////        std::cout << p << std::endl;
+////        std::cout << p.texturePoint << std::endl;
+////    }
+//
+//
+////     APPLY TEXTURE STUFF
+////     split triangle into 2 from middle vertex
 //    CanvasPoint middleV = points[1];
 //    int topHeight = static_cast<int> (std::abs(middleV.y - points[0].y));
 //    int bottomHeight = static_cast<int> (std::abs(points[2].y - middleV.y));
 //
-//    // interpolate from 1st point to last point to find extra vertex
+//    // extra vertex
 //    std::vector<float> extraVInterpolatedX = interpolateSingleFloats(points[0].x, points[2].x,topHeight + bottomHeight);
 //    float extraVx = extraVInterpolatedX[topHeight];
 //    float ratio = (points[1].y - points[0].y)/(points[2].y-points[0].y);
@@ -78,22 +103,24 @@ std::vector<std::vector<float>> drawFilled(DrawingWindow &window, CanvasTriangle
 //    std::vector<std::vector<float>> fakeDepthMatrix;
 //
 //    // top triangle
-//    std::vector<CanvasPoint> topStart = interpolateCanvasPoint(points[0], extraV, topHeight+1);
-//    std::vector<CanvasPoint> topEnd = interpolateCanvasPoint(points[0], middleV, topHeight+1);
+//    std::vector<CanvasPoint> topStartVertices = interpolateCanvasPoint(points[0], extraV, topHeight+1);
+//    std::vector<CanvasPoint> topEndVertices = interpolateCanvasPoint(points[0], middleV, topHeight+1);
+//
+//    std::vector<CanvasPoint> topStartTextures = interpolateTexturePoint(points[0].texturePoint, extraV.texturePoint, topHeight+1);
+//    std::vector<CanvasPoint> topEndTextures = interpolateTexturePoint(points[0].texturePoint, middleV.texturePoint, topHeight+1);
 //    for (int i = 0; i <= topHeight; i++) {
-////        color =;
-//        fakeDepthMatrix = drawLine(window, topStart[i], topEnd[i], color, fakeDepthMatrix, depth);
+//        color = textureMap[];
+//        fakeDepthMatrix = drawLine(window, topStartVertices[i], topEndVertices[i], color, fakeDepthMatrix, depth);
 //    }
 //
 //    // bottom triangle
-//    std::vector<CanvasPoint> bottomStart = interpolateCanvasPoint(extraV, points[2], bottomHeight+1);
-//    std::vector<CanvasPoint> bottomEnd = interpolateCanvasPoint(middleV, points[2], bottomHeight+1);
+//    std::vector<CanvasPoint> bottomStartVertices = interpolateCanvasPoint(extraV, points[2], bottomHeight+1);
+//    std::vector<CanvasPoint> bottomEndVertices = interpolateCanvasPoint(middleV, points[2], bottomHeight+1);
 //    for (int i = 0; i <= bottomHeight; i++) {
 ////        color =;
-//        fakeDepthMatrix = drawLine(window, bottomStart[i], bottomEnd[i], color, fakeDepthMatrix, depth);
+//        fakeDepthMatrix = drawLine(window, bottomStartVertices[i], bottomEndVertices[i], color, fakeDepthMatrix, depth);
 //    }
 //
-//    std::cout<< "texture map height/width/pixels len: " << textureMap.height << " " << textureMap.width << " " << textureMap.pixels.size() <<std::endl;
 //}
 
 CanvasTriangle randomTriangle() {
