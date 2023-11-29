@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "RedNoise::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-RedNoise-Debug-c278c195f378fe26d169.json",
+					"jsonFile" : "target-RedNoise-Debug-054b4f2961d79061f2f7.json",
 					"name" : "RedNoise",
 					"projectIndex" : 0
 				}
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug",
-		"source" : "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise"
+		"build" : "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug",
+		"source" : "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise"
 	},
 	"version" : 
 	{

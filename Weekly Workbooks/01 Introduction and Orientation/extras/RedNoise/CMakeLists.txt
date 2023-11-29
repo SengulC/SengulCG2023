@@ -5,7 +5,7 @@
 # Where `Release` can be replaced with `Debug`, which contains gdb and address sanitiser definitions already written for you.
 # Once a build is created, proceed with *compilation*:
 # 
-#   cmake --build build --target RedNoise --config Release # optionally, for parallel build, append -j $(nproc)
+#   c
 #
 # This creates the executable in the build directory. You only need to *generate* a build if you modify the CMakeList.txt file.
 # For any other changes to the source code, simply recompile.
@@ -70,7 +70,7 @@ else ()
 
     set(DEBUG_OPTIONS -O2 -fno-omit-frame-pointer -g)
     set(RELEASE_OPTIONS -O3 -march=native -mtune=native)
-    target_link_libraries(RedNoise PUBLIC $<$<CONFIG:Debug>:-Wl>)
+    #target_link_libraries(RedNoise PUBLIC $<$<CONFIG:Debug>:-Wl>)
 
 endif()
 
@@ -78,5 +78,5 @@ endif()
 target_compile_options(RedNoise PUBLIC "$<$<CONFIG:RelWithDebInfo>:${RELEASE_OPTIONS}>")
 target_compile_options(RedNoise PUBLIC "$<$<CONFIG:Release>:${RELEASE_OPTIONS}>")
 target_compile_options(RedNoise PUBLIC "$<$<CONFIG:Debug>:${DEBUG_OPTIONS}>")
- 
+
 target_link_libraries(RedNoise PRIVATE ${SDL2_LIBRARIES})

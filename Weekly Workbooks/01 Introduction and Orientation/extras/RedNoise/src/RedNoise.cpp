@@ -41,7 +41,7 @@ glm::mat3 rotateY(
         0.0f, 1.0f, 0.0f,
         -sin(0.1), 0.0f, cos(0.1)
 );
-glm::vec3 lightPosition(0,0.6,0.0);
+glm::vec3 lightPosition(0,0.6,0.5);
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
@@ -224,17 +224,17 @@ int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, true);
 	SDL_Event event;
 
-    std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
+    std::map<std::string, Colour> mtls = readMaterial("../models/cornell-box.mtl");
 /*        for (auto &pair : mtls) {
         if (pair.first == "Grey") {
             std::cout<< "Grey" <<(pair.second) << std::endl;
         }
     }*/
 
-    std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
+    std::vector<ModelTriangle> modelTriangles = readObj("../models/cornell-box.obj", mtls, 0.35);
     Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
-    Colour gray(178,178,178), yellow(255,255,0), green(0,255,0);;
-    std::vector<Colour> colors {red, blue, cyan, green, gray};
+    Colour gray(178,178,178), yellow(255,255,0), green(0,255,0), pink(255,0,255);
+    std::vector<Colour> colors {red, blue, cyan, green, gray, yellow, pink};
     std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
 
      // RASTERIZER
@@ -246,7 +246,7 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-      drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+//      drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
     // TEXTURING
 //    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
@@ -263,7 +263,7 @@ int main(int argc, char *argv[]) {
 //        cameraPosition = std::get<1>(tuple);
 //        cameraOrientation = std::get<2>(tuple);
 
-        // drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+         drawRaytracedScene(window, filteredTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //		 Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}

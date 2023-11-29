@@ -111,6 +111,7 @@ CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cam
 
 std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> drawRasterizedScene(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
     window.clearPixels();
+    std::cout<<"rasterizer"<<std::endl;
     depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
     std::vector<CanvasTriangle> twodTriangles;
 
@@ -136,6 +137,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::v
         ) * cameraPosition;
         cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition);
     }
+    std::cout<<"end of rasterizer"<<std::endl;
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation, depthMatrix);
 }
 
@@ -256,8 +258,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
 //                    window.setPixelColour(x, y, shadow);
 //                } else {
                     float radius = glm::length(lightPosition - intersection.intersectionPoint);
-                    float ratio = 1.0/4.0f;
-                    float brightness = ratio*M_PI*radius*radius;
+                    float brightness = 1/(4*M_PI*radius*radius) * 5;
 
                     glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
                     // terminal - init
@@ -265,11 +266,18 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                     float angle = glm::dot(intersection.intersectedTriangle.normal, surfaceToLight);
 
                     // restrict a given value between 0-1
-                    float intensity = glm::clamp(brightness, 0.0f, 1.0f);
+                    float intensity = brightness*angle;
+                    if (intensity>1) {
+                        intensity=1;
+                    } else if (intensity<0) {
+                        intensity=0;
+                    }
+                    // float intensity = glm::clamp(brightness*angle, 0.0f, 1.0f);
                     // TODO: it's as if the brighter spots are actually darker..?? reverse
                     // float intensity = brightness*angle;
 
                     Colour currColor = intersection.intersectedTriangle.colour;
+
                     uint32_t color = convertColor(Colour(currColor.red*intensity, currColor.green*intensity, currColor.blue*intensity));
                     window.setPixelColour(x, y, color);
 //                }
