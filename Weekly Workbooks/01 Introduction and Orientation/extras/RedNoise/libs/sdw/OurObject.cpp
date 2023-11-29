@@ -34,7 +34,11 @@ std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string
             glm::vec3 v0 = vertices[std::stoi(facet[1])-1];
             glm::vec3 v1 = vertices[std::stoi(facet[2])-1];
             glm::vec3 v2 = vertices[std::stoi(facet[3])-1];
+            glm::vec3 edge1 (v1-v0); glm::vec3 edge2 (v2-v0);
+            // normal vector to triangle
+            glm::vec3 normal = glm::cross(edge1, edge2);
             tempTriangle = {v0,v1,v2, trigColour};
+            tempTriangle.normal = normal;
             modelTriangles.push_back(tempTriangle);
         }
     }

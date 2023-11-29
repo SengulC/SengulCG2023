@@ -16,6 +16,8 @@
 #include "OurTriangle.h"
 #include "glm/ext.hpp"
 #include <algorithm>
+#include <math.h>
+
 
 void bAndWdraw(DrawingWindow &window);
 
