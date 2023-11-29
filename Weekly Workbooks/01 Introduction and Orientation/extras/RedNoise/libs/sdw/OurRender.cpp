@@ -236,10 +236,10 @@ glm::vec3 convertToDirectionVector(CanvasPoint startPoint, float scale, float fo
     return direction;
 }
 
-void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation) {
+void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, glm::vec3 lightPosition) {
     std::cout <<"in raytracer"<< std::endl;
     window.clearPixels();
-    glm::vec3 lightPosition (0,0.9,0);
+    // glm::vec3 lightPosition (0,0.9,0);
     for (int y=0; y<HEIGHT; y++) {
         for (int x=0; x<WIDTH; x++) {
             CanvasPoint point(x, y, focalLength);
@@ -256,7 +256,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
 //                    window.setPixelColour(x, y, shadow);
 //                } else {
                     float radius = glm::length(lightPosition - intersection.intersectionPoint);
-                    float ratio = 1.0/3.0f;
+                    float ratio = 1.0/4.0f;
                     float brightness = ratio*M_PI*radius*radius;
 
                     glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
@@ -265,7 +265,8 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                     float angle = glm::dot(intersection.intersectedTriangle.normal, surfaceToLight);
 
                     // restrict a given value between 0-1
-                    float intensity = glm::clamp(brightness*angle, 0.0f, 1.0f);
+                    float intensity = glm::clamp(brightness, 0.0f, 1.0f);
+                    // TODO: it's as if the brighter spots are actually darker..?? reverse
                     // float intensity = brightness*angle;
 
                     Colour currColor = intersection.intersectedTriangle.colour;
