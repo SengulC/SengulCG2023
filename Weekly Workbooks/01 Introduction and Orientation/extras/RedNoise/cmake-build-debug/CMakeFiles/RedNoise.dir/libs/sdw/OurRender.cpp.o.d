@@ -1,455 +1,674 @@
 CMakeFiles/RedNoise.dir/libs/sdw/OurRender.cpp.o: \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurRender.cpp \
- /usr/include/stdc-predef.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurRender.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/CanvasTriangle.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/CanvasPoint.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/TexturePoint.h \
- /usr/include/c++/8/iostream \
- /usr/include/c++/8/x86_64-redhat-linux/bits/c++config.h \
- /usr/include/bits/wordsize.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/os_defines.h \
- /usr/include/features.h /usr/include/sys/cdefs.h \
- /usr/include/bits/long-double.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/cpu_defines.h \
- /usr/include/c++/8/ostream /usr/include/c++/8/ios \
- /usr/include/c++/8/iosfwd /usr/include/c++/8/bits/stringfwd.h \
- /usr/include/c++/8/bits/memoryfwd.h /usr/include/c++/8/bits/postypes.h \
- /usr/include/c++/8/cwchar /usr/include/wchar.h \
- /usr/include/bits/libc-header-start.h /usr/include/bits/floatn.h \
- /usr/include/bits/floatn-common.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/stddef.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/stdarg.h \
- /usr/include/bits/wchar.h /usr/include/bits/types/wint_t.h \
- /usr/include/bits/types/mbstate_t.h \
- /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
- /usr/include/bits/types/FILE.h /usr/include/bits/types/locale_t.h \
- /usr/include/bits/types/__locale_t.h /usr/include/c++/8/exception \
- /usr/include/c++/8/bits/exception.h \
- /usr/include/c++/8/bits/exception_ptr.h \
- /usr/include/c++/8/bits/exception_defines.h \
- /usr/include/c++/8/bits/cxxabi_init_exception.h \
- /usr/include/c++/8/typeinfo /usr/include/c++/8/bits/hash_bytes.h \
- /usr/include/c++/8/new /usr/include/c++/8/bits/nested_exception.h \
- /usr/include/c++/8/bits/move.h /usr/include/c++/8/bits/concept_check.h \
- /usr/include/c++/8/type_traits /usr/include/c++/8/bits/char_traits.h \
- /usr/include/c++/8/bits/stl_algobase.h \
- /usr/include/c++/8/bits/functexcept.h \
- /usr/include/c++/8/bits/cpp_type_traits.h \
- /usr/include/c++/8/ext/type_traits.h \
- /usr/include/c++/8/ext/numeric_traits.h \
- /usr/include/c++/8/bits/stl_pair.h \
- /usr/include/c++/8/bits/stl_iterator_base_types.h \
- /usr/include/c++/8/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/8/debug/assertions.h \
- /usr/include/c++/8/bits/stl_iterator.h \
- /usr/include/c++/8/bits/ptr_traits.h /usr/include/c++/8/debug/debug.h \
- /usr/include/c++/8/bits/predefined_ops.h /usr/include/c++/8/cstdint \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/stdint.h \
- /usr/include/stdint.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/bits/stdint-intn.h \
- /usr/include/bits/stdint-uintn.h /usr/include/c++/8/bits/localefwd.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/c++locale.h \
- /usr/include/c++/8/clocale /usr/include/locale.h \
- /usr/include/bits/locale.h /usr/include/c++/8/cctype \
- /usr/include/ctype.h /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
- /usr/include/c++/8/bits/ios_base.h /usr/include/c++/8/ext/atomicity.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/gthr.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/gthr-default.h \
- /usr/include/pthread.h /usr/include/sched.h \
- /usr/include/bits/types/time_t.h \
- /usr/include/bits/types/struct_timespec.h /usr/include/bits/sched.h \
- /usr/include/bits/types/struct_sched_param.h /usr/include/bits/cpu-set.h \
- /usr/include/time.h /usr/include/bits/time.h /usr/include/bits/timex.h \
- /usr/include/bits/types/struct_timeval.h \
- /usr/include/bits/types/clock_t.h /usr/include/bits/types/struct_tm.h \
- /usr/include/bits/types/clockid_t.h /usr/include/bits/types/timer_t.h \
- /usr/include/bits/types/struct_itimerspec.h \
- /usr/include/bits/pthreadtypes.h /usr/include/bits/thread-shared-types.h \
- /usr/include/bits/pthreadtypes-arch.h /usr/include/bits/setjmp.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/atomic_word.h \
- /usr/include/c++/8/bits/locale_classes.h /usr/include/c++/8/string \
- /usr/include/c++/8/bits/allocator.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/c++allocator.h \
- /usr/include/c++/8/ext/new_allocator.h \
- /usr/include/c++/8/bits/ostream_insert.h \
- /usr/include/c++/8/bits/cxxabi_forced.h \
- /usr/include/c++/8/bits/stl_function.h \
- /usr/include/c++/8/backward/binders.h \
- /usr/include/c++/8/bits/range_access.h \
- /usr/include/c++/8/initializer_list \
- /usr/include/c++/8/bits/basic_string.h \
- /usr/include/c++/8/ext/alloc_traits.h \
- /usr/include/c++/8/bits/alloc_traits.h \
- /usr/include/c++/8/ext/string_conversions.h /usr/include/c++/8/cstdlib \
- /usr/include/stdlib.h /usr/include/bits/waitflags.h \
- /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/types/sigset_t.h /usr/include/bits/types/__sigset_t.h \
- /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
- /usr/include/bits/stdlib-float.h /usr/include/c++/8/bits/std_abs.h \
- /usr/include/c++/8/cstdio /usr/include/stdio.h \
- /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__fpos64_t.h \
- /usr/include/bits/types/struct_FILE.h \
- /usr/include/bits/types/cookie_io_functions_t.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/bits/stdio.h /usr/include/c++/8/cerrno /usr/include/errno.h \
- /usr/include/bits/errno.h /usr/include/linux/errno.h \
- /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
- /usr/include/asm-generic/errno-base.h /usr/include/bits/types/error_t.h \
- /usr/include/c++/8/bits/functional_hash.h \
- /usr/include/c++/8/bits/basic_string.tcc \
- /usr/include/c++/8/bits/locale_classes.tcc \
- /usr/include/c++/8/system_error \
- /usr/include/c++/8/x86_64-redhat-linux/bits/error_constants.h \
- /usr/include/c++/8/stdexcept /usr/include/c++/8/streambuf \
- /usr/include/c++/8/bits/streambuf.tcc \
- /usr/include/c++/8/bits/basic_ios.h \
- /usr/include/c++/8/bits/locale_facets.h /usr/include/c++/8/cwctype \
- /usr/include/wctype.h /usr/include/bits/wctype-wchar.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/ctype_base.h \
- /usr/include/c++/8/bits/streambuf_iterator.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/ctype_inline.h \
- /usr/include/c++/8/bits/locale_facets.tcc \
- /usr/include/c++/8/bits/basic_ios.tcc \
- /usr/include/c++/8/bits/ostream.tcc /usr/include/c++/8/istream \
- /usr/include/c++/8/bits/istream.tcc /usr/include/c++/8/array \
- /usr/include/c++/8/utility /usr/include/c++/8/bits/stl_relops.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/DrawingWindow.h \
- /usr/include/c++/8/fstream /usr/include/c++/8/bits/codecvt.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/basic_file.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/c++io.h \
- /usr/include/c++/8/bits/fstream.tcc /usr/include/c++/8/vector \
- /usr/include/c++/8/bits/stl_construct.h \
- /usr/include/c++/8/bits/stl_uninitialized.h \
- /usr/include/c++/8/bits/stl_vector.h \
- /usr/include/c++/8/bits/stl_bvector.h /usr/include/c++/8/bits/vector.tcc \
- /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
- /usr/include/SDL2/SDL_stdinc.h /usr/include/SDL2/SDL_config.h \
- /usr/include/SDL2/SDL_config-x86_64.h /usr/include/SDL2/SDL_platform.h \
- /usr/include/SDL2/begin_code.h /usr/include/SDL2/close_code.h \
- /usr/include/c++/8/stdlib.h /usr/include/string.h /usr/include/strings.h \
- /usr/include/inttypes.h /usr/include/c++/8/math.h \
- /usr/include/c++/8/cmath /usr/include/math.h \
- /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
- /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
- /usr/include/bits/fp-fast.h \
- /usr/include/bits/mathcalls-helper-functions.h \
- /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls-narrow.h \
- /usr/include/bits/iscanonical.h /usr/include/bits/mathinline.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/float.h \
- /usr/include/SDL2/SDL_assert.h /usr/include/SDL2/SDL_atomic.h \
- /usr/include/SDL2/SDL_audio.h /usr/include/SDL2/SDL_error.h \
- /usr/include/SDL2/SDL_endian.h /usr/include/SDL2/SDL_mutex.h \
- /usr/include/SDL2/SDL_thread.h /usr/include/SDL2/SDL_rwops.h \
- /usr/include/SDL2/SDL_clipboard.h /usr/include/SDL2/SDL_cpuinfo.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/immintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/mmintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/xmmintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/mm_malloc.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/emmintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/pmmintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/tmmintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/smmintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/popcntintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/wmmintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avxintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx2intrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512fintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512erintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512pfintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512cdintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vlintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512bwintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512dqintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vlbwintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vldqintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512ifmaintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512ifmavlintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vbmiintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vbmivlintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx5124fmapsintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx5124vnniwintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vpopcntdqintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vbmi2intrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vbmi2vlintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vnniintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vnnivlintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512vpopcntdqvlintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/avx512bitalgintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/shaintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/lzcntintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/bmiintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/bmi2intrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/fmaintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/f16cintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/rtmintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/xtestintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/cetintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/gfniintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/vaesintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/vpclmulqdqintrin.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/movdirintrin.h \
- /usr/include/SDL2/SDL_events.h /usr/include/SDL2/SDL_video.h \
- /usr/include/SDL2/SDL_pixels.h /usr/include/SDL2/SDL_rect.h \
- /usr/include/SDL2/SDL_surface.h /usr/include/SDL2/SDL_blendmode.h \
- /usr/include/SDL2/SDL_keyboard.h /usr/include/SDL2/SDL_keycode.h \
- /usr/include/SDL2/SDL_scancode.h /usr/include/SDL2/SDL_mouse.h \
- /usr/include/SDL2/SDL_joystick.h /usr/include/SDL2/SDL_gamecontroller.h \
- /usr/include/SDL2/SDL_quit.h /usr/include/SDL2/SDL_gesture.h \
- /usr/include/SDL2/SDL_touch.h /usr/include/SDL2/SDL_filesystem.h \
- /usr/include/SDL2/SDL_haptic.h /usr/include/SDL2/SDL_hints.h \
- /usr/include/SDL2/SDL_loadso.h /usr/include/SDL2/SDL_log.h \
- /usr/include/SDL2/SDL_messagebox.h /usr/include/SDL2/SDL_power.h \
- /usr/include/SDL2/SDL_render.h /usr/include/SDL2/SDL_sensor.h \
- /usr/include/SDL2/SDL_shape.h /usr/include/SDL2/SDL_system.h \
- /usr/include/SDL2/SDL_timer.h /usr/include/SDL2/SDL_version.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/Utils.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/glm.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/_fixes.hpp \
- /usr/include/c++/8/climits \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/limits.h \
- /usr/lib/gcc/x86_64-redhat-linux/8/include/syslimits.h \
- /usr/include/limits.h /usr/include/bits/posix1_lim.h \
- /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
- /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
- /usr/include/bits/uio_lim.h /usr/include/c++/8/cfloat \
- /usr/include/c++/8/limits /usr/include/c++/8/cassert \
- /usr/include/assert.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/fwd.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_int.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/setup.hpp \
- /usr/include/c++/8/cstddef \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_float.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/precision.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/vec2.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec2.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec2.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/vec3.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec3.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec3.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/vec4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec4.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat2x2.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x2.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x2.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat2x3.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x3.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x3.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat2x4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x4.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat3x2.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x2.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x2.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat3x3.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x3.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x3.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat3x4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x4.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat4x2.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x2.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x2.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat4x3.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x3.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x3.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat4x4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x4.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/trigonometric.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_trigonometric.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_trigonometric.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/_vectorize.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec1.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec1.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/exponential.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_exponential.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_exponential.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_vector_relational.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_vector_relational.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/common.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_common.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/_fixes.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_common.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/packing.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_packing.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_packing.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_half.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_half.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/geometric.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_geometric.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_geometric.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/matrix.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_matrix.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_matrix.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/vector_relational.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/integer.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_integer.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_integer.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/RayTriangleIntersection.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/ModelTriangle.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/Colour.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurLine.h \
- /usr/include/c++/8/map /usr/include/c++/8/bits/stl_tree.h \
- /usr/include/c++/8/ext/aligned_buffer.h \
- /usr/include/c++/8/bits/stl_map.h /usr/include/c++/8/tuple \
- /usr/include/c++/8/bits/uses_allocator.h \
- /usr/include/c++/8/bits/invoke.h /usr/include/c++/8/bits/stl_multimap.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurTriangle.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/TextureMap.h \
- /usr/include/c++/8/algorithm /usr/include/c++/8/bits/stl_algo.h \
- /usr/include/c++/8/bits/algorithmfwd.h \
- /usr/include/c++/8/bits/stl_heap.h /usr/include/c++/8/bits/stl_tempbuf.h \
- /usr/include/c++/8/bits/uniform_int_dist.h \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/ext.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/bitfield.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/bitfield.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/constants.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/constants.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/epsilon.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/epsilon.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/quaternion.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/quaternion.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/integer.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/integer.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/matrix_access.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/matrix_access.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/matrix_integer.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/matrix_inverse.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/matrix_inverse.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/matrix_transform.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/matrix_transform.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/noise.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/../detail/_noise.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/noise.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/packing.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/type_precision.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/../gtc/vec1.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/../gtc/vec1.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/type_precision.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/packing.inl \
- /usr/include/c++/8/cstring \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/random.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/random.inl \
- /usr/include/c++/8/ctime \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/reciprocal.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/reciprocal.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/round.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/round.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/type_ptr.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/type_ptr.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/ulp.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtc/ulp.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/associated_min_max.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/associated_min_max.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/bit.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/bit.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/closest_point.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/closest_point.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/color_space.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/color_space.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/color_space_YCoCg.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/color_space_YCoCg.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/compatibility.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/compatibility.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/component_wise.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/component_wise.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/dual_quaternion.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/dual_quaternion.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/euler_angles.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/euler_angles.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/extend.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/extend.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/extented_min_max.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/extented_min_max.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/fast_exponential.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/fast_exponential.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/fast_square_root.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/fast_square_root.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/fast_trigonometry.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/fast_trigonometry.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/gradient_paint.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/optimum_pow.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/optimum_pow.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/gradient_paint.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/handed_coordinate_space.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/handed_coordinate_space.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/integer.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/integer.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/intersect.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/vector_query.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/vector_query.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/intersect.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/log_base.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/log_base.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_cross_product.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_cross_product.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_interpolation.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_interpolation.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_major_storage.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_major_storage.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_operation.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_operation.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_query.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/matrix_query.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/mixed_product.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/mixed_product.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/norm.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/quaternion.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/quaternion.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/norm.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/normal.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/normal.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/normalize_dot.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/normalize_dot.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/number_precision.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/number_precision.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/orthonormalize.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/orthonormalize.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/perpendicular.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/projection.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/projection.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/perpendicular.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/polar_coordinates.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/polar_coordinates.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/raw_data.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/raw_data.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/rotate_vector.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/transform.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../gtx/transform.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/rotate_vector.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/spline.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/spline.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/std_based_type.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/std_based_type.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/string_cast.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/string_cast.inl \
- /usr/include/c++/8/cstdarg \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/transform2.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/transform2.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/type_aligned.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/type_aligned.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/vector_angle.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/vector_angle.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/wrap.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/wrap.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/scalar_multiplication.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/range.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/simd_vec4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../detail/intrinsic_common.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../detail/intrinsic_common.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../detail/intrinsic_geometric.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../detail/intrinsic_geometric.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../detail/intrinsic_integer.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../detail/intrinsic_integer.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/simd_vec4.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/simd_mat4.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../detail/intrinsic_matrix.hpp \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/../detail/intrinsic_matrix.inl \
- /home/tx21026/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/./gtx/simd_mat4.inl
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurRender.cpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurRender.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/CanvasTriangle.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/CanvasPoint.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/TexturePoint.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/iostream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__config \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__config_site \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/pthread.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/ios \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__locale \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__availability \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/string \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__debug \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/iosfwd \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__mbstate_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/wchar.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/stddef.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/stddef.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/__stddef_max_align_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__nullptr \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/wchar.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/cdefs.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_symbol_aliasing.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_posix_availability.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/machine/_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/i386/_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/Availability.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/AvailabilityVersions.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/AvailabilityInternal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_null.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_size_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_mbstate_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/machine/types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/i386/types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_int8_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_int16_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_int32_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_int64_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_u_int8_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_u_int16_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_u_int32_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_u_int64_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_intptr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_uintptr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_ct_rune_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_rune_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_wchar_t.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/stdarg.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_va_list.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_ctermid.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_off_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_ssize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/time.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_clock_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_time_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_timespec.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_wctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/__wctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_wint_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_wctype_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/ctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/ctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_ctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/runetype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional_base \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/binary_function.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/invoke.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/weak_result_type.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/unary_function.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__undef_macros \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/type_traits \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cstddef \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/version \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/forward.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/move.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/operations.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/reference_wrapper.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/addressof.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/allocator_arg_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/uses_allocator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/exception \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cstdlib \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/stdlib.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/stdlib.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/wait.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_pid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_id_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/signal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/appleapiopts.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/machine/signal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/i386/signal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/machine/_mcontext.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/i386/_mcontext.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/mach/machine/_structs.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/mach/i386/_structs.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_attr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_sigaltstack.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_ucontext.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_sigset_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_uid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/resource.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/stdint.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/stdint.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/stdint.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_uint8_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_uint16_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_uint32_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_uint64_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_intmax_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_uintmax_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_timeval.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/machine/endian.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/i386/endian.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_endian.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/libkern/_OSByteOrder.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/libkern/i386/_OSByteOrder.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/alloca.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/malloc/_malloc.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_dev_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_mode_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/new \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/typeinfo \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cstdint \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/utility \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__tuple \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/as_const.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/cmp.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/limits \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/declval.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/exchange.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/in_place.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/integer_sequence.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/pair.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/unwrap_ref.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/piecewise_construct.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/rel_ops.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/swap.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/to_underlying.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/compare \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/initializer_list \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/wrap_iter.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/iterator_traits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/incrementable_traits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/concepts \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/readable_traits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/pointer_traits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/algorithm \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__bits \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cstring \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/string.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/string.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_rsize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_errno_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/strings.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/functional \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/search.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/comp.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/binary_negate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/bind_front.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/perfect_forward.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/tuple \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/bind.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/binder1st.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/binder2nd.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/default_searcher.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/function.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/allocator_traits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/construct_at.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/compressed_pair.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/shared_ptr.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/allocation_guard.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/allocator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/stdexcept \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/unique_ptr.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/hash.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/auto_ptr.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/atomic \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__thread/poll_with_backoff.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/chrono \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/ctime \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/ratio \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/climits \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/limits.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/machine/limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/i386/limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/i386/_limits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/syslimits.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__threading_support \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/errno.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/errno.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/errno.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/pthread/sched.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/pthread/pthread_impl.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_cond_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_condattr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_key_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_mutex_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_mutexattr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_once_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_rwlock_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_rwlockattr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_pthread/_pthread_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/pthread/qos.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/qos.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_mach_port_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sched.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/memory \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/pointer_safety.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/raw_storage_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/iterator \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/access.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/advance.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__function_like.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/concepts.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/iter_move.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/back_insert_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/common_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/iter_swap.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__ranges/access.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__ranges/enable_borrowed_range.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__utility/__decay_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/variant \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__variant/monostate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/counted_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/default_sentinel.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/data.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/distance.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/empty.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/erase_if_container.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/front_insert_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/insert_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/istreambuf_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/istream_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/move_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/next.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/ostreambuf_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/ostream_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/prev.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/projected.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/reverse_access.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/reverse_iterator.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__iterator/size.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/temporary_buffer.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__memory/uninitialized_algorithms.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cassert \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/assert.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/identity.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/mem_fn.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/mem_fun_ref.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/not_fn.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/pointer_to_binary_function.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/pointer_to_unary_function.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/ranges_operations.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/unary_negate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/adjacent_find.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/all_of.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/any_of.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/binary_search.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/lower_bound.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/half_positive.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/comp_ref_type.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/clamp.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/unwrap_iter.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/copy_backward.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/copy_if.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/copy_n.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/count.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/count_if.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/equal.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/equal_range.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/upper_bound.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/fill_n.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/fill.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/find.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/find_end.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/find_first_of.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/find_if.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/find_if_not.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/for_each.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/for_each_n.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/generate_n.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/generate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/includes.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/inplace_merge.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/min.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/min_element.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/move.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/rotate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/move_backward.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/swap_ranges.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/is_heap.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/is_heap_until.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/is_partitioned.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/is_permutation.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/is_sorted.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/is_sorted_until.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/iter_swap.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/lexicographical_compare.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/make_heap.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/sift_down.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/max.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/max_element.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/merge.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/minmax.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/minmax_element.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/mismatch.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/next_permutation.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/reverse.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/none_of.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/nth_element.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/sort.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/partial_sort.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/sort_heap.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/pop_heap.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/partial_sort_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/partition.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/partition_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/partition_point.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/prev_permutation.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/push_heap.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/remove.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/remove_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/remove_copy_if.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/remove_if.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/replace.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/replace_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/replace_copy_if.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/replace_if.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/reverse_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/rotate_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/sample.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__random/uniform_int_distribution.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/search_n.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/set_difference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/set_intersection.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/set_symmetric_difference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/set_union.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/shift_left.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/shift_right.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/shuffle.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/stable_partition.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/stable_sort.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/transform.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/unique_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__algorithm/unique.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cstdio \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/string_view \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__ranges/enable_view.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__string \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cwchar \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cwctype \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cctype \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/wctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/wctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_wctrans_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/mutex \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__mutex_base \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/system_error \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__errc \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cerrno \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/locale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/locale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_locale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_xlocale.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale/_ctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale/__wctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale/_stdio.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale/_stdlib.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale/_string.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale/_time.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale/_wchar.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale/_wctype.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/istream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/ostream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/bitset \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__bit_reference \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/locale \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/streambuf \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/nl_types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/types.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_u_char.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_u_short.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_u_int.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_caddr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_blkcnt_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_blksize_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_gid_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_in_addr_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_in_port_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_ino_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_ino64_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_key_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_nlink_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_useconds_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_suseconds_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fd_def.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fd_setsize.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fd_set.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fd_clr.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fd_zero.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fd_isset.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fd_copy.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fsblkcnt_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fsfilcnt_t.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_nl_item.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/array \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/DrawingWindow.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/fstream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/filesystem \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/stack \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/deque \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__split_buffer \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/iomanip \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/vector \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_main.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_stdinc.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_config.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_platform.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/AvailabilityMacros.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/TargetConditionals.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/begin_code.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/close_code.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/inttypes.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/inttypes.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/inttypes.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/xlocale/_inttypes.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/math.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/math.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/float.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/float.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/float.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_assert.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_atomic.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_audio.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_error.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_endian.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_mutex.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_thread.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_rwops.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_clipboard.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_cpuinfo.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/immintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/x86gprintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/hresetintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/uintrintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/crc32intrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/mmintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/xmmintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/mm_malloc.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/emmintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/pmmintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/tmmintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/smmintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/popcntintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/wmmintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/__wmmintrin_aes.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/__wmmintrin_pclmul.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/clflushoptintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/clwbintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avxintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx2intrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/f16cintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/bmiintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/bmi2intrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/lzcntintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/fmaintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512fintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vlintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512bwintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512bitalgintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512cdintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vpopcntdqintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vpopcntdqvlintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vnniintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vlvnniintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avxvnniintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512dqintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vlbitalgintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vlbwintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vlcdintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vldqintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512erintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512ifmaintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512ifmavlintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vbmiintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vbmivlintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vbmi2intrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vlvbmi2intrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512pfintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512bf16intrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vlbf16intrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/pkuintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/vpclmulqdqintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/vaesintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/gfniintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/rtmintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/xtestintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/shaintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/fxsrintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/xsaveintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/xsaveoptintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/xsavecintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/xsavesintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/cetintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/adxintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/rdseedintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/wbnoinvdintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/cldemoteintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/waitpkgintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/movdirintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/pconfigintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/sgxintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/ptwriteintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/invpcidintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/keylockerintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/amxintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vp2intersectintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/avx512vlvp2intersectintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/enqcmdintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/serializeintrin.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include/tsxldtrkintrin.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_events.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_video.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_pixels.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_rect.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_surface.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_blendmode.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_keyboard.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_keycode.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_scancode.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_mouse.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_joystick.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_guid.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_gamecontroller.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_sensor.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_quit.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_gesture.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_touch.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_filesystem.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_haptic.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_hidapi.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_hints.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_loadso.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_log.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_messagebox.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_metal.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_power.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_render.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_shape.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_system.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_timer.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_version.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_locale.h \
+  /usr/local/Cellar/sdl2/2.28.3/include/SDL2/SDL_misc.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/Utils.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/glm.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/_fixes.hpp \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cmath \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cfloat \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/fwd.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_int.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/setup.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_float.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/precision.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/vec2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec2.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/vec3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec3.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/vec4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec4.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat2x2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../fwd.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x2.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat2x3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x3.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat2x4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat2x4.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat3x2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x2.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat3x3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x3.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat3x4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat3x4.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat4x2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x2.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat4x3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x3.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/mat4x4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_mat4x4.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/trigonometric.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_trigonometric.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_trigonometric.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/_vectorize.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec1.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_vec1.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/exponential.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_exponential.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_exponential.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_vector_relational.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_vector_relational.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/common.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_common.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_common.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/packing.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_packing.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_packing.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_half.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/type_half.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/geometric.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_geometric.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_geometric.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/matrix.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_matrix.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../detail/precision.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../detail/setup.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../detail/type_mat.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../vec2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../vec3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../vec4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../mat2x2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../mat2x3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../mat2x4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../mat3x2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../mat3x3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../mat3x4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../mat4x2.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../mat4x3.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../mat4x4.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_matrix.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/../geometric.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/vector_relational.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/integer.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_integer.hpp \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/glm-0.9.7.2/glm/detail/func_integer.inl \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/Colour.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/ModelTriangle.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurLine.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/map \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__functional/is_transparent.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__node_handle \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/optional \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__tree \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurTriangle.h \
+  /Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly\ Workbooks/01\ Introduction\ and\ Orientation/extras/RedNoise/libs/sdw/OurObject.h

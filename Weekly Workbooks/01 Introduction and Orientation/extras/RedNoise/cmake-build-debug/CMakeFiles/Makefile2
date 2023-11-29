@@ -45,19 +45,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/clion/2023/bin/cmake/linux/x64/bin/cmake
+CMAKE_COMMAND = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake
 
 # The command to remove a file.
-RM = /opt/clion/2023/bin/cmake/linux/x64/bin/cmake -E rm -f
+RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise"
+CMAKE_SOURCE_DIR = "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug"
+CMAKE_BINARY_DIR = "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/RedNoise.dir/clean
 CMakeFiles/RedNoise.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RedNoise.dir/build.make CMakeFiles/RedNoise.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 "Built target RedNoise"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 "Built target RedNoise"
 .PHONY : CMakeFiles/RedNoise.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/RedNoise.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" 15
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/RedNoise.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/cmake-build-debug/CMakeFiles" 0
 .PHONY : CMakeFiles/RedNoise.dir/rule
 
 # Convenience name for target.

@@ -37,6 +37,12 @@
 				"parent" : 0
 			},
 			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 73,
+				"parent" : 0
+			},
+			{
 				"command" : 2,
 				"file" : 0,
 				"line" : 60,
@@ -68,66 +74,71 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++14 -fdiagnostics-color=always"
+					"fragment" : "-g -std=gnu++14 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -fcolor-diagnostics"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"fragment" : "-Wall"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"fragment" : "-Wextra"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"fragment" : "-Wcast-align"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"fragment" : "-Wfatal-errors"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"fragment" : "-Werror=return-type"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"fragment" : "-Wno-unused-parameter"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"fragment" : "-Wno-unused-variable"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"fragment" : "-Wno-ignored-attributes"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"fragment" : "-O2"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"fragment" : "-fno-omit-frame-pointer"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"fragment" : "-g"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 5,
-					"path" : "/usr/include/SDL2"
-				},
-				{
-					"backtrace" : 5,
-					"path" : "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/glm-0.9.7.2"
+					"backtrace" : 6,
+					"path" : "/usr/local/Cellar/sdl2/2.28.3/include"
 				},
 				{
 					"backtrace" : 6,
-					"path" : "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw"
+					"path" : "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/glm-0.9.7.2"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/Users/leventcagdal/Documents/Year3/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/local/Cellar/sdl2/2.28.3/include/SDL2"
 				}
 			],
 			"language" : "CXX",
@@ -173,7 +184,21 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-L/usr/lib64  -lSDL2",
+				"fragment" : "-L/usr/local/Cellar/sdl2/2.28.3/lib",
+				"role" : "libraryPath"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/usr/local/Cellar/sdl2/2.28.3/lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-Wl",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/usr/local/Cellar/sdl2/2.28.3/lib/libSDL2.dylib",
 				"role" : "libraries"
 			}
 		],

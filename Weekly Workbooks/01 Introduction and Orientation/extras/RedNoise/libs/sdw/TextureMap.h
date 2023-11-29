@@ -4,8 +4,6 @@
 #include <fstream>
 #include <stdexcept>
 #include "Utils.h"
-#include<algorithm>
-using namespace std;
 
 class TextureMap {
 public:
