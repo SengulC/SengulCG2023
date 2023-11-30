@@ -33,12 +33,6 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 73,
-				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
 				"line" : 82,
 				"parent" : 0
 			},
@@ -77,62 +71,62 @@
 					"fragment" : "-g -std=gnu++14 -fdiagnostics-color=always"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "-Wall"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "-Wextra"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "-Wcast-align"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "-Wfatal-errors"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "-Werror=return-type"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "-Wno-unused-parameter"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "-Wno-unused-variable"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "-Wno-ignored-attributes"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"fragment" : "-O2"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"fragment" : "-fno-omit-frame-pointer"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"fragment" : "-g"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 6,
+					"backtrace" : 5,
 					"path" : "/usr/include/SDL2"
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 5,
 					"path" : "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/glm-0.9.7.2"
 				},
 				{
-					"backtrace" : 7,
+					"backtrace" : 6,
 					"path" : "/home/tx21026/SengulCG2023/Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/libs/sdw"
 				}
 			],
@@ -179,11 +173,6 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-Wl",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
 				"fragment" : "-L/usr/lib64  -lSDL2",
 				"role" : "libraries"
 			}
