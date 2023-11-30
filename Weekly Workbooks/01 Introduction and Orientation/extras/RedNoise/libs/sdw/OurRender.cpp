@@ -256,8 +256,20 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
 
                 glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
                 // terminal - init
-                // from surface (init) to light (terminal)
-                float angle = glm::dot(intersection.intersectedTriangle.normal, surfaceToLight);
+                // from surface (init) to cam/light (terminal)
+                glm::vec3 normal = intersection.intersectedTriangle.normal;
+                float angle = glm::dot(normal, surfaceToLight);
+
+                // SPECULAR
+                glm::vec3 lightToSurface = intersection.intersectionPoint-lightPosition;
+                glm::vec3 reflectionVector (lightToSurface - ((2*normal)*(glm::normalizeDot(lightToSurface, normal))));
+                glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
+                float specular = glm::normalizeDot(reflectionVector, surfaceToCam);
+
+                if (specular < 0) {
+                    specular = 0;
+                }
+                specular = pow(specular, 256);
 
                 // restrict a given value between 0-1
                 float intensity = brightness*angle; // scalar to reach boxes
@@ -271,11 +283,11 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                     glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
                         // SHADOW
                         Colour currColor = intersection.intersectedTriangle.colour;
-                        uint32_t shadow = convertColor(Colour(currColor.red*0.2, currColor.green*0.2, currColor.blue*0.2));
+                        uint32_t shadow = convertColor(Colour(currColor.red/**0.2*/, currColor.green/**0.2*/, currColor.blue/**0.2*/));
                         window.setPixelColour(x, y, shadow);
                 } else {
                     Colour currColor = intersection.intersectedTriangle.colour;
-                    uint32_t color = convertColor(Colour(currColor.red*intensity, currColor.green*intensity, currColor.blue*intensity));
+                    uint32_t color = convertColor(Colour(currColor.red * specular/**intensity*/, currColor.green * specular/**intensity*/, currColor.blue * specular/**intensity*/));
                     window.setPixelColour(x, y, color);
                 }
             }
