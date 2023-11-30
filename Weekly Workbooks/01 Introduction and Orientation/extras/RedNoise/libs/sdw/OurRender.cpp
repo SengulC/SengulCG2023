@@ -260,7 +260,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 float angle = glm::dot(intersection.intersectedTriangle.normal, surfaceToLight);
 
                 // restrict a given value between 0-1
-                float intensity = brightness*angle*4; // scalar to reach boxes
+                float intensity = brightness*angle; // scalar to reach boxes
                 if (intensity>1) {
                     intensity=1;
                 } else if (intensity<0.2) {
