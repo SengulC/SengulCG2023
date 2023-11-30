@@ -251,36 +251,33 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 // ray from surface to light
                 glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
                 RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
-                // SHADOWS
-//                if (closestObjIntersection.valid &&
-//                    glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
-//                    uint32_t shadow = convertColor(Colour(0,0,0));
-//                    window.setPixelColour(x, y, shadow);
-//                } else {
-                    float radius = glm::length(lightPosition - intersection.intersectionPoint);
-                    float brightness = 1/(4*M_PI*radius*radius) * 5;
+                float radius = glm::length(lightPosition - intersection.intersectionPoint);
+                float brightness = 1/(4*M_PI*radius*radius) * 5;
 
-                    glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
-                    // terminal - init
-                    // from surface (init) to light (terminal)
-                    float angle = glm::dot(intersection.intersectedTriangle.normal, surfaceToLight);
+                glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
+                // terminal - init
+                // from surface (init) to light (terminal)
+                float angle = glm::dot(intersection.intersectedTriangle.normal, surfaceToLight);
 
-                    // restrict a given value between 0-1
-                    float intensity = brightness*angle*2;
-                    if (intensity>1) {
-                        intensity=1;
-                    } else if (intensity<0) {
-                        intensity=0;
-                    }
-                    // float intensity = glm::clamp(brightness*angle, 0.0f, 1.0f);
-                    // TODO: it's as if the brighter spots are actually darker..?? reverse
-                    // float intensity = brightness*angle;
+                // restrict a given value between 0-1
+                float intensity = brightness*angle*4; // scalar to reach boxes
+                if (intensity>1) {
+                    intensity=1;
+                } else if (intensity<0.2) {
+                    intensity=0.2;
+                }
 
+                if (closestObjIntersection.valid &&
+                    glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
+                        // SHADOW
+                        Colour currColor = intersection.intersectedTriangle.colour;
+                        uint32_t shadow = convertColor(Colour(currColor.red*0.2, currColor.green*0.2, currColor.blue*0.2));
+                        window.setPixelColour(x, y, shadow);
+                } else {
                     Colour currColor = intersection.intersectedTriangle.colour;
-
                     uint32_t color = convertColor(Colour(currColor.red*intensity, currColor.green*intensity, currColor.blue*intensity));
                     window.setPixelColour(x, y, color);
-//                }
+                }
             }
         }
     }
