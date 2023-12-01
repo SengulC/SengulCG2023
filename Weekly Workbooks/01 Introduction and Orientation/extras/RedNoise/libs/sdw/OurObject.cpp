@@ -5,7 +5,7 @@
 #define WIDTH 320
 #define HEIGHT 240
 
-std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale) {
+std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale, bool sphere) {
     // remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
     std::vector<ModelTriangle> modelTriangles;
     ModelTriangle tempTriangle;
@@ -18,11 +18,13 @@ std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string
     // read the file line by line
     // make a list of vec3s for the vertices
     while (getline (theObjFile, myObj)) {
+        if (sphere) {
+            trigColour = Colour(255,0,0);
+        }
         if (myObj[0] == 'u') {
             std::vector<std::string> colorInfo = split(myObj, ' ');
             trigColour = mtls[colorInfo[1]];
-        }
-        else if (myObj[0] == 'v') {
+        } else if (myObj[0] == 'v') {
             std::vector<std::string> xyz = split(myObj, ' ');
             glm::vec3 currVector{std::stof(xyz[1])*scale, std::stof(xyz[2])*scale, std::stof(xyz[3])*scale}; // xyz[0] = 'v'
             vertices.push_back(currVector);

@@ -13,5 +13,5 @@
 #include <string>
 #include "OurLine.h"
 
-std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale);
+std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale, bool sphere);
 std::map<std::string, Colour> readMaterial(const std::string& file);

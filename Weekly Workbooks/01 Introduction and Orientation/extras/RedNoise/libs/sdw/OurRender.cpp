@@ -269,17 +269,17 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 if (specular < 0) {
                     specular = 0;
                 }
-                specular = pow(specular, 256);
+                specular = pow(specular, 512);
 
                 // restrict a given value between 0-1
-                float intensity = (brightness*angle*5)+specular; // scalar to reach boxes
+                float intensity = /*(brightness*angle*5)+*/specular; // scalar to reach boxes
                 if (intensity>1) {
                     intensity=1;
                 } else if (intensity<0.2) {
                     intensity=0.2;
                 }
 
-                if (closestObjIntersection.valid &&
+/*                if (closestObjIntersection.valid &&
                     glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
                         // SHADOW
                         Colour currColor = intersection.intersectedTriangle.colour;
@@ -289,11 +289,11 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                     // hardcoding lightbox lol
                     window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
                 }
-                else {
+                else {*/
                     Colour currColor = intersection.intersectedTriangle.colour;
                     uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
                     window.setPixelColour(x, y, color);
-                }
+//                }
             }
         }
     }

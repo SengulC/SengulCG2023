@@ -41,7 +41,7 @@ glm::mat3 rotateY(
         0.0f, 1.0f, 0.0f,
         -sin(0.1), 0.0f, cos(0.1)
 );
-glm::vec3 lightPosition(0,0.6,0.5);
+glm::vec3 lightPosition(0.8,-0.9,-0.1);
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
@@ -104,7 +104,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         else if (event.key.keysym.sym == 'y') {
             window.clearPixels();
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-            std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
+            std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
             tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
                                         depthMatrix, orbit);
@@ -160,7 +160,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         else if (event.key.keysym.sym == 'r') {
             depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-            std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
+            std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
             tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
                                         depthMatrix, orbit);
@@ -231,7 +231,9 @@ int main(int argc, char *argv[]) {
         }
     }*/
 
-    std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35);
+    std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
+    std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
+
     Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
     Colour gray(178,178,178), yellow(255,255,0), green(0,255,0), pink(255,0,255);
     std::vector<Colour> colors {red, blue, cyan, green, gray, yellow, pink};
@@ -239,14 +241,14 @@ int main(int argc, char *argv[]) {
 
      // RASTERIZER
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
-//    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//    tuple = drawRasterizedScene(window, sphereTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    twodTriangles = std::get<0>(tuple);
 //    cameraPosition = std::get<1>(tuple);
 //    cameraOrientation = std::get<2>(tuple);
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-      drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+      drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
     // TEXTURING
 //    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
@@ -258,7 +260,7 @@ int main(int argc, char *argv[]) {
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
         // // RASTERIZER
 //        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
-//        tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//        tuple = drawRasterizedScene(window, sphereTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //        twodTriangles = std::get<0>(tuple);
 //        cameraPosition = std::get<1>(tuple);
 //        cameraOrientation = std::get<2>(tuple);
