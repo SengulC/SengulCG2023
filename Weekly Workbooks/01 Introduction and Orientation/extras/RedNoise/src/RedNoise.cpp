@@ -22,9 +22,11 @@ int indexcheck;
 bool toggle = true;
 bool orbit = false;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
-float focalLength = 1.5f;
+float focalLength = 2.0;
 float scale = 240.0f;
-glm::vec3 cameraPosition {0.0, 0.5, 2.0};
+glm::vec3 cameraPosition {0.0, 0.5, 4.0};
+std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
+std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
 glm::mat3 cameraOrientation(
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
@@ -41,29 +43,35 @@ glm::mat3 rotateY(
         0.0f, 1.0f, 0.0f,
         -sin(0.1), 0.0f, cos(0.1)
 );
-glm::vec3 lightPosition(0,0.5,0.8);
+glm::vec3 lightPosition(0.0,0.5,3.0);
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
         // translation: up/down/left/right
         if (event.key.keysym.sym == SDLK_UP) {
             cameraPosition += glm::vec3{0,0.1,0};
+            std::cout<< cameraPosition.x << " "<< cameraPosition.y << " "<< cameraPosition.z << std::endl;
         }
         else if (event.key.keysym.sym == SDLK_DOWN) {
             cameraPosition -= glm::vec3{0,0.1,0};
+            std::cout<< cameraPosition.x << " "<< cameraPosition.y << " "<< cameraPosition.z << std::endl;
         }
         else if (event.key.keysym.sym == SDLK_LEFT) {
             cameraPosition -= glm::vec3{0.1,0,0};
+            std::cout<< cameraPosition.x << " "<< cameraPosition.y << " "<< cameraPosition.z << std::endl;
         }
 		else if (event.key.keysym.sym == SDLK_RIGHT) {
             cameraPosition += glm::vec3{0.1,0,0};
+            std::cout<< cameraPosition.x << " "<< cameraPosition.y << " "<< cameraPosition.z << std::endl;
         }
         // translation: z axis: ;/'
         else if (event.key.keysym.sym == SDLK_SEMICOLON) {
             cameraPosition -= glm::vec3{0,0,0.1};
+            std::cout<< cameraPosition.x << " "<< cameraPosition.y << " "<< cameraPosition.z << std::endl;
         }
         else if (event.key.keysym.sym == SDLK_QUOTE) {
             cameraPosition += glm::vec3{0,0,0.1};
+            std::cout<< cameraPosition.x << " "<< cameraPosition.y << " "<< cameraPosition.z << std::endl;
         }
         // rotation </>
         else if (event.key.keysym.sym == SDLK_COMMA) {
@@ -180,19 +188,26 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         else if (event.key.keysym.sym == 'a'){
             lightPosition -= glm::vec3(0,0,0.1);
             std::cout<<"light: " << lightPosition.x << " " << lightPosition.y << " " << lightPosition.z <<std::endl;
+            drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
         }
         else if (event.key.keysym.sym == 'd'){
             lightPosition += glm::vec3(0,0,0.1);
             std::cout<<"light: " << lightPosition.x << " " << lightPosition.y << " " << lightPosition.z <<std::endl;
+            drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
         }
         // lighting. y+-
         else if (event.key.keysym.sym == 'w'){
-            lightPosition -= glm::vec3(0,0,0.1);
+            lightPosition -= glm::vec3(0,0.1,0);
             std::cout<<"light: " << lightPosition.x << " " << lightPosition.y << " " << lightPosition.z <<std::endl;
+            drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
         }
         else if (event.key.keysym.sym == 's'){
-            lightPosition += glm::vec3(0,0,0.1);
+            lightPosition += glm::vec3(0,0.1,0);
             std::cout<<"light: " << lightPosition.x << " " << lightPosition.y << " " << lightPosition.z <<std::endl;
+            drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+        }
+        else if (event.key.keysym.sym == 'h'){
+            drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
         }
 	} else if (event.type == SDL_MOUSEBUTTONDOWN) {
 		window.savePPM("output.ppm");
@@ -224,7 +239,7 @@ int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, true);
 	SDL_Event event;
 
-    std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
+//    std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
 /*        for (auto &pair : mtls) {
         if (pair.first == "Grey") {
             std::cout<< "Grey" <<(pair.second) << std::endl;
@@ -232,7 +247,7 @@ int main(int argc, char *argv[]) {
     }*/
 
     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
-    std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
+//    std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
 
     Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
     Colour gray(178,178,178), yellow(255,255,0), green(0,255,0), pink(255,0,255);
@@ -250,6 +265,8 @@ int main(int argc, char *argv[]) {
     // RAYTRACER
       drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
+
+
     // TEXTURING
 //    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
 //    std::vector<TexturePoint> textures {TexturePoint(195, 5), TexturePoint(395, 380), TexturePoint(65, 330)};
@@ -265,7 +282,7 @@ int main(int argc, char *argv[]) {
 //        cameraPosition = std::get<1>(tuple);
 //        cameraOrientation = std::get<2>(tuple);
 
-//         drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+         //drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //		 Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}

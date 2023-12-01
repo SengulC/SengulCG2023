@@ -252,13 +252,17 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
                 RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
                 float radius = glm::length(lightPosition - intersection.intersectionPoint);
-                float brightness = 1/(4*M_PI*radius*radius) * 5;
+                float brightness = 1/(4*M_PI*radius*radius) /** 5*/;
 
                 glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
                 // terminal - init
                 // from surface (init) to cam/light (terminal)
                 glm::vec3 normal = intersection.intersectedTriangle.normal;
                 float angle = glm::dot(normal, surfaceToLight);
+
+/*                if (angle < 0.2) {
+                    angle = 0.2;
+                }*/
 
                 // SPECULAR
                 glm::vec3 lightToSurface = intersection.intersectionPoint-lightPosition;
@@ -269,33 +273,38 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 if (specular < 0) {
                     specular = 0;
                 }
-                specular = pow(specular, 512);
+                specular = pow(specular, 64);
 
                 // restrict a given value between 0-1
-                float intensity = (brightness*angle*5)/*+specular*/; // scalar to reach boxes
-                if (intensity>1) {
-                    intensity=1;
-                } else if (intensity<0.2) {
-                    intensity=0.2;
+                float intensity = /*brightness*32*/ (angle*brightness*600)+specular;
+                // intesnity = /*brightness*/**angle*//**0.5)+specular*/; // scalar to reach boxes
+//                std::cout<<intensity<<std::endl;
+                if (intensity > 1) {
+                    intensity = 1;
+                } else if (intensity < 0.3) {
+                    intensity = 0.3;
                 }
 
-                if (closestObjIntersection.valid &&
+/*                if (closestObjIntersection.valid &&
                     glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
                         // SHADOW
                         Colour currColor = intersection.intersectedTriangle.colour;
-                        uint32_t shadow = convertColor(Colour(currColor.red *0.2, currColor.green *0.2, currColor.blue *0.2));
+                        uint32_t shadow = convertColor(Colour(currColor.red *0.3, currColor.green *0.3, currColor.blue *0.3));
                         window.setPixelColour(x, y, shadow);
                 } else if (intersection.intersectedTriangle.colour.name=="White") {
                     // hardcoding lightbox lol
                     window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
-                } else {
+                } else {*/
                     Colour currColor = intersection.intersectedTriangle.colour;
                     uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
                     window.setPixelColour(x, y, color);
-                }
+//                }
             }
         }
     }
+    // lightPosition(0.0,0.5,0.8);
+    CanvasPoint lightPos = getCanvasIntersectionPoint(CanvasPoint(lightPosition.x, lightPosition.y, lightPosition.z), cameraPosition, cameraOrientation, focalLength, scale);
+    drawPoint(window, lightPos, {160,120,0.695027}, {255,255,255});
     std::cout<<"end of ray trace"<<std::endl;
 }
 

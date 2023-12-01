@@ -190,6 +190,11 @@ std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from
     return depthMatrix;
 }
 
-void drawPoint(DrawingWindow &window, CanvasPoint point, Colour color) {
-    window.setPixelColour(static_cast<size_t>(point.x), static_cast<size_t>(point.y), convertColor(color));
+void drawPoint(DrawingWindow &window, CanvasPoint point, CanvasPoint otherPoint, Colour color) {
+    if(point.depth > otherPoint.depth) {
+        window.setPixelColour(static_cast<size_t>(point.x), static_cast<size_t>(point.y), convertColor(color));
+    } else {
+        std::cout<<"pos already set"<<std::endl;
+    }
+
 }
