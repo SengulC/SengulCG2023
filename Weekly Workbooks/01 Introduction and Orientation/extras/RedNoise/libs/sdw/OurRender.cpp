@@ -279,7 +279,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 // restrict a given value between 0-1
                 float intensity = (brightness*angle*20)+specular;
 //                float intensity = specular;
-                std::cout<<intensity<<std::endl;
+//                std::cout<<intensity<<std::endl;
                 if (intensity > 1) {
                     intensity = 1;
                 } else if (intensity < 0.2) {
