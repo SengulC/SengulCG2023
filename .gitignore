@@ -1,3 +1,18 @@
 .DS_Store
 *.o
 Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/RedNoise
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/CanvasPoint.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/CanvasTriangle.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/Colour.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/DrawingWindow.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/ModelTriangle.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/OurLine.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/OurObject.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/OurRender.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/OurTriangle.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/RayTriangleIntersection.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/RedNoise
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/RedNoise.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/TextureMap.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/TexturePoint.o
+Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/build/Utils.o
