@@ -258,7 +258,8 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 // terminal - init
                 // from surface (init) to cam/light (terminal)
                 glm::vec3 normal = intersection.intersectedTriangle.normal;
-                float angle = glm::dot(normal, surfaceToLight);
+                float angle = glm::normalizeDot(normal, surfaceToLight);
+                //angle = pow(angle, 128);
 
 /*                if (angle < 0.2) {
                     angle = 0.2;
@@ -270,35 +271,35 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
                 float specular = glm::normalizeDot(reflectionVector, surfaceToCam);
 
-                if (specular < 0) {
-                    specular = 0;
-                }
-                specular = pow(specular, 64);
+//                if (specular < 0) {
+//                    specular = 0;
+//                }
+                specular = pow(specular, 512);
 
                 // restrict a given value between 0-1
-                float intensity = /*brightness*32*/ (angle*brightness*600)+specular;
-                // intesnity = /*brightness*/**angle*//**0.5)+specular*/; // scalar to reach boxes
-//                std::cout<<intensity<<std::endl;
+                float intensity = (brightness*angle*20)+specular;
+//                float intensity = specular;
+                std::cout<<intensity<<std::endl;
                 if (intensity > 1) {
                     intensity = 1;
-                } else if (intensity < 0.3) {
-                    intensity = 0.3;
+                } else if (intensity < 0.2) {
+                    intensity = 0.2;
                 }
 
-/*                if (closestObjIntersection.valid &&
+                if (closestObjIntersection.valid &&
                     glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
                         // SHADOW
                         Colour currColor = intersection.intersectedTriangle.colour;
-                        uint32_t shadow = convertColor(Colour(currColor.red *0.3, currColor.green *0.3, currColor.blue *0.3));
-                        window.setPixelColour(x, y, shadow);
+                        uint32_t shadow = convertColor(Colour(currColor.red *0.2, currColor.green *0.2, currColor.blue *0.2));
+                        //window.setPixelColour(x, y, shadow);
                 } else if (intersection.intersectedTriangle.colour.name=="White") {
                     // hardcoding lightbox lol
-                    window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
-                } else {*/
+                    //window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
+                } else {
                     Colour currColor = intersection.intersectedTriangle.colour;
                     uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
                     window.setPixelColour(x, y, color);
-//                }
+                }
             }
         }
     }
