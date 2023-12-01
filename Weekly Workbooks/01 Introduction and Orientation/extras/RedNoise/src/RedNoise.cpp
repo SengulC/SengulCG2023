@@ -22,9 +22,9 @@ int indexcheck;
 bool toggle = true;
 bool orbit = false;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
-float focalLength = 1.8f;
+float focalLength = 1.5f;
 float scale = 240.0f;
-glm::vec3 cameraPosition {0.0, 0.0, 4.0};
+glm::vec3 cameraPosition {0.0, 0.5, 2.0};
 glm::mat3 cameraOrientation(
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
@@ -41,7 +41,7 @@ glm::mat3 rotateY(
         0.0f, 1.0f, 0.0f,
         -sin(0.1), 0.0f, cos(0.1)
 );
-glm::vec3 lightPosition(0.8,-0.9,-0.1);
+glm::vec3 lightPosition(0,0.5,0.8);
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
