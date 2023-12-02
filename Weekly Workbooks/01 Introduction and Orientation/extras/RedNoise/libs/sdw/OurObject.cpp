@@ -44,6 +44,15 @@ std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string
             modelTriangles.push_back(tempTriangle);
         }
     }
+
+    // calculate vertex normals, take an avg of the tri normals for each tri the vertex appears in
+    std::map<glm::vec3, std::vector<ModelTriangle>> vertexTriangles; // dictionary to store which tri.s a vertex appears in
+    for (ModelTriangle tri : modelTriangles) {
+        for (glm::vec3 vertex :  tri.vertices) {
+
+        }
+    }
+
     theObjFile.close();
     return modelTriangles;
 }

@@ -278,8 +278,8 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 specular = pow(specular, 1024);
 
                 // restrict a given value between 0-1
-//                float intensity = (brightness*angle*20)+specular;
-                float intensity = brightness*5;
+                float intensity = (brightness*angle*5)+specular;
+//                float intensity = brightness*5;
                 brightnesses.push_back(intensity);
 //                std::cout<<intensity<<std::endl;
                 if (intensity > 1) {
@@ -305,13 +305,8 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             }
         }
     }
-    // lightPosition(0.0,0.5,0.8);
-    CanvasPoint lightPos = getCanvasIntersectionPoint(CanvasPoint(lightPosition.x, lightPosition.y, lightPosition.z), cameraPosition, cameraOrientation, focalLength, scale);
-    drawPoint(window, lightPos, {160,120,0.695027}, {255,255,255});
-    auto min = std::min_element(brightnesses.begin(), brightnesses.end());
-    auto max = std::max_element(brightnesses.begin(), brightnesses.end());
-    std::cout << *min << std::endl;
-    std::cout << *max << std::endl;
-//    std::cout<<"end of ray trace"<<std::endl;
+//    CanvasPoint lightPos = getCanvasIntersectionPoint(CanvasPoint(lightPosition.x, lightPosition.y, lightPosition.z), cameraPosition, cameraOrientation, focalLength, scale);
+//    drawPoint(window, lightPos, {160,120,0.695027}, {255,255,255});
+    std::cout<<"end of ray trace"<<std::endl;
 }
 
