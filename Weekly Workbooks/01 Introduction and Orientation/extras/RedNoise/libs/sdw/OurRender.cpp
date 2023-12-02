@@ -111,7 +111,7 @@ CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cam
 
 std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> drawRasterizedScene(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
     window.clearPixels();
-    std::cout<<"rasterizer"<<std::endl;
+//    std::cout<<"rasterizer"<<std::endl;
     depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
     std::vector<CanvasTriangle> twodTriangles;
 
@@ -137,7 +137,7 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::v
         ) * cameraPosition;
         cameraOrientation = LookAt(cameraOrientation, glm::vec3(0,0,0), cameraPosition);
     }
-    std::cout<<"end of rasterizer"<<std::endl;
+//    std::cout<<"end of rasterizer"<<std::endl;
     return std::make_tuple(twodTriangles, cameraPosition, cameraOrientation, depthMatrix);
 }
 
@@ -239,8 +239,9 @@ glm::vec3 convertToDirectionVector(CanvasPoint startPoint, float scale, float fo
 }
 
 void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, glm::vec3 lightPosition) {
-    std::cout <<"in raytracer"<< std::endl;
+//    std::cout <<"in raytracer"<< std::endl;
     window.clearPixels();
+    std::vector<float> brightnesses;
     // glm::vec3 lightPosition (0,0.9,0);
     for (int y=0; y<HEIGHT; y++) {
         for (int x=0; x<WIDTH; x++) {
@@ -252,7 +253,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
                 RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
                 float radius = glm::length(lightPosition - intersection.intersectionPoint);
-                float brightness = 1/(4*M_PI*radius*radius) /** 5*/;
+                float brightness = 5/(3*M_PI*radius*radius) /** 5*/;
 
                 glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
                 // terminal - init
@@ -274,16 +275,17 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
 //                if (specular < 0) {
 //                    specular = 0;
 //                }
-                specular = pow(specular, 512);
+                specular = pow(specular, 1024);
 
                 // restrict a given value between 0-1
-                float intensity = (brightness*angle*20)+specular;
-//                float intensity = specular;
+//                float intensity = (brightness*angle*20)+specular;
+                float intensity = brightness*5;
+                brightnesses.push_back(intensity);
 //                std::cout<<intensity<<std::endl;
                 if (intensity > 1) {
                     intensity = 1;
-                } else if (intensity < 0.2) {
-                    intensity = 0.2;
+                } else if (intensity < 0.1) {
+                    intensity = 0.1;
                 }
 
                 if (closestObjIntersection.valid &&
@@ -306,6 +308,10 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
     // lightPosition(0.0,0.5,0.8);
     CanvasPoint lightPos = getCanvasIntersectionPoint(CanvasPoint(lightPosition.x, lightPosition.y, lightPosition.z), cameraPosition, cameraOrientation, focalLength, scale);
     drawPoint(window, lightPos, {160,120,0.695027}, {255,255,255});
-    std::cout<<"end of ray trace"<<std::endl;
+    auto min = std::min_element(brightnesses.begin(), brightnesses.end());
+    auto max = std::max_element(brightnesses.begin(), brightnesses.end());
+    std::cout << *min << std::endl;
+    std::cout << *max << std::endl;
+//    std::cout<<"end of ray trace"<<std::endl;
 }
 
