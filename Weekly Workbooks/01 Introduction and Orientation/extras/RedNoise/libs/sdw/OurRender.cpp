@@ -267,7 +267,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
 
                 // SPECULAR
                 glm::vec3 lightToSurface = intersection.intersectionPoint-lightPosition;
-                glm::vec3 reflectionVector (lightToSurface - ((2*normal)*(glm::normalizeDot(lightToSurface, normal))));
+                glm::vec3 reflectionVector (lightToSurface - ((2*normal)*(glm::dot(lightToSurface, normal))));
                 glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
                 float specular = glm::normalizeDot(reflectionVector, surfaceToCam);
 
