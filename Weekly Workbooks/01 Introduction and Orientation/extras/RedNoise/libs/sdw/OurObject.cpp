@@ -81,19 +81,24 @@ std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string
     }
 
     // for each vertex, calc vertex normal
-    std::vector<ModelTriangle> modelTrianglesWithNormals = modelTriangles;
+    std::vector<ModelTriangle> modelTrianglesWithNormals;
     if (sphere) {
         for (ModelTriangle t : modelTriangles) {
             // for each triangle
-            ModelTriangle temp = t;
             for (glm::vec3 v : t.vertices) {
-                // for each vertex in that triange
+                // for each vertex in that triangle,
+                // calculate normal
                 glm::vec3 normal = calculateVertexNormal(modelTriangles, v);
-                temp.vertexNormals.push_back(normal);
+                // push normal of current vertex onto vertexNormals list of copied tri
+                t.vertexNormals.push_back(normal);
             }
-            modelTrianglesWithNormals.push_back(temp);
+            modelTrianglesWithNormals.push_back(t); // add copied and normal'd tri to list
+            // go to next tri
         }
+    } else {
+        modelTrianglesWithNormals = modelTriangles;
     }
+
     theObjFile.close();
     return modelTrianglesWithNormals;
 }

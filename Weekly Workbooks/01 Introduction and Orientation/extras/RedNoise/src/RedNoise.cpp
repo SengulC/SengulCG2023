@@ -232,12 +232,12 @@ int main(int argc, char *argv[]) {
         }
     }*/
 
-     auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
+    // auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
 
     Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
     Colour gray(178,178,178), yellow(255,255,0), green(0,255,0), pink(255,0,255);
     std::vector<Colour> colors {red, blue, cyan, green, gray, yellow, pink};
-    std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
+    // std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
 
     // RASTERIZER
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
@@ -249,21 +249,16 @@ int main(int argc, char *argv[]) {
 
     // RAYTRACER
 //    drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-//    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
 //   VERTEX NORMALS DEBUGGING
-//    std::vector<ModelTriangle> smallObj = readObj("models/shortened_sphere.obj", mtls, 1, true);
-//    for (const auto& tri : smallObj) {
-//        std::cout<< tri<<std::endl;
-//        std::cout<< "vertex normals..."<<std::endl;
-//        if (tri.vertexNormals.empty()) {
-//            std::cout<<"this fucking triangle weird bro"<<std::endl;
-//            std::cout<<tri<<std::endl;
+//    std::cout<<sphereTriangles.size()<<std::endl;
+//    int index = 0;
+//    for (ModelTriangle ct : sphereTriangles) {
+//        if (ct.vertexNormals.empty()) {
+//            std::cout<<"empty at tri index: "<< index <<std::endl;
 //        }
-//        for (glm::vec3 normal : tri.vertexNormals) {
-//            printVec3("normal:", normal);
-//        }
-//        std::cout<<"---"<<std::endl;
+//        index++;
 //    }
 
 	while (true) {

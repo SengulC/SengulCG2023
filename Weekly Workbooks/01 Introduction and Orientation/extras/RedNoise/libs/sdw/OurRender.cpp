@@ -167,6 +167,7 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm
     // loop through all triangles for given ray direction
     for (ModelTriangle triangle : triangles) {
             e0 = triangle.vertices[1] - triangle.vertices[0];
+            e0 = triangle.vertices[1] - triangle.vertices[0];
             e1 = triangle.vertices[2] - triangle.vertices[0];
             SPVector = startPosition - triangle.vertices[0];
             glm::mat3 DEMatrix(-rayDirection, e0, e1);
@@ -299,39 +300,51 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
     std::cout<<"end of ray trace"<<std::endl;
 }
 
+std::vector<float> calculateBrightness(glm::vec3 lightPosition, glm::vec3 cameraPosition, RayTriangleIntersection intersection) {
+    std::vector<float> brightnesses;
+    int index = 0;
+    for (auto vertex: intersection.intersectedTriangle.vertices) {
+        // intersectionPoint -> vertex
+        // triangle.normal -> vertexNormal
+
+        float radius = glm::length(lightPosition - vertex);
+        float brightness = 5 / (3 * M_PI * radius * radius); // PROXIMITY
+        glm::vec3 surfaceToLight = lightPosition - vertex;
+        glm::vec3 normal = intersection.intersectedTriangle.vertexNormals[index];
+        float angle = glm::normalizeDot(normal, surfaceToLight); // AOL
+        glm::vec3 lightToSurface = vertex - lightPosition;
+        glm::vec3 reflectionVector(lightToSurface - ((2 * normal) * (glm::dot(lightToSurface, normal))));
+        glm::vec3 surfaceToCam(cameraPosition - vertex);
+        float specular = glm::normalizeDot(reflectionVector, surfaceToCam);
+        specular = pow(specular, 1024); // SPECULAR
+        float intensity = (brightness * angle * 5) + specular;
+        if (intensity > 1) {
+            intensity = 1;
+        } else if (intensity < 0.1) {
+            intensity = 0.1;
+        }
+
+        brightnesses.push_back(intensity);
+        index++;
+    }
+    return brightnesses;
+}
 
 void drawGouraucedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, glm::vec3 lightPosition) {
-    std::cout <<"in raytracer w/ gouraud lighting"<< std::endl;
+    std::cout<<"in drawGouraucedScene"<<std::endl;
     window.clearPixels();
-    std::vector<float> brightnesses;
+
     for (int y=0; y<HEIGHT; y++) {
         for (int x=0; x<WIDTH; x++) {
             CanvasPoint point(x, y, focalLength);
             glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
-//                std::vector<Colour> = calculateBrightness(lightPosition, intersection);
-                // brightness = barycentric of c1 c2 c3
-                glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
-                RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
-                float radius = glm::length(lightPosition - intersection.intersectionPoint);
-                float brightness = 5/(3*M_PI*radius*radius); // PROXIMITY
-                glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
-                glm::vec3 normal = intersection.intersectedTriangle.normal;
-                float angle = glm::normalizeDot(normal, surfaceToLight); // AOL
-                glm::vec3 lightToSurface = intersection.intersectionPoint-lightPosition;
-                glm::vec3 reflectionVector (lightToSurface - ((2*normal)*(glm::dot(lightToSurface, normal))));
-                glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
-                float specular = glm::normalizeDot(reflectionVector, surfaceToCam); // SPECULAR
-                specular = pow(specular, 1024);
+                std::vector<float> vertexBrightnesses = calculateBrightness(lightPosition, cameraPosition, intersection);
+                float c1=vertexBrightnesses[0], c2=vertexBrightnesses[1], c3=vertexBrightnesses[2];
 
-                float intensity = (brightness*angle*5)+specular;
-                brightnesses.push_back(intensity);
-                if (intensity > 1) {
-                    intensity = 1;
-                } else if (intensity < 0.1) {
-                    intensity = 0.1;
-                }
+                float intensity = (c1+c2+c3)/3;
+                // can get tuv of given intersectionpoint from getClosestValidIntersection func
 
                 Colour currColor = intersection.intersectedTriangle.colour;
                 uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
