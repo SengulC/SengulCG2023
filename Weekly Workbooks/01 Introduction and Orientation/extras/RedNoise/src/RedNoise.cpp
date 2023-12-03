@@ -246,8 +246,10 @@ int main(int argc, char *argv[]) {
         }
     }*/
 
-    std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
-//    std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
+     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
+
+
+    //    std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
 
     Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
     Colour gray(178,178,178), yellow(255,255,0), green(0,255,0), pink(255,0,255);
@@ -263,7 +265,7 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-      drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+      // drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
 
 
@@ -271,6 +273,18 @@ int main(int argc, char *argv[]) {
 //    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
 //    std::vector<TexturePoint> textures {TexturePoint(195, 5), TexturePoint(395, 380), TexturePoint(65, 330)};
 //    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"), textures);
+
+
+    ModelTriangle sphereTri = sphereTriangles[1];
+    std::cout << sphereTri.vertexNormals.size() << std::endl;
+    for (const std::pair<glm::vec3, glm::vec3>& pair : sphereTri.vertexNormals) {
+        glm::vec3 vertex = pair.first;
+        glm::vec3 normal = pair.second;
+
+        std::cout << "Vertex: (" << vertex.x << ", " << vertex.y << ", " << vertex.z << ")" << std::endl;
+        std::cout << "Normal: (" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
+        std::cout << std::endl;
+    }
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !

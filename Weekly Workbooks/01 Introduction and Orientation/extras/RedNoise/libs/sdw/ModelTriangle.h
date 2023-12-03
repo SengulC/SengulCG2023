@@ -3,12 +3,15 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <array>
+#include <vector>
 #include "Colour.h"
 #include "TexturePoint.h"
 
 struct ModelTriangle {
 	std::array<glm::vec3, 3> vertices{};
-    std::array<glm::vec3, 3> vertexNormals{};
+    std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormals;
+    // list of pairs ~ vertex normals 'dictionary'
+    // pair: vertex (x,y,z) has a normal (xn, yn, zn) based off of all the triangles vertex appears in
 	std::array<TexturePoint, 3> texturePoints{};
 	Colour colour{};
 	glm::vec3 normal{};

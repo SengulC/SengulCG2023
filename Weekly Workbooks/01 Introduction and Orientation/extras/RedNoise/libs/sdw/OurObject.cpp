@@ -5,6 +5,44 @@
 #define WIDTH 320
 #define HEIGHT 240
 
+std::vector<std::pair<glm::vec3, glm::vec3>> calculateVertexNormals(const std::vector<ModelTriangle>& modelTriangles) {
+    // calculate vertex normals, take an avg of the tri normals for each tri the vertex appears in
+    std::vector<std::pair<glm::vec3, std::vector<ModelTriangle>>> vertexIsInTheseTriangles; // list of pairs to store which tri.s a vertex appears in
+    for (const ModelTriangle& tri : modelTriangles) {
+        for (glm::vec3 vertex : tri.vertices) {
+            auto entry = std::find_if(vertexIsInTheseTriangles.begin(), vertexIsInTheseTriangles.end(),
+            // go thru vertexIsInTheseTriangles list.
+            // if there is a pair whose first entry (the vertex val) == vertex, then the vertex is already in the list
+            [&](const std::pair<glm::vec3, std::vector<ModelTriangle>>& pair) { return pair.first == vertex; });
+
+            if (entry == vertexIsInTheseTriangles.end()) {
+                // curr vertex does NOT have an entry, init. w curr tri
+                vertexIsInTheseTriangles.emplace_back(vertex, std::vector<ModelTriangle>{tri});
+            } else {
+                // curr vertex DOES have an entry, add to it w curr tri
+                entry->second.push_back(tri);
+            }
+        }
+    }
+
+    std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormals;
+    for (const std::pair<glm::vec3, std::vector<ModelTriangle>>& pairEntry : vertexIsInTheseTriangles) {
+        // for given vertex we have the list of triangles it appears in. calculate avg normal...
+        glm::vec3 avg (0,0,0);
+        int count = 0;
+        for (const ModelTriangle& tri : pairEntry.second) {
+            avg += tri.normal;
+            count++;
+        }
+        //... and store in vertexNormals
+        std::pair<glm::vec3, glm::vec3> calcNormal (pairEntry.first, avg/count);
+        vertexNormals.push_back(calcNormal);
+        // move onto next vertex!
+    }
+
+    return vertexNormals;
+}
+
 std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale, bool sphere) {
     // remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
     std::vector<ModelTriangle> modelTriangles;
@@ -41,15 +79,8 @@ std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string
             glm::vec3 normal = glm::cross(edge1, edge2);
             tempTriangle = {v0,v1,v2, trigColour};
             tempTriangle.normal = normal;
+            tempTriangle.vertexNormals = calculateVertexNormals(modelTriangles);
             modelTriangles.push_back(tempTriangle);
-        }
-    }
-
-    // calculate vertex normals, take an avg of the tri normals for each tri the vertex appears in
-    std::map<glm::vec3, std::vector<ModelTriangle>> vertexTriangles; // dictionary to store which tri.s a vertex appears in
-    for (ModelTriangle tri : modelTriangles) {
-        for (glm::vec3 vertex :  tri.vertices) {
-
         }
     }
 
