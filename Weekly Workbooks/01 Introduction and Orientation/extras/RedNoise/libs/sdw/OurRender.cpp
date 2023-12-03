@@ -250,26 +250,21 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
                 // ray from surface to light
+                // terminal - init
+                // from surface (init) to cam/light (terminal)
                 glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
                 RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
                 float radius = glm::length(lightPosition - intersection.intersectionPoint);
                 float brightness = 5/(3*M_PI*radius*radius) /** 5*/;
 
                 glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
-                // terminal - init
-                // from surface (init) to cam/light (terminal)
-//                glm::vec3 normal = intersection.intersectedTriangle.normal;
-                glm::vec3 normal = findVertexNormal(intersection);
+                glm::vec3 normal = intersection.intersectedTriangle.normal;
+//                glm::vec3 normal = findVertexNormal(intersection);
 //                glm::vec3 zero {0,0,0};
 //                if (normal == zero) {
 //                    normal = intersection.intersectedTriangle.normal;
 //                }
                 float angle = glm::normalizeDot(normal, surfaceToLight);
-                //angle = pow(angle, 128);
-
-/*                if (angle < 0.2) {
-                    angle = 0.2;
-                }*/
 
                 // SPECULAR
                 glm::vec3 lightToSurface = intersection.intersectionPoint-lightPosition;
@@ -277,9 +272,6 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
                 float specular = glm::normalizeDot(reflectionVector, surfaceToCam);
 
-//                if (specular < 0) {
-//                    specular = 0;
-//                }
                 specular = pow(specular, 1024);
 
                 // restrict a given value between 0-1
