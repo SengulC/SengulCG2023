@@ -248,22 +248,23 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-//    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition, vertexNormalsMap);
+//    drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+//    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
 //   VERTEX NORMALS DEBUGGING
-    std::vector<ModelTriangle> smallObj = readObj("models/shortened_sphere.obj", mtls, 1, true);
-    for (const auto& tri : smallObj) {
+//    std::vector<ModelTriangle> smallObj = readObj("models/shortened_sphere.obj", mtls, 1, true);
+//    for (const auto& tri : smallObj) {
 //        std::cout<< tri<<std::endl;
 //        std::cout<< "vertex normals..."<<std::endl;
-        if (tri.vertexNormals.empty()) {
+//        if (tri.vertexNormals.empty()) {
 //            std::cout<<"this fucking triangle weird bro"<<std::endl;
 //            std::cout<<tri<<std::endl;
-        }
+//        }
 //        for (glm::vec3 normal : tri.vertexNormals) {
 //            printVec3("normal:", normal);
 //        }
 //        std::cout<<"---"<<std::endl;
-    }
+//    }
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !

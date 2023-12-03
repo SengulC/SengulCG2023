@@ -279,20 +279,20 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                     intensity = 0.1;
                 }
 
-                if (closestObjIntersection.valid &&
-                    glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
-                        // SHADOW
-                        Colour currColor = intersection.intersectedTriangle.colour;
-                        uint32_t shadow = convertColor(Colour(currColor.red *0.2, currColor.green *0.2, currColor.blue *0.2));
-                        //window.setPixelColour(x, y, shadow);
-                } else if (intersection.intersectedTriangle.colour.name=="White") {
-                    // hardcoding lightbox lol
-                    //window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
-                } else {
+//                if (closestObjIntersection.valid &&
+//                    glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
+//                        // SHADOW
+//                        Colour currColor = intersection.intersectedTriangle.colour;
+//                        uint32_t shadow = convertColor(Colour(currColor.red *0.2, currColor.green *0.2, currColor.blue *0.2));
+//                        //window.setPixelColour(x, y, shadow);
+//                } else if (intersection.intersectedTriangle.colour.name=="White") {
+//                    // hardcoding lightbox lol
+//                    //window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
+//                } else {
                     Colour currColor = intersection.intersectedTriangle.colour;
                     uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
                     window.setPixelColour(x, y, color);
-                }
+//                }
             }
         }
     }
@@ -310,45 +310,32 @@ void drawGouraucedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
-                if (std::find(intersection.intersectedTriangle.vertices.begin(),intersection.intersectedTriangle.vertices.end(),
-                intersection.intersectionPoint)!=intersection.intersectedTriangle.vertices.end())
-                {
-                    std::cout<<"WE MADE ITTT"<<std::endl;
-                    // intersectionPoint = 1/3 of triangle's vertices (not some arbitrary point inside a tri!)
-//                    glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
-//                    RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
-//                    float radius = glm::length(lightPosition - intersection.intersectionPoint);
-//                    float brightness = 5/(3*M_PI*radius*radius); // PROXIMITY
-//                    glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
-//                    glm::vec3 normal = intersection.intersectedTriangle.normal;
-//                    float angle = glm::normalizeDot(normal, surfaceToLight); // AOL
-//                    glm::vec3 lightToSurface = intersection.intersectionPoint-lightPosition;
-//                    glm::vec3 reflectionVector (lightToSurface - ((2*normal)*(glm::dot(lightToSurface, normal))));
-//                    glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
-//                    float specular = glm::normalizeDot(reflectionVector, surfaceToCam); // SPECULAR
-//                    specular = pow(specular, 1024);
-//
-//                    float intensity = (brightness*angle*5)+specular;
-//                    brightnesses.push_back(intensity);
-//                    if (intensity > 1) {
-//                        intensity = 1;
-//                    } else if (intensity < 0.1) {
-//                        intensity = 0.1;
-//                    }
-//
-//                    if (closestObjIntersection.valid &&
-//                        glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
-//                        // SHADOW
-//                        Colour currColor = intersection.intersectedTriangle.colour;
-//                        uint32_t shadow = convertColor(Colour(currColor.red *0.2, currColor.green *0.2, currColor.blue *0.2));
-//                        //window.setPixelColour(x, y, shadow);
-//                    } else {
-//                        Colour currColor = intersection.intersectedTriangle.colour;
-//                        uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
-//                        window.setPixelColour(x, y, color);
-//                    }
-                    window.setPixelColour(x, y, convertColor({255,0,0}));
+//                std::vector<Colour> = calculateBrightness(lightPosition, intersection);
+                // brightness = barycentric of c1 c2 c3
+                glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
+                RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
+                float radius = glm::length(lightPosition - intersection.intersectionPoint);
+                float brightness = 5/(3*M_PI*radius*radius); // PROXIMITY
+                glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
+                glm::vec3 normal = intersection.intersectedTriangle.normal;
+                float angle = glm::normalizeDot(normal, surfaceToLight); // AOL
+                glm::vec3 lightToSurface = intersection.intersectionPoint-lightPosition;
+                glm::vec3 reflectionVector (lightToSurface - ((2*normal)*(glm::dot(lightToSurface, normal))));
+                glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
+                float specular = glm::normalizeDot(reflectionVector, surfaceToCam); // SPECULAR
+                specular = pow(specular, 1024);
+
+                float intensity = (brightness*angle*5)+specular;
+                brightnesses.push_back(intensity);
+                if (intensity > 1) {
+                    intensity = 1;
+                } else if (intensity < 0.1) {
+                    intensity = 0.1;
                 }
+
+                Colour currColor = intersection.intersectedTriangle.colour;
+                uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
+                window.setPixelColour(x, y, color);
             }
         }
     }
