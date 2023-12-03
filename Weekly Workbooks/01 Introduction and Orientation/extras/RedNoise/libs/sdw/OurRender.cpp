@@ -239,7 +239,7 @@ glm::vec3 convertToDirectionVector(CanvasPoint startPoint, float scale, float fo
 }
 
 void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, glm::vec3 lightPosition) {
-//    std::cout <<"in raytracer"<< std::endl;
+    std::cout <<"in raytracer"<< std::endl;
     window.clearPixels();
     std::vector<float> brightnesses;
     // glm::vec3 lightPosition (0,0.9,0);
@@ -258,7 +258,12 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
                 // terminal - init
                 // from surface (init) to cam/light (terminal)
-                glm::vec3 normal = intersection.intersectedTriangle.normal;
+//                glm::vec3 normal = intersection.intersectedTriangle.normal;
+                glm::vec3 normal = findVertexNormal(intersection);
+//                glm::vec3 zero {0,0,0};
+//                if (normal == zero) {
+//                    normal = intersection.intersectedTriangle.normal;
+//                }
                 float angle = glm::normalizeDot(normal, surfaceToLight);
                 //angle = pow(angle, 128);
 

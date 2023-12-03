@@ -14,6 +14,7 @@
 #include <string>
 #include "OurLine.h"
 #include "OurTriangle.h"
+#include "OurObject.h"
 #include "glm/ext.hpp"
 #include <algorithm>
 #include <math.h>

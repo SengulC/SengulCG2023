@@ -1,11 +1,44 @@
 #include "OurObject.h"
-#include <glm/glm.hpp>
-#include "glm/ext.hpp"
 
 #define WIDTH 320
 #define HEIGHT 240
 
-std::vector<std::pair<glm::vec3, glm::vec3>> calculateVertexNormals(const std::vector<ModelTriangle>& modelTriangles) {
+void printVertexNormals (std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormals) {
+    glm::vec3 vertex, normal;
+    for (auto &&vn: vertexNormals) {
+        vertex = vn.first;
+        normal = vn.second;
+
+        std::cout << "vertex: (" << vertex.x << ", " << vertex.y << ", " << vertex.z << ") has normal: " << std::endl;
+        std::cout << "(" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
+    }
+}
+
+void printVec3 (std::string string, glm::vec3 vec) {
+    std::cout << string << " (" << vec.x << ", " << vec.y << ", " << vec.z << ")" << std::endl;
+}
+
+glm::vec3 findVertexNormal(const RayTriangleIntersection& intersection) {
+    ModelTriangle triangle = intersection.intersectedTriangle;
+    glm::vec3 vertex = intersection.intersectionPoint;
+
+    std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormals = triangle.vertexNormals;
+//    std::cout<<"in findVertexNormal func"<<std::endl;
+
+//    printVec3("vertex we're looking for", vertex);
+
+    for (std::pair<glm::vec3, glm::vec3> pair : vertexNormals) {
+//        printVec3("vertices...", pair.first);
+        if (pair.first == vertex) {
+            std::cout<<"Found!"<<std::endl;
+            return pair.second;
+        }
+    }
+    // couldn't find for some reason...
+    return {0,0,0};
+}
+
+glm::vec3 calculateVertexNormal(const std::vector<ModelTriangle>& modelTriangles, glm::vec3 vertex) {
     // calculate vertex normals, take an avg of the tri normals for each tri the vertex appears in
     std::vector<std::pair<glm::vec3, std::vector<ModelTriangle>>> vertexIsInTheseTriangles; // list of pairs to store which tri.s a vertex appears in
     for (const ModelTriangle& tri : modelTriangles) {
@@ -79,9 +112,15 @@ std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string
             glm::vec3 normal = glm::cross(edge1, edge2);
             tempTriangle = {v0,v1,v2, trigColour};
             tempTriangle.normal = normal;
-            tempTriangle.vertexNormals = calculateVertexNormals(modelTriangles);
             modelTriangles.push_back(tempTriangle);
         }
+    }
+
+    // for each vertex, calc vertex normal
+    std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormalsMap;
+    for (glm::vec3 v : vertices) {
+        glm::vec3 normal = calculateVertexNormal(modelTriangles, v);
+        vertexNormalsMap.emplace_back(v, normal);
     }
 
     theObjFile.close();

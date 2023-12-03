@@ -265,7 +265,7 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-      // drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+       // drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
     // TEXTURING
 //    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
@@ -273,16 +273,8 @@ int main(int argc, char *argv[]) {
 //    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"), textures);
 
 //   VERTEX NORMALS DEBUGGING
-//    ModelTriangle sphereTri = sphereTriangles[1];
-//    std::cout << sphereTri.vertexNormals.size() << std::endl;
-//    for (const std::pair<glm::vec3, glm::vec3>& pair : sphereTri.vertexNormals) {
-//        glm::vec3 vertex = pair.first;
-//        glm::vec3 normal = pair.second;
-//
-//        std::cout << "Vertex: (" << vertex.x << ", " << vertex.y << ", " << vertex.z << ")" << std::endl;
-//        std::cout << "Normal: (" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
-//        std::cout << std::endl;
-//    }
+    std::vector<ModelTriangle> shortSphere = readObj("models/shortened_sphere.obj", mtls, 0.35, true);
+
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
