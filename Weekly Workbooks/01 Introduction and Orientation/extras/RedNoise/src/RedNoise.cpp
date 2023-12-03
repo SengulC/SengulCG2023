@@ -267,24 +267,22 @@ int main(int argc, char *argv[]) {
     // RAYTRACER
       // drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
-
-
     // TEXTURING
 //    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
 //    std::vector<TexturePoint> textures {TexturePoint(195, 5), TexturePoint(395, 380), TexturePoint(65, 330)};
 //    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"), textures);
 
-
-    ModelTriangle sphereTri = sphereTriangles[1];
-    std::cout << sphereTri.vertexNormals.size() << std::endl;
-    for (const std::pair<glm::vec3, glm::vec3>& pair : sphereTri.vertexNormals) {
-        glm::vec3 vertex = pair.first;
-        glm::vec3 normal = pair.second;
-
-        std::cout << "Vertex: (" << vertex.x << ", " << vertex.y << ", " << vertex.z << ")" << std::endl;
-        std::cout << "Normal: (" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
-        std::cout << std::endl;
-    }
+//   VERTEX NORMALS DEBUGGING
+//    ModelTriangle sphereTri = sphereTriangles[1];
+//    std::cout << sphereTri.vertexNormals.size() << std::endl;
+//    for (const std::pair<glm::vec3, glm::vec3>& pair : sphereTri.vertexNormals) {
+//        glm::vec3 vertex = pair.first;
+//        glm::vec3 normal = pair.second;
+//
+//        std::cout << "Vertex: (" << vertex.x << ", " << vertex.y << ", " << vertex.z << ")" << std::endl;
+//        std::cout << "Normal: (" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
+//        std::cout << std::endl;
+//    }
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
