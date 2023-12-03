@@ -17,8 +17,8 @@
 #include <glm/glm.hpp>
 #include "glm/ext.hpp"
 
-glm::vec3 findVertexNormal(const RayTriangleIntersection& intersection);
+void printVec3 (std::string string, glm::vec3 vec);
 void printVertexNormals (std::vector<ModelTriangle> triangles, std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormals);
 glm::vec3 calculateVertexNormal(const std::vector<ModelTriangle>& modelTriangles, glm::vec3 vertex);
-std::tuple<std::vector<ModelTriangle>, std::vector<std::pair<glm::vec3, glm::vec3>>> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale, bool sphere);
+std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale, bool sphere);
 std::map<std::string, Colour> readMaterial(const std::string& file);

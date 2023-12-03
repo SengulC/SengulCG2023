@@ -26,7 +26,7 @@ float focalLength = 2.0;
 float scale = 240.0f;
 glm::vec3 cameraPosition {0.0, 0.5, 4.0};
 std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-std::vector<ModelTriangle> sphereTriangles = std::get<0>(readObj("models/sphere.obj", mtls, 0.35, true));
+std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
 
 glm::mat3 cameraOrientation(
         1.0f, 0.0f, 0.0f,
@@ -113,7 +113,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         else if (event.key.keysym.sym == 'y') {
             window.clearPixels();
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-            auto modelTriangles = std::get<0>(readObj("models/cornell-box.obj", mtls, 0.35, false));
+            auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
             tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
                                         depthMatrix, orbit);
@@ -164,20 +164,6 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 1.0f
             );
-        }
-        // rasterise
-        else if (event.key.keysym.sym == 'r') {
-            depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
-            std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-            auto modelTriangles = std::get<0>(readObj("models/cornell-box.obj", mtls, 0.35, false));
-            std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
-            tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
-                                        depthMatrix, orbit);
-            twodTriangles = std::get<0>(tuple);
-            cameraPosition = std::get<1>(tuple);
-            cameraOrientation = std::get<2>(tuple);
-            depthMatrix = std::get<3>(tuple);
-            indexcheck=0;
         }
         // print out depth of previously drawn triangle
         else if (event.key.keysym.sym == 'e') {
@@ -246,7 +232,7 @@ int main(int argc, char *argv[]) {
         }
     }*/
 
-     auto modelTriangles = std::get<0>(readObj("models/cornell-box.obj", mtls, 0.35, false));
+     auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
 
     Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
     Colour gray(178,178,178), yellow(255,255,0), green(0,255,0), pink(255,0,255);
@@ -262,14 +248,22 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-    //drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-
+//    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition, vertexNormalsMap);
 
 //   VERTEX NORMALS DEBUGGING
-//    auto smallObj = readObj("models/shortened_sphere.obj", mtls, 0.35, true);
-//    std::vector<ModelTriangle> smallSphere = std::get<0>(smallObj);
-//    std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormalsMap = std::get<1>(smallObj);
-//    printVertexNormals(smallSphere, vertexNormalsMap);
+    std::vector<ModelTriangle> smallObj = readObj("models/shortened_sphere.obj", mtls, 1, true);
+    for (const auto& tri : smallObj) {
+//        std::cout<< tri<<std::endl;
+//        std::cout<< "vertex normals..."<<std::endl;
+        if (tri.vertexNormals.empty()) {
+//            std::cout<<"this fucking triangle weird bro"<<std::endl;
+//            std::cout<<tri<<std::endl;
+        }
+//        for (glm::vec3 normal : tri.vertexNormals) {
+//            printVec3("normal:", normal);
+//        }
+//        std::cout<<"---"<<std::endl;
+    }
 
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !

@@ -24,28 +24,8 @@ void printVec3 (std::string string, glm::vec3 vec) {
     std::cout << string << " (" << vec.x << ", " << vec.y << ", " << vec.z << ")" << std::endl;
 }
 
-glm::vec3 findVertexNormal(const RayTriangleIntersection& intersection) {
-    ModelTriangle triangle = intersection.intersectedTriangle;
-    glm::vec3 vertex = intersection.intersectionPoint;
-
-    std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormals = triangle.vertexNormals;
-//    std::cout<<"in findVertexNormal func"<<std::endl;
-
-//    printVec3("vertex we're looking for", vertex);
-
-    for (std::pair<glm::vec3, glm::vec3> pair : vertexNormals) {
-//        printVec3("vertices...", pair.first);
-        if (pair.first == vertex) {
-            std::cout<<"Found!"<<std::endl;
-            return pair.second;
-        }
-    }
-    // couldn't find for some reason...
-    return {0,0,0};
-}
-
 glm::vec3 calculateVertexNormal(const std::vector<ModelTriangle>& modelTriangles, glm::vec3 vertex) {
-    glm::vec3 normal;
+    glm::vec3 normal (0,0,0);
     int count = 0;
     for (ModelTriangle tri : modelTriangles) {
         if (std::find(tri.vertices.begin(), tri.vertices.end(), vertex) != tri.vertices.end()) {
@@ -60,7 +40,7 @@ glm::vec3 calculateVertexNormal(const std::vector<ModelTriangle>& modelTriangles
     return normal;
 }
 
-std::tuple<std::vector<ModelTriangle>, std::vector<std::pair<glm::vec3, glm::vec3>>> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale, bool sphere) {
+std::vector<ModelTriangle> readObj(const std::string& file, std::map<std::string, Colour> mtls, float scale, bool sphere) {
     // remember that vertices in OBJ files are indexed from 1 (whereas vectors are indexed from 0).
     std::vector<ModelTriangle> modelTriangles;
     ModelTriangle tempTriangle;
@@ -101,15 +81,21 @@ std::tuple<std::vector<ModelTriangle>, std::vector<std::pair<glm::vec3, glm::vec
     }
 
     // for each vertex, calc vertex normal
-    std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormalsMap;
+    std::vector<ModelTriangle> modelTrianglesWithNormals = modelTriangles;
     if (sphere) {
-        for (glm::vec3 v: vertices) {
-            glm::vec3 normal = calculateVertexNormal(modelTriangles, v);
-            vertexNormalsMap.emplace_back(v, normal);
+        for (ModelTriangle t : modelTriangles) {
+            // for each triangle
+            ModelTriangle temp = t;
+            for (glm::vec3 v : t.vertices) {
+                // for each vertex in that triange
+                glm::vec3 normal = calculateVertexNormal(modelTriangles, v);
+                temp.vertexNormals.push_back(normal);
+            }
+            modelTrianglesWithNormals.push_back(temp);
         }
     }
     theObjFile.close();
-    return std::make_tuple(modelTriangles, vertexNormalsMap);
+    return modelTrianglesWithNormals;
 }
 
 std::map<std::string, Colour> readMaterial(const std::string& file) {
