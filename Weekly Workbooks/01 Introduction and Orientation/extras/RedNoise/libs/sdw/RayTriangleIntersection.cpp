@@ -1,10 +1,11 @@
 #include "RayTriangleIntersection.h"
 
 RayTriangleIntersection::RayTriangleIntersection() = default;
-RayTriangleIntersection::RayTriangleIntersection(const glm::vec3 &point, float distance, float t, const ModelTriangle &triangle, size_t index, bool valid) :
+RayTriangleIntersection::RayTriangleIntersection(const glm::vec3 &point, float distance, float t, glm::vec3 tuv, const ModelTriangle &triangle, size_t index, bool valid) :
 		intersectionPoint(point),
 		distanceFromStart(distance),
         t(t),
+        tuv(tuv),
 		intersectedTriangle(triangle),
 		triangleIndex(index),
         valid(valid) {}

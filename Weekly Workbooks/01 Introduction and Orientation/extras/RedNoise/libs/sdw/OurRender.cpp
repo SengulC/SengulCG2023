@@ -167,14 +167,13 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm
     // loop through all triangles for given ray direction
     for (ModelTriangle triangle : triangles) {
             e0 = triangle.vertices[1] - triangle.vertices[0];
-            e0 = triangle.vertices[1] - triangle.vertices[0];
             e1 = triangle.vertices[2] - triangle.vertices[0];
             SPVector = startPosition - triangle.vertices[0];
             glm::mat3 DEMatrix(-rayDirection, e0, e1);
             possibleSolution = glm::inverse(DEMatrix) * SPVector;
 
             possibleSolutions.emplace_back(possibleSolution, glm::distance(startPosition, endPosition),
-                                           possibleSolution.x, triangle, index, true);
+                                           possibleSolution.x, possibleSolution, triangle, index, true);
             index++;
     }
 
@@ -211,11 +210,11 @@ RayTriangleIntersection getClosestValidIntersection(glm::vec3 startPosition, glm
                 [](const RayTriangleIntersection& a, const RayTriangleIntersection& b) {return (a.t) < (b.t);});
 
         // -> is some wrap-iter thing apparently (source: CLion)
-        closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromStart, intersection1->t, intersection1->intersectedTriangle, intersection1->triangleIndex, intersection1->valid);
-        closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromStart, intersection1->t, intersection2->intersectedTriangle, intersection2->triangleIndex, intersection2->valid);
+        closestIntersection = RayTriangleIntersection(intersection1->intersectionPoint, intersection1->distanceFromStart, intersection1->t, intersection1->tuv, intersection1->intersectedTriangle, intersection1->triangleIndex, intersection1->valid);
+        closestIntersection2 = RayTriangleIntersection(intersection2->intersectionPoint, intersection2->distanceFromStart, intersection2->t,  intersection2->tuv, intersection2->intersectedTriangle, intersection2->triangleIndex, intersection2->valid);
     } else {
         // return error codes within RayTriangleIntersection (primarily valid: false)
-        RayTriangleIntersection erroneous = RayTriangleIntersection(glm::vec3(0, 0, 0), 1000, 1000, triangles[0], INT_MAX, false);
+        RayTriangleIntersection erroneous = RayTriangleIntersection({0,0,0} , 1000, 1000, {0,0,0}, triangles[0], INT_MAX, false);
         return erroneous;
     }
 
@@ -341,10 +340,13 @@ void drawGouraucedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
                 std::vector<float> vertexBrightnesses = calculateBrightness(lightPosition, cameraPosition, intersection);
-                float c1=vertexBrightnesses[0], c2=vertexBrightnesses[1], c3=vertexBrightnesses[2];
+                float c1 = vertexBrightnesses[0], c2 = vertexBrightnesses[1], c3 = vertexBrightnesses[2];
 
-                float intensity = (c1+c2+c3)/3;
-                // can get tuv of given intersectionpoint from getClosestValidIntersection func
+                glm::vec3 tuv = intersection.tuv;
+                float u = tuv.y, v = tuv.z, w = 1-(u+v);
+
+                // barycentric coords
+                float intensity = (u * c2) + (v * c3) + (w * c1);
 
                 Colour currColor = intersection.intersectedTriangle.colour;
                 uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
