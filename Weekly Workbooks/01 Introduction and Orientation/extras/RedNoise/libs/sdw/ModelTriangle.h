@@ -9,9 +9,7 @@
 
 struct ModelTriangle {
 	std::array<glm::vec3, 3> vertices{};
-    std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormals;
-    // list of pairs ~ vertex normals 'dictionary'
-    // pair: vertex (x,y,z) has a normal (xn, yn, zn) based off of all the triangles vertex appears in
+    std::vector<glm::vec3> vertexNormals{};
 	std::array<TexturePoint, 3> texturePoints{};
 	Colour colour{};
 	glm::vec3 normal{};

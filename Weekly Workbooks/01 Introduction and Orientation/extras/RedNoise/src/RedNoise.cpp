@@ -27,6 +27,7 @@ float scale = 240.0f;
 glm::vec3 cameraPosition {0.0, 0.5, 4.0};
 std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
 std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
+
 glm::mat3 cameraOrientation(
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
@@ -112,7 +113,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
         else if (event.key.keysym.sym == 'y') {
             window.clearPixels();
             std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-            std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
+            auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
             tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
                                         depthMatrix, orbit);
@@ -163,20 +164,6 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 1.0f
             );
-        }
-        // rasterise
-        else if (event.key.keysym.sym == 'r') {
-            depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
-            std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
-            std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
-            std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
-            tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
-                                        depthMatrix, orbit);
-            twodTriangles = std::get<0>(tuple);
-            cameraPosition = std::get<1>(tuple);
-            cameraOrientation = std::get<2>(tuple);
-            depthMatrix = std::get<3>(tuple);
-            indexcheck=0;
         }
         // print out depth of previously drawn triangle
         else if (event.key.keysym.sym == 'e') {
@@ -239,49 +226,39 @@ int main(int argc, char *argv[]) {
 	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, true);
 	SDL_Event event;
 
-//    std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
 /*        for (auto &pair : mtls) {
         if (pair.first == "Grey") {
             std::cout<< "Grey" <<(pair.second) << std::endl;
         }
     }*/
 
-     std::vector<ModelTriangle> modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
-
-
-    //    std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
+    // auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
 
     Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
     Colour gray(178,178,178), yellow(255,255,0), green(0,255,0), pink(255,0,255);
     std::vector<Colour> colors {red, blue, cyan, green, gray, yellow, pink};
-    std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
+    // std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
 
-     // RASTERIZER
+    // RASTERIZER
 //    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
-//    tuple = drawRasterizedScene(window, sphereTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    twodTriangles = std::get<0>(tuple);
 //    cameraPosition = std::get<1>(tuple);
 //    cameraOrientation = std::get<2>(tuple);
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-      // drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-
-    // TEXTURING
-//    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
-//    std::vector<TexturePoint> textures {TexturePoint(195, 5), TexturePoint(395, 380), TexturePoint(65, 330)};
-//    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"), textures);
+//    drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
 //   VERTEX NORMALS DEBUGGING
-//    ModelTriangle sphereTri = sphereTriangles[1];
-//    std::cout << sphereTri.vertexNormals.size() << std::endl;
-//    for (const std::pair<glm::vec3, glm::vec3>& pair : sphereTri.vertexNormals) {
-//        glm::vec3 vertex = pair.first;
-//        glm::vec3 normal = pair.second;
-//
-//        std::cout << "Vertex: (" << vertex.x << ", " << vertex.y << ", " << vertex.z << ")" << std::endl;
-//        std::cout << "Normal: (" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
-//        std::cout << std::endl;
+//    std::cout<<sphereTriangles.size()<<std::endl;
+//    int index = 0;
+//    for (ModelTriangle ct : sphereTriangles) {
+//        if (ct.vertexNormals.empty()) {
+//            std::cout<<"empty at tri index: "<< index <<std::endl;
+//        }
+//        index++;
 //    }
 
 	while (true) {
