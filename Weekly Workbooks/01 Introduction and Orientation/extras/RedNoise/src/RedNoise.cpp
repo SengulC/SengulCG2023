@@ -22,9 +22,9 @@ int indexcheck;
 bool toggle = true;
 bool orbit = false;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
-float focalLength = 2.0;
+float focalLength = 1.8;
 float scale = 240.0f;
-glm::vec3 cameraPosition {0.0, 0.5, 4.0};
+glm::vec3 cameraPosition {0.0, 0.0, 4.0};
 std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
 std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
 
@@ -44,7 +44,7 @@ glm::mat3 rotateY(
         0.0f, 1.0f, 0.0f,
         -sin(0.1), 0.0f, cos(0.1)
 );
-glm::vec3 lightPosition(0.0,0.5,2.5);
+glm::vec3 lightPosition(0.0,/*0.5*/0,/*2.5*/0.5);
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
@@ -249,9 +249,10 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-//    drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+    auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
+    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-    drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+//    drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //   VERTEX NORMALS DEBUGGING
 //    std::cout<<sphereTriangles.size()<<std::endl;
 //    int index = 0;
