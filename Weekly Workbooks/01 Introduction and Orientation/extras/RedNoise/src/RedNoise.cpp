@@ -240,7 +240,8 @@ int main(int argc, char *argv[]) {
     // std::vector<ModelTriangle> filteredTriangles = filterTrianglesByColour(modelTriangles, colors);
 
     // RASTERIZER
-//    std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
+//    auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
+//    auto tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    twodTriangles = std::get<0>(tuple);
 //    cameraPosition = std::get<1>(tuple);
@@ -249,8 +250,8 @@ int main(int argc, char *argv[]) {
 
     // RAYTRACER
 //    drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-
+//    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+    drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //   VERTEX NORMALS DEBUGGING
 //    std::cout<<sphereTriangles.size()<<std::endl;
 //    int index = 0;
