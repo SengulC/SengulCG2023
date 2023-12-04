@@ -411,10 +411,10 @@ void drawPhongdScene(DrawingWindow &window, const std::vector<ModelTriangle>& tr
                 glm::vec3 reflectionVector (lightToSurface - ((2*normal)*(glm::dot(lightToSurface, normal))));
                 glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
                 float specular = glm::normalizeDot(reflectionVector, surfaceToCam);
-                specular = pow(specular, 512);
+                specular = pow(specular, 1024);
 
                 // restrict a given value between 0-1
-                float intensity = (brightness*angle*5)+specular;
+                float intensity = (brightness*angle/**5*/)+specular;
                 if (intensity > 1) {
                     intensity = 1;
                 } else if (intensity < 0.1) {
