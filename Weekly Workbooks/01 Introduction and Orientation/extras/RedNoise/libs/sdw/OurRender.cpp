@@ -327,31 +327,18 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
                 // shoot a bunch of shadow rays...
-                std::vector<glm::vec3> allOfTheLights {glm::vec3 { -0.5, 0.4, -0.4 },
-                                                       { -0.5, 0.4, 0.4 },
-                                                       { 0.5, 0.4, 0.4 },
-                                                       { 0.5, 0.4, -0.4 },
-                                                       { -0.5, 0.6, -0.4 },
-                                                       { -0.5, 0.6, 0.4 },
-                                                       { 0.5, 0.6, 0.4 },
-                                                       { 0.5, 0.6, -0.4 },
-                                                       { -0.5, 0.5, -0.4 },
-                                                       { -0.5, 0.5, 0.4 },
-                                                       { 0.5, 0.5, 0.4 },
-                                                       { 0.5, 0.5, -0.4 },
-
-                                                       { -0.5, 0.4, -0.2 },
-                                                       { -0.5, 0.4, 0.2 },
-                                                       { 0.5, 0.4, 0.2 },
-                                                       { 0.5, 0.4, -0.2 },
-                                                       { -0.5, 0.6, -0.2 },
-                                                       { -0.5, 0.6, 0.2 },
-                                                       { 0.5, 0.6, 0.2 },
-                                                       { 0.5, 0.6, -0.2 },
-                                                       { -0.5, 0.5, -0.2 },
-                                                       { -0.5, 0.5, 0.2 },
-                                                       { 0.5, 0.5, 0.2 },
-                                                       { 0.5, 0.5, -0.2 }
+                std::vector<glm::vec3> allOfTheLights {glm::vec3 { -0.5, 0.4, -0.5 },
+                                                       { -0.5, 0.4, 0.5 },
+                                                       { 0.5, 0.4, 0.5 },
+                                                       { 0.5, 0.4, -0.5 },
+                                                       { -0.5, 0.6, -0.5 },
+                                                       { -0.5, 0.6, 0.5 },
+                                                       { 0.5, 0.6, 0.5 },
+                                                       { 0.5, 0.6, -0.5 },
+                                                       { -0.5, 0.5, -0.5 },
+                                                       { -0.5, 0.5, 0.5 },
+                                                       { 0.5, 0.5, 0.5 },
+                                                       { 0.5, 0.5, -0.5 }
                                                        };
 
                 for (auto light : allOfTheLights) {
