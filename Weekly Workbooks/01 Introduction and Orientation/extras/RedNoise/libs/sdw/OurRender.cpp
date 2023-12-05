@@ -331,16 +331,15 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                                                        { -0.5, 0.4, 0.5 },
                                                        { 0.5, 0.4, 0.5 },
                                                        { 0.5, 0.4, -0.5 },
-
                                                        { -0.5, 0.6, -0.5 },
                                                        { -0.5, 0.6, 0.5 },
                                                        { 0.5, 0.6, 0.5 },
                                                        { 0.5, 0.6, -0.5 },
-
-                                                       { -0.5, 0.8, -0.5 },
-                                                       { -0.5, 0.8, 0.5 },
-                                                       { 0.5, 0.8, 0.5 },
-                                                       { 0.5, 0.8, -0.5 }};
+                                                       { -0.5, 0.5, -0.5 },
+                                                       { -0.5, 0.5, 0.5 },
+                                                       { 0.5, 0.5, 0.5 },
+                                                       { 0.5, 0.5, -0.5 }
+                                                       };
 
                 for (auto light : allOfTheLights) {
                     CanvasPoint point (light.x, light.y, light.z);
