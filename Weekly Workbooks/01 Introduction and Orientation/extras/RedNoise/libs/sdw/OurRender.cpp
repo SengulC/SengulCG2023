@@ -253,7 +253,7 @@ float calculateBrightness(glm::vec3 lightPosition, glm::vec3 cameraPosition, glm
     specular = pow(specular, 512);
 
     // restrict a given value between 0-1
-    float intensity = (brightness*angle*5)+specular;
+    float intensity = /*(brightness*angle*5)+specular*/1;
     if (intensity > 1) {
         intensity = 1;
     } else if (intensity < 0.1) {
@@ -263,19 +263,38 @@ float calculateBrightness(glm::vec3 lightPosition, glm::vec3 cameraPosition, glm
     return intensity;
 }
 
-std::tuple<int, bool> shootShadowRays(std::vector<glm::vec3> allOfTheLights, RayTriangleIntersection intersection, const std::vector<ModelTriangle>& triangles) {
-    std::vector<std::pair<RayTriangleIntersection, float>> intersections;
+std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, glm::vec3 cameraPosition, RayTriangleIntersection intersection, const std::vector<ModelTriangle>& triangles) {
+    //std::vector<std::pair<RayTriangleIntersection, float>> validIntersections; // intersection data + t dist
+    std::vector<std::pair<float, float>> shadowData; // floats repping: light weight, pixel brightness wrt current light
     int count = 0;
-    // have a map of valid intersections and the distance btwn surface-thatLight to use in weighted brightness calc later!
+    float weight, brightness, weightedBrightness = 0;
+    // have a map of valid validIntersections and the distance btwn surface-thatLight to use in weighted brightness calc later!
     for (auto lightPosition : allOfTheLights) {
+        // for each light...
+        // shoot shadow ray
         glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
         RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
-        if (closestObjIntersection.valid) {
+        if (closestObjIntersection.valid)
+        { // if pixel should be in shadow...
+            // add a weighting to that light
+            weight = glm::distance(lightPosition, intersection.intersectionPoint);
+            // calc brightness at that pixel wrt current lightPos
+            brightness = calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, intersection.intersectedTriangle.normal);
             count++;
+            //validIntersections.emplace_back(closestObjIntersection, closestObjIntersection.t);
+            shadowData.emplace_back(weight, brightness);
         }
-        intersections.emplace_back(closestObjIntersection, closestObjIntersection.t);
     }
-    return std::make_tuple(count, !intersections.empty());
+    // now we have valid shadowData, loop thru the map and apply weight for each
+    for (auto entry : shadowData) {
+        weightedBrightness += (entry.first * entry.second);
+    }
+    if (weightedBrightness!=0){ std::cout << weightedBrightness / 10 << std::endl; }
+
+    // if shadowData is empty there were no shadows.
+    // if it is NOT empty, there were shadows.
+
+    return std::make_tuple(!shadowData.empty(), 1-(weightedBrightness/10));
 }
 
 //float calculateShadowIntensity(std::vector<std::pair<RayTriangleIntersection, float>> lightIntersections) {
@@ -298,34 +317,35 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
                 // shoot a bunch of shadow rays...
-                std::vector<glm::vec3> allOfTheLights {glm::vec3 {0,0,0.5}, glm::vec3 {0.2,0,0.5},
-                glm::vec3 {0.4,0,0.5}, glm::vec3 {0,0.2,0.5}, glm::vec3 {0.2,0.2,0.5},
-                glm::vec3 {0.4,0.4,0.5}, glm::vec3 {-0.2,0,0.5}, glm::vec3 {-0.4,0,0.5},
-                glm::vec3 {0,-0.2,0.5}, glm::vec3 {-0.2,-0.2,0.5}, glm::vec3 {-0.4,-0.4,0.5}};
+                std::vector<glm::vec3> allOfTheLights {glm::vec3 {-0.1,0.8,0.5}, {0.0,0.8,0.5}, {0.1,0.8,0.5}};
+
+                for (auto light : allOfTheLights) {
+                    CanvasPoint point (light.x, light.y, light.z);
+                    point = getCanvasIntersectionPoint(point, cameraPosition, cameraOrientation, focalLength, scale);
+                    window.setPixelColour(point.x, point.y, convertColor({255,255,255}));
+                }
 
                 //glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
                 //RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
 
-                auto shadowData = shootShadowRays(allOfTheLights, intersection, triangles);
-                int shadowIntersections = std::get<0>(shadowData);
-                bool validShadow = std::get<1>(shadowData);
+                auto shadowData = shootShadowRays(allOfTheLights, cameraPosition, intersection, triangles);
+                //if there were/was a valid shadow, use above intensity, otherwise use below
 
                 glm::vec3 normal = intersection.intersectedTriangle.normal;
                 float intensity = calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, normal);
+                bool validShadow = std::get<0>(shadowData);
+                float shadowIntensity = std::get<1>(shadowData);
+                Colour currColor = intersection.intersectedTriangle.colour;
 
-                if (validShadow && shadowIntersections!=0) {
-                        // SOFT SHADOW: how many shadow rays respond with an intersection?
-                        Colour currColor = intersection.intersectedTriangle.colour;
-                        //float shadowIntensity = 1-(shadowIntersections/allOfTheLights.size());
-                        float shadowIntensity = 0.2;
-                        std::cout<<"dividing: " << shadowIntersections << " by: " << allOfTheLights.size()<<std::endl;
-                        uint32_t shadow = convertColor(Colour(currColor.red * shadowIntensity, currColor.green * shadowIntensity, currColor.blue * shadowIntensity));
-                        window.setPixelColour(x, y, shadow);
+                if (validShadow) {
+                    //std::cout<<shadowIntensity<<std::endl;
+                    // SOFT SHADOW: how many shadow rays respond with an intersection?
+                    uint32_t shadow = convertColor(Colour(currColor.red * shadowIntensity, currColor.green * shadowIntensity, currColor.blue * shadowIntensity));
+                    window.setPixelColour(x, y, shadow);
                 } else if (intersection.intersectedTriangle.colour.name=="White") {
                     // hardcoding lightbox lol
                     //window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
                 } else {
-                    Colour currColor = intersection.intersectedTriangle.colour;
                     uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
                     window.setPixelColour(x, y, color);
                 }
