@@ -289,28 +289,22 @@ std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, g
     for (auto entry : shadowData) {
         weightedBrightness += (entry.first * entry.second);
     }
-
-    weightedBrightness = weightedBrightness/10;
-//    if (weightedBrightness<0.2){ std::cout << weightedBrightness << std::endl; }
-
-    if (weightedBrightness > 1) {
-        weightedBrightness = 1;
-    } else if (weightedBrightness == 0 || weightedBrightness < 0.1) {
-        weightedBrightness = 0.2;
-    }
-
-//    std::cout << weightedBrightness << std::endl;
+    if (weightedBrightness!=0){ std::cout << weightedBrightness / 10 << std::endl; }
 
     // if shadowData is empty there were no shadows.
     // if it is NOT empty, there were shadows.
 
-    return std::make_tuple(!shadowData.empty(), 1-(weightedBrightness));
+    return std::make_tuple(!shadowData.empty(), 1-(weightedBrightness/10));
 }
 
-std::vector<glm::vec3> computeLightPositions(glm::vec3 start, int width, int height) {
-    std::vector<glm::vec3> allOfTheLights;
-    
-}
+//float calculateShadowIntensity(std::vector<std::pair<RayTriangleIntersection, float>> lightIntersections) {
+//    float intensity;
+//
+//    for (auto entry : lightIntersections) {
+//        entry.first.}
+//
+//    return intensity;
+//}
 
 void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, glm::vec3 lightPosition) {
     std::cout <<"in raytracer"<< std::endl;
@@ -323,7 +317,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
                 // shoot a bunch of shadow rays...
-                std::vector<glm::vec3> allOfTheLights = computeLightPositions({0,0,0}, 5, 5);
+                std::vector<glm::vec3> allOfTheLights {glm::vec3 {-0.1,0.8,0.5}, {0.0,0.8,0.5}, {0.1,0.8,0.5}};
 
                 for (auto light : allOfTheLights) {
                     CanvasPoint point (light.x, light.y, light.z);
