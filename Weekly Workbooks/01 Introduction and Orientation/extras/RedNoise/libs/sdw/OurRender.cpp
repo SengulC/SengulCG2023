@@ -327,14 +327,41 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
                 // shoot a bunch of shadow rays...
-                std::vector<glm::vec3> allOfTheLights {glm::vec3 {-0.1,0.8,0.5}, {0.0,0.8,0.5}, {0.1,0.8,0.5},
-                                                       glm::vec3 {-0.1,0.7,0.5}, {0.0,0.7,0.5}, {0.1,0.7,0.5},
-                                                       glm::vec3 {-0.1,0.6,0.5}, {0.0,0.6,0.5}, {0.1,0.6,0.5},
-                                                       glm::vec3 {-0.1,0.5,0.5}, {0.0,0.5,0.5}, {0.1,0.5,0.5},
-                                                       glm::vec3 {-0.2,0.8,0.5}, {0.2,0.8,0.5},
-                                                       glm::vec3 {-0.2,0.7,0.5}, {0.2,0.7,0.5},
-                                                       glm::vec3 {-0.2,0.6,0.5}, {0.2,0.6,0.5},
-                                                       glm::vec3 {-0.2,0.5,0.5}, {0.2,0.5,0.5}};
+                std::vector<glm::vec3> allOfTheLights {glm::vec3 { -1, 0.6, -1 },
+                                                       { -1, 0.6, 0 },
+                                                       { -1, 0.6, 1 },
+
+                                                       { 0, 0.6, -1 },
+                                                       { 0, 0.6, 0 },
+                                                       { 0, 0.6, 1 },
+
+                                                       { 1, 0.6, -1 },
+                                                       { 1, 0.6, 0 },
+                                                       { 1, 0.6, 1 },
+
+                                                       { -1, 1.6, -1 },
+                                                       { -1, 1.6, 0 },
+                                                       { -1, 1.6, 1 },
+
+                                                       { 0, 1.6, -1 },
+                                                       { 0, 1.6, 0 },
+                                                       { 0, 1.6, 1 },
+
+                                                       { 1, 1.6, -1 },
+                                                       { 1, 1.6, 0 },
+                                                       { 1, 1.6, 1 },
+
+                                                       { -1, 2.6, -1 },
+                                                       { -1, 2.6, 0 },
+                                                       { -1, 2.6, 1 },
+
+                                                       { 0, 2.6, -1 },
+                                                       { 0, 2.6, 0 },
+                                                       { 0, 2.6, 1 },
+
+                                                       { 1, 2.6, -1 },
+                                                       { 1, 2.6, 0 },
+                                                       { 1, 2.6, 1 }};
 
                 for (auto light : allOfTheLights) {
                     CanvasPoint point (light.x, light.y, light.z);
