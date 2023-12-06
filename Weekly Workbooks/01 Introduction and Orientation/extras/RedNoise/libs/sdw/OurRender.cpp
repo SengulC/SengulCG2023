@@ -254,7 +254,7 @@ float calculateBrightness(glm::vec3 lightPosition, glm::vec3 cameraPosition, glm
     specular = pow(specular, 512);
 
     // restrict a given value between 0-1
-    float intensity = (brightness*angle*5)+specular;
+    float intensity = (brightness*angle*3)+specular;
     if (intensity > 1) {
         intensity = 1;
     } else if (intensity < 0.1) {

@@ -44,7 +44,7 @@ glm::mat3 rotateY(
         0.0f, 1.0f, 0.0f,
         -sin(0.1), 0.0f, cos(0.1)
 );
-glm::vec3 lightPosition(0.0,/*0.5*/0.6,/*2.5*/0.5);
+glm::vec3 lightPosition(0.0,/*0.5*/0.5,/*2.5*/0.5);
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
@@ -250,7 +250,7 @@ int main(int argc, char *argv[]) {
 
     // RAYTRACER
     auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
-    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+//    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //    drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //   VERTEX NORMALS DEBUGGING
@@ -263,6 +263,8 @@ int main(int argc, char *argv[]) {
 //        index++;
 //    }
 
+
+//    std::vector<glm::vec3> lightPositins
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
@@ -272,7 +274,8 @@ int main(int argc, char *argv[]) {
 //        twodTriangles = std::get<0>(tuple);
 //        cameraPosition = std::get<1>(tuple);
 //        cameraOrientation = std::get<2>(tuple);
-
+        drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+//        lightPosition += glm::vec3{0.1,0,0};
          //drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //		 Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
