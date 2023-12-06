@@ -350,7 +350,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 // glm::vec3 lightToSurface = vertex-lightPosition;
                 // glm::vec3 reflectionVector (lightToSurface - ((2*normal)*(glm::dot(lightToSurface, normal))));
                 // set pixel to getclosestvalidintersection.color...
-                std::string mirrorColor = "Grey";
+                std::string mirrorColor = "Magenta";
                 glm::vec3 normal = intersection.intersectedTriangle.normal;
                 float intensity=1;
                 if (intersection.intersectedTriangle.colour.name == mirrorColor) {

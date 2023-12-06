@@ -36,13 +36,13 @@ glm::mat3 cameraOrientation(
 // [right up forward]
 glm::mat3 rotateX(
         1.0f, 0.0f, 0.0f,
-        0.0f, cos(0.1), -sin(0.1),
-        0.0f, sin(0.1), cos(0.1)
+        0.0f, cos(0.01), -sin(0.01),
+        0.0f, sin(0.01), cos(0.01)
 );
 glm::mat3 rotateY(
-        cos(0.1), 0.0f, sin(0.1),
+        cos(0.01), 0.0f, sin(0.01),
         0.0f, 1.0f, 0.0f,
-        -sin(0.1), 0.0f, cos(0.1)
+        -sin(0.01), 0.0f, cos(0.01)
 );
 glm::vec3 lightPosition(0.0,/*0.5*/0.5,/*2.5*/0.5);
 
@@ -223,7 +223,7 @@ std::vector<ModelTriangle> filterTrianglesByColour(const std::vector<ModelTriang
 }
 
 int main(int argc, char *argv[]) {
-	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, true);
+	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false); //fullscren
 	SDL_Event event;
 
 /*        for (auto &pair : mtls) {
@@ -281,8 +281,10 @@ int main(int argc, char *argv[]) {
         if (count < lights.size()) {
             printVec3("light", lights[count]);
             drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
-            window.savePPM("./Reflective/reflective_back_wall" + std::to_string(count) + ".ppm") ;
-//            window.saveBMP("./Reflective/reflective_back_wall" + std::to_string(count) + ".bmp") ;
+            cameraPosition = rotateX * cameraPosition;
+            cameraOrientation = LookAt(cameraOrientation, {0,0,0}, cameraPosition);
+            window.savePPM("./Reflective/reflective_left_wall_rotate" + std::to_string(count) + ".ppm") ;
+//            window.saveBMP("./Reflective/reflective_back_wall_rotate" + std::to_string(count) + ".bmp") ;
         } else {
             std::cout<<"done"<<std::endl;
         }
