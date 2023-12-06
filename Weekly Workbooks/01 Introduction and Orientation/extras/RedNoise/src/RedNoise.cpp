@@ -267,6 +267,8 @@ int main(int argc, char *argv[]) {
 //    std::vector<glm::vec3> lightPositins
     std::vector<glm::vec3> lights = {{-0.1,0.5,0.5}, {0.0,0.5,0.5}, {0.1,0.5,0.5},
                                     {-0.1,0.6,0.5}, {0.0,0.6,0.5}, {0.1,0.6,0.5}};
+
+    std::vector<glm::vec3> cameraPositions = {cameraPosition, {0,0,3.5}};
 //    std::vector<glm::vec3> lights = {{-0.6, -0.5,-0.5}, {1.5, -1.5,0.5}}; // cornell blue box specular
     int count = 0;
 //    lightPosition = {-0.2,0.6,2.5};
@@ -278,9 +280,9 @@ int main(int argc, char *argv[]) {
 
         if (count < lights.size()) {
             printVec3("light", lights[count]);
-            drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
-//            window.savePPM("./CornellLighting/reflective" + std::to_string(count) + ".ppm") ;
-//            window.saveBMP("./CornellLighting/reflective" + std::to_string(count) + ".bmp") ;
+            drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
+            window.savePPM("./Reflective/reflective_back_wall" + std::to_string(count) + ".ppm") ;
+//            window.saveBMP("./Reflective/reflective_back_wall" + std::to_string(count) + ".bmp") ;
         } else {
             std::cout<<"done"<<std::endl;
         }
