@@ -109,7 +109,7 @@ CanvasPoint getCanvasIntersectionPoint(CanvasPoint vertexPosition, glm::vec3 cam
     return intersection;
 }
 
-std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> drawRasterizedScene(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit) {
+std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> drawRasterizedScene(DrawingWindow &window, std::vector<ModelTriangle> modelTriangles, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, float focalLength, float scale, std::vector<std::vector<float>> depthMatrix, bool orbit, bool wireframe) {
     window.clearPixels();
 //    std::cout<<"rasterizer"<<std::endl;
     depthMatrix = std::vector<std::vector<float>> (WIDTH, std::vector<float>(HEIGHT, 0.0f));
@@ -123,12 +123,12 @@ std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::v
                                                                     cameraOrientation, focalLength, scale);
         }
         twodTriangles.push_back(canvasTriangle);
-        depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix);
+        if(!wireframe){ depthMatrix = drawFilled(window, canvasTriangle, modelTriangle.colour, depthMatrix); }
         drawStroked(window, canvasTriangle, modelTriangle.colour, depthMatrix);
     }
 
     // ORBIT
-    float angle = 0.5f;
+    float angle = 0.3f;
     if (orbit) {
         cameraPosition = glm::mat3 (
                 cos(angle), 0.0f, -sin(angle),
@@ -266,7 +266,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
                 float specular = glm::normalizeDot(reflectionVector, surfaceToCam);
 
-                specular = pow(specular, 1024);
+                specular = pow(specular, 512);
 
                 // restrict a given value between 0-1
                 float intensity = (brightness*angle*5)+specular;
