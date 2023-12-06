@@ -324,6 +324,23 @@ float calculateBrightness(glm::vec3 lightPosition, glm::vec3 cameraPosition, glm
     return brightness;
 }
 
+std::vector<glm::vec3> createLights(float startX, float endX, float startY, float endY, float startZ, float endZ) {
+    std::vector<glm::vec3> lights;
+    int steps = 2;
+    std::vector<float> width = interpolateSingleFloats(startX, endX, steps);
+    std::vector<float> height = interpolateSingleFloats(startY, endY, steps);
+    std::vector<float> depth = interpolateSingleFloats(startZ, endZ, steps);
+
+    for (auto x : width) {
+        for (auto y : height) {
+            for (auto z : depth) {
+                lights.emplace_back(x, y, z);
+            }
+        }
+    }
+    return lights;
+}
+
 std::vector<float> calculateBrightnesses(glm::vec3 lightPosition, glm::vec3 cameraPosition, RayTriangleIntersection intersection) {
     std::vector<float> brightnesses;
     int index = 0;
