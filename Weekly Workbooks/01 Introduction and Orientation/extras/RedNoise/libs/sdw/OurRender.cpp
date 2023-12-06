@@ -295,19 +295,27 @@ std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, g
         }
     }
 
+    if (validIntersectionsRegularLighting.empty()) {
+        return std::make_tuple(!validIntersectionsRegularLighting.empty(), 0);
+    }
+
     float avgRegIntensity = 0;
     for (float regIntensity : validIntersectionsRegularLighting) {
         avgRegIntensity += regIntensity;
     }
 
     avgRegIntensity = avgRegIntensity/validIntersectionsRegularLighting.size();
-    float weight = validIntersectionsRegularLighting.size()/allOfTheLights.size();
+    float weight = 1-(validIntersectionsRegularLighting.size())/allOfTheLights.size();
     float weightedBrightness = avgRegIntensity * (weight);
 
     if (weightedBrightness > 1) {
         weightedBrightness = 1;
     } else if (weightedBrightness < 0.2) {
         weightedBrightness = 0.2;
+    }
+
+    if (!validIntersectionsRegularLighting.empty()) {
+        std::cout << weightedBrightness << std::endl;
     }
     return std::make_tuple(!validIntersectionsRegularLighting.empty(), weightedBrightness);
 }
@@ -358,10 +366,10 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 auto shadowData = shootShadowRays(allOfTheLights, cameraPosition, intersection, triangles);
                 //if there were/was a valid shadow, use below intensity, otherwise use above
                 bool validShadow = std::get<0>(shadowData);
-                float shadowIntensity = 1-(std::get<1>(shadowData));
+                float shadowIntensity = (std::get<1>(shadowData));
                 Colour currColor = intersection.intersectedTriangle.colour;
 
-                if (validShadow) {
+                if (validShadow && shadowIntensity!=1) {
                     //std::cout<<shadowIntensity<<std::endl;
                     // SOFT SHADOW: how many shadow rays respond with an intersection?
                     uint32_t shadow = convertColor(Colour(currColor.red * shadowIntensity, currColor.green * shadowIntensity, currColor.blue * shadowIntensity));
