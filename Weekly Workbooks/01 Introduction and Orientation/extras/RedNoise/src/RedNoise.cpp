@@ -272,7 +272,7 @@ int main(int argc, char *argv[]) {
 //        index++;
 //    }
 //    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-    bool wireframe = true;
+    bool wireframe = false;
     int count = 0;
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
@@ -283,7 +283,8 @@ int main(int argc, char *argv[]) {
         twodTriangles = std::get<0>(tuple);
         cameraPosition = std::get<1>(tuple);
         cameraOrientation = std::get<2>(tuple);
-        if(count<40){ window.savePPM("./WireframeOrbit/output" + std::to_string(count) + ".ppm") ;}
+        if(count<22){ window.savePPM("./WireframeOrbit/output" + std::to_string(count) + ".ppm") ;}
+//        if(count<40){ window.saveBMP("./WireframeOrbit/output" + std::to_string(count) + ".bmp") ;}
         count++;
 
          //drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
