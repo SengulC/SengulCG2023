@@ -323,7 +323,7 @@ std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, g
 
 std::vector<glm::vec3> createLights(float startX, float endX, float startY, float endY, float startZ, float endZ) {
     std::vector<glm::vec3> lights;
-    int steps = 2;
+    int steps = 3;
     std::vector<float> width = interpolateSingleFloats(startX, endX, steps);
     std::vector<float> height = interpolateSingleFloats(startY, endY, steps);
     std::vector<float> depth = interpolateSingleFloats(startZ, endZ, steps);
@@ -349,7 +349,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
                 // shoot a bunch of shadow rays...
-                std::vector<glm::vec3> allOfTheLights = createLights(-0.1, 0.0, 0.2, 0.3, 0.4, 0.5);
+                std::vector<glm::vec3> allOfTheLights = createLights(-0.3, 0.3, 0.2, 0.3, 0.4, 0.5);
 
                 for (auto light : allOfTheLights) {
                     CanvasPoint point (light.x, light.y, light.z);
