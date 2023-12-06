@@ -244,7 +244,7 @@ float calculateBrightness(glm::vec3 lightPosition, glm::vec3 cameraPosition, glm
     // triangle.normal -> vertexNormal
 
     float radius = glm::length(lightPosition - vertex);
-    float brightness = 5/(3*M_PI*radius*radius) /** 5*/;
+    float brightness = 5/(3*M_PI*radius*radius);
     glm::vec3 surfaceToLight = lightPosition - vertex;
     float angle = glm::normalizeDot(normal, surfaceToLight);
     glm::vec3 lightToSurface = vertex-lightPosition;
@@ -352,7 +352,7 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 // set pixel to getclosestvalidintersection.color...
                 std::string mirrorColor = "Magenta";
                 glm::vec3 normal = intersection.intersectedTriangle.normal;
-                float intensity = calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, normal);
+                float intensity=1;
                 if (intersection.intersectedTriangle.colour.name == mirrorColor) {
                     auto camToSurface = intersection.intersectionPoint - cameraPosition;
                     auto reflectionRay = (camToSurface - ((2 * normal) * (glm::normalizeDot(camToSurface, normal))));
@@ -360,16 +360,18 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                     auto mirrIntersect = getClosestValidIntersection(intersection.intersectionPoint, {0, 0, 0},
                                                                      reflectionRay, triangles, false,intersection.triangleIndex, true, mirrorColor);
                     if (mirrIntersect.valid) {
+                        intensity = calculateBrightness(lightPosition, cameraPosition, mirrIntersect.intersectionPoint, mirrIntersect.intersectedTriangle.normal);
                         currColor = mirrIntersect.intersectedTriangle.colour;
                     } else {
                         currColor = {0,0,0};
                     }
 //                    currColor = {255,255,255};
                 } else {
+                    intensity = calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, normal);;
                     currColor = intersection.intersectedTriangle.colour;
-            }
-                    uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
-                    window.setPixelColour(x, y, color);
+                }
+                uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
+                window.setPixelColour(x, y, color);
             }
         }
     }
