@@ -265,19 +265,28 @@ int main(int argc, char *argv[]) {
 
 
 //    std::vector<glm::vec3> lightPositins
-	while (true) {
-		// We MUST poll for events - otherwise the window will freeze !
-		if (window.pollForInputEvents(event)) handleEvent(event, window);
-        // // RASTERIZER
-//        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
-//        tuple = drawRasterizedScene(window, sphereTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
-//        twodTriangles = std::get<0>(tuple);
-//        cameraPosition = std::get<1>(tuple);
-//        cameraOrientation = std::get<2>(tuple);
-        drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-//        lightPosition += glm::vec3{0.1,0,0};
-         //drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+    std::vector<glm::vec3> lights = {{-0.1,0.5,0.5}, {0.0,0.5,0.5}, {0.1,0.5,0.5},
+                                    {-0.1,0.6,0.5}, {0.0,0.6,0.5}, {0.1,0.6,0.5}};
+//    std::vector<glm::vec3> lights = {{-0.6, -0.5,-0.5}, {1.5, -1.5,0.5}}; // cornell blue box specular
+    int count = 0;
+//    lightPosition = {-0.2,0.6,2.5};
+//
+//
+    while (true) {
+        // We MUST poll for events - otherwise the window will freeze !
+        if (window.pollForInputEvents(event)) handleEvent(event, window);
+
+        if (count < lights.size()) {
+            printVec3("light", lights[count]);
+            drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
+//            window.savePPM("./CornellLighting/reflective" + std::to_string(count) + ".ppm") ;
+//            window.saveBMP("./CornellLighting/reflective" + std::to_string(count) + ".bmp") ;
+        } else {
+            std::cout<<"done"<<std::endl;
+        }
+        count++;
+
 //		 Need to render the frame at the end, or nothing actually gets shown on the screen !
-		window.renderFrame();
-	}
+        window.renderFrame();
+    }
 }
