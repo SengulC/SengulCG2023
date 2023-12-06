@@ -22,11 +22,11 @@ int indexcheck;
 bool toggle = true;
 bool orbit = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
-//float focalLength = 2.0; // sphere
-float focalLength = 1.8; //cornell
+float focalLength = 2.0; // sphere
+//float focalLength = 1.8; //cornell
 float scale = 240.0f;
-//glm::vec3 cameraPosition {0.0, 0.5, 4.0}; sphere
-glm::vec3 cameraPosition {0.0, 0.0, 4.0}; // cornell
+glm::vec3 cameraPosition {0.0, 0.5, 4.0}; /*sphere*/
+//glm::vec3 cameraPosition {0.0, 0.0, 4.0}; // cornell
 glm::vec3 lightPosition {0.0, 0.6, 0.0}; // cornell reg
 //glm::vec3 lightPosition(-0.5, -0.5,-0.5); // cornell blue box specular
 //glm::vec3 lightPosition(1.5, -1.5,0.5); // cornell RED box specular
@@ -272,20 +272,24 @@ int main(int argc, char *argv[]) {
 //        index++;
 //    }
 //    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-    std::vector<glm::vec3> lights = {{-0.2, 0.6, 0}, {0, 0.6, 0}, {0.2, 0.6, 0},
-                                     {-0.2, 0.4, 0}, {0, 0.4, 0}, {0.2, 0.4, 0}};
-//    std::vector<glm::vec3> lights = {{-0.5, -0.5,-0.5}, {1.5, -1.5,0.5}}; // cornell blue box specular
+    std::vector<glm::vec3> lights = {{-0.1,0.5,2.5}, {0.0,0.5,2.5}, {0.1,0.5,2.5},
+                                     {-0.1,0.6,2.5}, {0.0,0.6,2.5}, {0.1,0.6,2.5},
+                                     {-0.1,0.5,2.5}, {0.0,0.5,2.5}, {0.1,0.5,2.5}};
+//    std::vector<glm::vec3> lights = {{-0.6, -0.5,-0.5}, {1.5, -1.5,0.5}}; // cornell blue box specular
     bool wireframe = false;
     int count = 0;
-
+//    lightPosition = {-0.2,0.5,2.5};
+//
+//
     while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
 
-        if (count < lights.size()){
-            drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
+        if (count < lights.size()) {
             printVec3("light", lights[count]);
-            window.savePPM("./CornellLighting/hard_shadow" + std::to_string(count) + ".ppm") ;
+            drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
+//            window.savePPM("./CornellLighting/phong" + std::to_string(count) + ".ppm") ;
+//            window.saveBMP("./CornellLighting/phong" + std::to_string(count) + ".bmp") ;
         } else {
             std::cout<<"done"<<std::endl;
         }
