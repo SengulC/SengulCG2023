@@ -23,7 +23,7 @@ bool toggle = true;
 bool orbit = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
 //float focalLength = 2.0; // sphere
-float focalLength = 1.5; //cornell
+float focalLength = 1.8; //cornell
 float scale = 240.0f;
 //glm::vec3 cameraPosition {0.0, 0.5, 4.0}; sphere
 glm::vec3 cameraPosition {0.0, 0.0, 4.0}; // cornell
@@ -233,7 +233,7 @@ std::vector<ModelTriangle> filterTrianglesByColour(const std::vector<ModelTriang
 }
 
 int main(int argc, char *argv[]) {
-	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false);
+	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false); //fullscreen
 	SDL_Event event;
 
 /*        for (auto &pair : mtls) {
@@ -272,22 +272,25 @@ int main(int argc, char *argv[]) {
 //        index++;
 //    }
 //    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+    std::vector<glm::vec3> lights {{-0.2,0.6,0}, {0.0,0.6,0}, {0.2,0.6,0},
+                                   {-0.2,0.6,0}, {0.0,0.6,0}, {0.2,0.6,0},
+                                   {-0.2,0.6,0}, {0.0,0.6,0}, {0.2,0.6,0}};
     bool wireframe = false;
     int count = 0;
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
-        // RASTERIZER
-        std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
-        tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit, wireframe);
-        twodTriangles = std::get<0>(tuple);
-        cameraPosition = std::get<1>(tuple);
-        cameraOrientation = std::get<2>(tuple);
-        if(count<22){ window.savePPM("./WireframeOrbit/output" + std::to_string(count) + ".ppm") ;}
+
+//        if(count<22){ window.savePPM("./WireframeOrbit/output" + std::to_string(count) + ".ppm") ;}
 //        if(count<40){ window.saveBMP("./WireframeOrbit/output" + std::to_string(count) + ".bmp") ;}
+        if (count < 3){
+            drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation,
+                               lights[count]);
+            printVec3("light", lights[count]);
+        }
         count++;
 
-         //drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+        //drawRaytracedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //		 Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}
