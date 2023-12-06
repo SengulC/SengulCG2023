@@ -272,21 +272,22 @@ int main(int argc, char *argv[]) {
 //        index++;
 //    }
 //    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-    std::vector<glm::vec3> lights {{-0.2,0.6,0}, {0.0,0.6,0}, {0.2,0.6,0},
-                                   {-0.2,0.6,0}, {0.0,0.6,0}, {0.2,0.6,0},
-                                   {-0.2,0.6,0}, {0.0,0.6,0}, {0.2,0.6,0}};
+//    std::vector<glm::vec3> lights = {{-0.2, 0.6, 0}, {0, 0.6, 0}, {0.2, 0.6, 0},
+//                                     {-0.2, 0.4, 0}, {0, 0.4, 0}, {0.2, 0.4, 0}};
+    std::vector<glm::vec3> lights = {{-0.5, -0.5,-0.5}, {1.5, -1.5,0.5}}; // cornell blue box specular
     bool wireframe = false;
     int count = 0;
 	while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
 
-//        if(count<22){ window.savePPM("./WireframeOrbit/output" + std::to_string(count) + ".ppm") ;}
 //        if(count<40){ window.saveBMP("./WireframeOrbit/output" + std::to_string(count) + ".bmp") ;}
-        if (count < 3){
-            drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation,
-                               lights[count]);
+        if (count < lights.size()){
+            drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
             printVec3("light", lights[count]);
+//            window.savePPM("./CornellLighting/specular" + std::to_string(count) + ".ppm") ;
+        } else {
+            std::cout<<"done"<<std::endl;
         }
         count++;
 

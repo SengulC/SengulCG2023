@@ -266,11 +266,11 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
                 float specular = glm::normalizeDot(reflectionVector, surfaceToCam);
 
-                specular = pow(specular, 512);
+                specular = pow(specular, 1024);
 
                 // restrict a given value between 0-1
-//                float intensity = (brightness*angle*5)+specular;
-                float intensity = brightness*5;
+                float intensity = /*(brightness*angle*5)+*/specular;
+//                float intensity = angle;
                 brightnesses.push_back(intensity);
 //                std::cout<<intensity<<std::endl;
                 if (intensity > 1) {
@@ -279,20 +279,20 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                     intensity = 0.1;
                 }
 
-               /* if (closestObjIntersection.valid &&
-                    glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
-                        // SHADOW
-                        Colour currColor = intersection.intersectedTriangle.colour;
-                        uint32_t shadow = convertColor(Colour(currColor.red *0.2, currColor.green *0.2, currColor.blue *0.2));
-                        //window.setPixelColour(x, y, shadow);
-                } else */if (intersection.intersectedTriangle.colour.name=="White") {
-                    // hardcoding lightbox lol
-                    window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
-                } else {
+//                if (closestObjIntersection.valid &&
+//                    glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
+//                        // SHADOW
+//                        Colour currColor = intersection.intersectedTriangle.colour;
+//                        uint32_t shadow = convertColor(Colour(currColor.red *0.3, currColor.green *0.3, currColor.blue *0.3));
+//                        window.setPixelColour(x, y, shadow);
+//                } else if (intersection.intersectedTriangle.colour.name=="White") {
+//                    // hardcoding lightbox lol
+//                    window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
+//                } else {
                     Colour currColor = intersection.intersectedTriangle.colour;
                     uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
                     window.setPixelColour(x, y, color);
-                }
+//                }
             }
         }
     }
@@ -331,10 +331,18 @@ std::vector<glm::vec3> createLights(float startX, float endX, float startY, floa
     std::vector<float> height = interpolateSingleFloats(startY, endY, steps);
     std::vector<float> depth = interpolateSingleFloats(startZ, endZ, steps);
 
-    for (auto x : width) {
-        for (auto y : height) {
-            for (auto z : depth) {
-                lights.emplace_back(x, y, z);
+    if (startZ == endZ) {
+        for (auto x : width) {
+            for (auto y : height) {
+                lights.emplace_back(x, y, startZ);
+            }
+        }
+    } else {
+        for (auto x : width) {
+            for (auto y : height) {
+                for (auto z : depth) {
+                    lights.emplace_back(x, y, z);
+                }
             }
         }
     }
