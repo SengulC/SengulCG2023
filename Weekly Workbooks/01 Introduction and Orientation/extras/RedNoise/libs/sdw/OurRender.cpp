@@ -264,55 +264,52 @@ float calculateBrightness(glm::vec3 lightPosition, glm::vec3 cameraPosition, glm
 }
 
 std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, glm::vec3 cameraPosition, RayTriangleIntersection intersection, const std::vector<ModelTriangle>& triangles) {
-    //std::vector<std::pair<RayTriangleIntersection, float>> validIntersections; // intersection data + t dist
-    std::vector<std::pair<float, float>> shadowData; // floats repping: light weight, pixel brightness wrt current light
-    int count = 0;
-    float weight, brightness, weightedBrightness = 0;
-    // have a map of valid validIntersections and the distance btwn surface-thatLight to use in weighted brightness calc later!
+//    std::vector<std::pair<float, float>> shadowData; // floats repping: light weight, pixel brightness wrt current light
+    std::vector<float> validIntersectionsRegularLighting;
+//    int count = 0;
+//    float weight, brightness = 0, weightedBrightness = 0;
+
+    // loop over canvas
+        // shoot a ray from camera to model
+        // if a valid intersection has been made from cam-model
+        // shoot a ray from model surface to lights
+            // so loop over lights and shoot a ray for each surface-to-light
+            // if a valid intersection has been made from surface-light
+                // add current light to validShadows list
+        // now we have a list of validShadows. calculate weight as: validShadows.size/allOfTheLights.size
+        // final shadow intensity for current pixel = weighted calculation calculated by...
+            // shadow intensity = (1-weight) * avg of current surface point's regular light intensity
+
+        // got back shadow intensity for given surface-to-lights
+        // paint shadowed pixels as RGB * shadow intensity
+        // and other pixels as RGB * regular light intensity
+
+    float brightness;
     for (auto lightPosition : allOfTheLights) {
-        // for each light...
-        // shoot shadow ray
         glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
         RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
         if (closestObjIntersection.valid)
-        { // if pixel should be in shadow...
-            // add a weighting to that light
-            // weight = glm::distance(lightPosition, intersection.intersectionPoint);
-            // calc brightness at that pixel wrt current lightPos
+        {
             brightness = calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, intersection.intersectedTriangle.normal);
-            count++;
-            //validIntersections.emplace_back(closestObjIntersection, closestObjIntersection.t);
-            shadowData.emplace_back(count, brightness);
+            validIntersectionsRegularLighting.push_back(brightness);
         }
     }
-    // now we have valid shadowData, loop thru the map and apply weight for each
 
-    for (auto entry : shadowData) {
-        weight = 1-(entry.first/allOfTheLights.size());
-        weightedBrightness += (weight * entry.second);
+    float avgRegIntensity = 0;
+    for (float regIntensity : validIntersectionsRegularLighting) {
+        avgRegIntensity += regIntensity;
     }
 
-    weightedBrightness = (weightedBrightness/allOfTheLights.size());
-//    std::cout<<weightedBrightness<<std::endl;
-//    weightedBrightness = weightedBrightness/10;
-//    /*if (weightedBrightness<0.2){ */std::cout << weightedBrightness << std::endl; /*}*/
-
-    //    std::cout<<weightedBrightness<<std::endl;
-
-//    weightedBrightness = (brightness * count/allOfTheLights.size());
-
-//
-
-    // if shadowData is empty there were no shadows.
-    // if it is NOT empty, there were shadows.
+    avgRegIntensity = avgRegIntensity/validIntersectionsRegularLighting.size();
+    float weight = validIntersectionsRegularLighting.size()/allOfTheLights.size();
+    float weightedBrightness = avgRegIntensity * (weight);
 
     if (weightedBrightness > 1) {
         weightedBrightness = 1;
     } else if (weightedBrightness < 0.2) {
         weightedBrightness = 0.2;
     }
-//    std::cout << weightedBrightness << std::endl;
-    return std::make_tuple(!shadowData.empty(), weightedBrightness);
+    return std::make_tuple(!validIntersectionsRegularLighting.empty(), weightedBrightness);
 }
 
 
@@ -358,8 +355,8 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 glm::vec3 normal = intersection.intersectedTriangle.normal;
                 float intensity = calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, normal);
 
-                //if there were/was a valid shadow, use above intensity, otherwise use below
                 auto shadowData = shootShadowRays(allOfTheLights, cameraPosition, intersection, triangles);
+                //if there were/was a valid shadow, use below intensity, otherwise use above
                 bool validShadow = std::get<0>(shadowData);
                 float shadowIntensity = 1-(std::get<1>(shadowData));
                 Colour currColor = intersection.intersectedTriangle.colour;
