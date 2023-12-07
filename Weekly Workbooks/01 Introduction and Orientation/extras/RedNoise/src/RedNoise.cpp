@@ -265,7 +265,10 @@ std::vector<CanvasPoint> interpolateCanvasPoint(CanvasPoint from, CanvasPoint to
     return vect;
 }
 
-void drawTexturedLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, uint32_t color) {
+TextureMap txtmap("models/texture.ppm");
+auto textureMap = linearListTo2DMatrix(txtmap.pixels, txtmap.height, txtmap.width);
+
+void drawTexturedLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, TexturePoint textureFrom, TexturePoint textureTo) {
     from.x = std::ceil(from.x);
     to.x = std::ceil(to.x);
     float xDiff = to.x - from.x;
@@ -274,6 +277,8 @@ void drawTexturedLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, u
     float steps = std::max(std::abs(xDiff), std::abs(yDiff));
     float xSteps = xDiff / steps;
     float ySteps = yDiff / steps;
+    auto Xtextures = interpolateSingleFloats(textureFrom.x, textureTo.x, steps+100);
+    auto Ytextures = interpolateSingleFloats(textureFrom.y, textureTo.y, steps+100);
 
     for (int i = 0; i < static_cast<int>(std::ceil(steps)) + 1; i++) {
         float x = from.x + (xSteps * static_cast<float>(i));
@@ -287,12 +292,13 @@ void drawTexturedLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, u
         int yval = static_cast<int>(std::round(y));
 
         if (xval < 320 && yval < 240 && xval > 0 && yval > 0) {
-            // within drawing bounds
-            std::cout<<"abt to draw textured line"<<std::endl;
-            window.setPixelColour(xval, yval, color);
-            std::cout<<"drawn"<<std::endl;
+            if (i < txtmap.width && i < txtmap.height) {
+                uint32_t color = textureMap[Xtextures[i]][Ytextures[i]];
+                window.setPixelColour(xval, yval, color);
+            }
         }
     }
+    std::cout<<"done w drawline"<<std::endl;
 }
 
 
@@ -420,35 +426,11 @@ std::vector<TexturePoint> interpolateTexturePoint (TexturePoint from, TexturePoi
 
 void drawTextureFilled(DrawingWindow &window, CanvasTriangle triangle, const TextureMap& textureMap, const std::vector<TexturePoint>& texturePoints) {
     std::cout<<"drawing textured tri"<<std::endl;
-    /*
-     * Each TextureMap object has a publicly accessible pixels attribute that holds all of the pixel data loaded in from the PPM file.
-     * This pixels attribute is a single dimension vector of pixel-packed RGB integers.
-     * Note that there is no representation of x or y positioning within the data.
-     * The pixel data is just stored linearly: pixels from one row flow directly into those from the next row
-     * The vector contains pure RGB data - there is no concept of a "newline" or "end of row" marker.
-     * You will need to work out the positioning of pixels yourself.
-     * There are however publicly accessible width and height attributes of the TextureMap class
-     * that you can use to find out the dimensions of the original image.
-     */
 
-    // given triangle vertices, giving rectangular texturemap, interpolate and set colors with texturePoint
     std::vector<std::vector<uint32_t>> textureMatrix = linearListTo2DMatrix(textureMap.pixels, textureMap.height, textureMap.width);
-    // now we have texturemap as a 2d matrix for easier access.
-    // draw triangle via interpolation stuff
-    // set texture pixels aka the colors via interpolation of the 3 texture points
-
     // create canvas points and sort in terms of linked canvas points and texture points
     std::array<CanvasPoint, 3> points = sortAndLinkTextures(triangle.vertices, texturePoints);
 
-//    std::cout<<"printing points"<<std::endl;
-//    for (CanvasPoint p : points) {
-//        std::cout << p << std::endl;
-//        std::cout << p.texturePoint << std::endl;
-//    }
-
-
-//     APPLY TEXTURE STUFF
-//     split triangle into 2 from middle vertex
     CanvasPoint middleV = points[1];
     int topHeight = static_cast<int> (std::abs(middleV.y - points[0].y));
     int bottomHeight = static_cast<int> (std::abs(points[2].y - middleV.y));
@@ -460,31 +442,32 @@ void drawTextureFilled(DrawingWindow &window, CanvasTriangle triangle, const Tex
     float extraVz = ratio * (points[2].depth - points[0].depth) + points[0].depth;
     CanvasPoint extraV = {extraVx, middleV.y, extraVz};
 
-    uint32_t color; bool depth = false;
-    std::vector<std::vector<float>> fakeDepthMatrix;
+    uint32_t color;
+
+    auto leftTextures = interpolateTexturePoint(points[0].texturePoint, points[2].texturePoint, topHeight+bottomHeight+100);
+    auto rightTextures = interpolateTexturePoint(points[0].texturePoint, points[1].texturePoint, topHeight+bottomHeight+100);
 
     // top triangle
     std::vector<CanvasPoint> topStartVertices = interpolateCanvasPoint(points[0], extraV, topHeight+1);
     std::vector<CanvasPoint> topEndVertices = interpolateCanvasPoint(points[0], middleV, topHeight+1);
-    std::cout<<"abt to texture"<<std::endl;
-    std::vector<float> topTextures = interpolateSingleFloats(points[0].texturePoint.x, std::max(extraV.texturePoint.x, middleV.texturePoint.x), topHeight+1);
+
     for (int i = 0; i <= topHeight; i++) {
-        float x = topTextures[i];
-        color = textureMatrix[x][i];
-        drawTexturedLine(window, topStartVertices[i], topEndVertices[i], color);
+        TexturePoint from (leftTextures[i].x, leftTextures[i].y);
+        TexturePoint to (rightTextures[i].x, rightTextures[i].y);
+        drawTexturedLine(window, topStartVertices[i], topEndVertices[i], from, to);
     }
+    std::cout<<"done w top"<<std::endl;
 
     // bottom triangle
     std::vector<CanvasPoint> bottomStartVertices = interpolateCanvasPoint(extraV, points[2], bottomHeight+1);
     std::vector<CanvasPoint> bottomEndVertices = interpolateCanvasPoint(middleV, points[2], bottomHeight+1);
 
-    std::vector<float> bottomTextures = interpolateSingleFloats(std::min(middleV.texturePoint.x, extraV.texturePoint.x), points[2].texturePoint.x, bottomHeight+1);
     for (int i = 0; i <= bottomHeight; i++) {
-        float x = bottomTextures[i];
-        color = textureMatrix[x][i];
-        drawTexturedLine(window, bottomStartVertices[i], bottomEndVertices[i], color);
+        TexturePoint from (leftTextures[i].x, leftTextures[i].y);
+        TexturePoint to (rightTextures[i].x, rightTextures[i].y);
+        drawTexturedLine(window, bottomStartVertices[i], bottomEndVertices[i], from, to);
     }
-
+    std::cout<<"done w top"<<std::endl;
 }
 
 CanvasTriangle randomTriangle() {
@@ -911,7 +894,7 @@ void drawRaytracedSceneWithSoft(DrawingWindow &window, const std::vector<ModelTr
                     uint32_t shadow = convertColor(Colour(currColor.red * shadowIntensity, currColor.green * shadowIntensity, currColor.blue * shadowIntensity));
                     window.setPixelColour(x, y, shadow);
                 } else if (intersection.intersectedTriangle.colour.name=="White") {
-                    // hardcoding lightbox lol
+                    // hardcoding lightbox lolf
                     window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
                 } else {
                     uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
@@ -1201,8 +1184,8 @@ int main(int argc, char *argv[]) {
     //(10, 150)	→	(65, 330
 
     // (DrawingWindow &window, CanvasTriangle triangle, const TextureMap& textureMap, const std::vector<TexturePoint>& texturePoints
-    std::vector<TexturePoint> texturePoints {TexturePoint{195,5}, TexturePoint{395,380}, TexturePoint{65,330}};
-    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
+//    std::vector<TexturePoint> texturePoints {TexturePoint{195,5}, TexturePoint{395,380}, TexturePoint{65,330}};
+//    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
 //    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"), texturePoints);
 
 //    auto lights1 = createLights(-0.2, 0.2, 0.2, 0.4, 0.4, 0.5);
