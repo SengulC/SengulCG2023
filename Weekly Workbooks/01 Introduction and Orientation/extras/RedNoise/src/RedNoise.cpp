@@ -856,7 +856,7 @@ std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, s
 
     weighted = weighted/validIntersectionsRegularLighting.size();
     float weightedBrightness = weighted;
-    std::cout<<weightedBrightness<<std::endl;
+//    std::cout<<weightedBrightness<<std::endl;
 //    avgRegIntensity = avgRegIntensity/validIntersectionsRegularLighting.size();
 //    float avgRegIntensity = validIntersectionsRegularLighting[0];
 //    float weight = 1-(validIntersectionsRegularLighting.size())/allOfTheLights.size();
@@ -872,7 +872,7 @@ std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, s
     return std::make_tuple(!validIntersectionsRegularLighting.empty(), weightedBrightness);
 }
 
-void drawRaytracedSceneWithSoft(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, glm::vec3 lightPosition) {
+void drawRaytracedSceneWithSoft(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, glm::vec3 lightPosition, std::pair<std::vector<glm::vec3>, std::vector<float>> allOfTheLightData) {
     std::cout <<"in raytracer"<< std::endl;
     window.clearPixels();
     std::vector<float> brightnesses;
@@ -883,15 +883,15 @@ void drawRaytracedSceneWithSoft(DrawingWindow &window, const std::vector<ModelTr
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000, false, "");
             if (intersection.valid) {
                 // shoot a bunch of shadow rays...
-                auto allOfTheLightData = createLights(-0.2, 0.2, 0.2, 0.4, 0.4, 0.5);
+//                auto allOfTheLightData = createLights(-0.2, 0.2, 0.2, 0.4, 0.4, 0.5);
                 auto allOfTheLights = allOfTheLightData.first;
                 auto allOfTheWeights = allOfTheLightData.second;
 
-                for (auto light : allOfTheLights) {
-                    CanvasPoint point (light.x, light.y, light.z);
-                    point = getCanvasIntersectionPoint(point, cameraPosition, cameraOrientation, focalLength, scale);
-                    window.setPixelColour(point.x, point.y, convertColor({255,255,255}));
-                }
+//                for (auto light : allOfTheLights) {
+//                    CanvasPoint point (light.x, light.y, light.z);
+//                    point = getCanvasIntersectionPoint(point, cameraPosition, cameraOrientation, focalLength, scale);
+//                    window.setPixelColour(point.x, point.y, convertColor({255,255,255}));
+//                }
 
                 //glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
                 //RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
@@ -912,7 +912,7 @@ void drawRaytracedSceneWithSoft(DrawingWindow &window, const std::vector<ModelTr
                     window.setPixelColour(x, y, shadow);
                 } else if (intersection.intersectedTriangle.colour.name=="White") {
                     // hardcoding lightbox lol
-                    //window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
+                    window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
                 } else {
                     uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
                     window.setPixelColour(x, y, color);
@@ -1207,21 +1207,26 @@ int main(int argc, char *argv[]) {
     CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
 //    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"), texturePoints);
 
+//    auto lights1 = createLights(-0.2, 0.2, 0.2, 0.4, 0.4, 0.5);
+//    auto lights2 = createLights(-0.2, 0.2, 0.4, 0.6, 0.4, 0.5);
+//    auto lights3 = createLights(-0.2, 0.2, 0.6, 0.8, 0.4, 0.5);
+//    std::vector<std::pair<std::vector<glm::vec3>, std::vector<float>>> allOfTheLights {lights1, lights2, lights3};
+
     while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
 		if (window.pollForInputEvents(event)) handleEvent(event, window);
-//
-//        if (count < lights.size()) {
+
+//        if (count < allOfTheLights.size()) {
 //            printVec3("light", lights[count]);
-//            drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
-////            window.savePPM("./CornellLighting/phong" + std::to_string(count) + ".ppm") ;
-////            window.saveBMP("./CornellLighting/phong" + std::to_string(count) + ".bmp") ;
+//            drawRaytracedSceneWithSoft(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition, allOfTheLights[count]);
+//            window.savePPM("./CornellLighting/soft_shadows" + std::to_string(count) + ".ppm");
+//            window.saveBMP("./CornellLighting/soft_shadows" + std::to_string(count) + ".bmp");
 //        } else {
 //            std::cout<<"done"<<std::endl;
 //        }
 //        count++;
 
-//		 Need to render the frame at the end, or nothing actually gets shown on the screen !
+		// Need to render the frame at the end, or nothing actually gets shown on the screen !
 		window.renderFrame();
 	}
 }
