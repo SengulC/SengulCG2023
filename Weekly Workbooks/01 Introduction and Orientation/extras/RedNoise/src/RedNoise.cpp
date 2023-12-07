@@ -250,15 +250,17 @@ int main(int argc, char *argv[]) {
 
     // RAYTRACER
     auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
-//    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
-//    std::vector<glm::vec3> allOfTheLights = createLights(-0.3, 0.3, 0.2, 0.3, 0.4, 0.5);
+//    std::vector<glm::vec3> allOfTheLights = createLights(-0.2, 0.2, 0.2, 0.4, 0.4, 0.5).first;
 //
 //    for (auto light : allOfTheLights) {
 //        CanvasPoint point (light.x, light.y, light.z);
 //        point = getCanvasIntersectionPoint(point, cameraPosition, cameraOrientation, focalLength, scale);
+////        printVec3("light:", light);
 //        window.setPixelColour(point.x, point.y, convertColor({255,255,255}));
 //    }
+//    std::cout<<allOfTheLights.size()<<std::endl;
 
 //    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //    drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);

@@ -263,9 +263,10 @@ float calculateBrightness(glm::vec3 lightPosition, glm::vec3 cameraPosition, glm
     return intensity;
 }
 
-std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, glm::vec3 cameraPosition, RayTriangleIntersection intersection, const std::vector<ModelTriangle>& triangles) {
+std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, std::vector<float> allOfTheWeights, glm::vec3 cameraPosition, RayTriangleIntersection intersection, const std::vector<ModelTriangle>& triangles) {
 //    std::vector<std::pair<float, float>> shadowData; // floats repping: light weight, pixel brightness wrt current light
     std::vector<float> validIntersectionsRegularLighting;
+    std::vector<float> weights;
 //    int count = 0;
 //    float weight, brightness = 0, weightedBrightness = 0;
 
@@ -285,57 +286,83 @@ std::tuple<bool, float> shootShadowRays(std::vector<glm::vec3> allOfTheLights, g
         // and other pixels as RGB * regular light intensity
 
     float brightness;
+    float weight;
+    int i = 0;
+    std::vector<float> allOfTheValidWeights;
     for (auto lightPosition : allOfTheLights) {
         glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
         RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
         if (closestObjIntersection.valid)
         {
             brightness = calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, intersection.intersectedTriangle.normal);
+            weight = glm::distance(lightPosition,intersection.intersectionPoint);
+            weights.push_back(weight);
+            allOfTheValidWeights.push_back(allOfTheWeights[i]);
             validIntersectionsRegularLighting.push_back(brightness);
         }
+        i++;
     }
 
     if (validIntersectionsRegularLighting.empty()) {
         return std::make_tuple(!validIntersectionsRegularLighting.empty(), 0);
     }
 
-    float avgRegIntensity = 0;
-    for (float regIntensity : validIntersectionsRegularLighting) {
-        avgRegIntensity += regIntensity;
+//    float avgRegIntensity = 0;
+//    for (float regIntensity : validIntersectionsRegularLighting) {
+//        avgRegIntensity += regIntensity;
+//    }
+    float weighted = 0;
+    for (int count=0; count<validIntersectionsRegularLighting.size(); count++) {
+        weighted += (validIntersectionsRegularLighting[count]/* * weights[count]*/ * allOfTheValidWeights[count]);
     }
 
-    avgRegIntensity = avgRegIntensity/validIntersectionsRegularLighting.size();
-    float weight = 1-(validIntersectionsRegularLighting.size())/allOfTheLights.size();
-    float weightedBrightness = avgRegIntensity * (weight);
+    weighted = weighted/validIntersectionsRegularLighting.size();
+    float weightedBrightness = weighted;
+    std::cout<<weightedBrightness<<std::endl;
+//    avgRegIntensity = avgRegIntensity/validIntersectionsRegularLighting.size();
+//    float avgRegIntensity = validIntersectionsRegularLighting[0];
+//    float weight = 1-(validIntersectionsRegularLighting.size())/allOfTheLights.size();
+//    float weightedBrightness = avgRegIntensity * (weighted);
+//    weightedBrightness = 1-weightedBrightness;
 
     if (weightedBrightness > 1) {
         weightedBrightness = 1;
-    } else if (weightedBrightness < 0.2) {
-        weightedBrightness = 0.2;
+    } else if (weightedBrightness < 0.1) {
+        weightedBrightness = 0.1;
     }
 
-    if (!validIntersectionsRegularLighting.empty()) {
-        std::cout << weightedBrightness << std::endl;
-    }
     return std::make_tuple(!validIntersectionsRegularLighting.empty(), weightedBrightness);
 }
 
 
-std::vector<glm::vec3> createLights(float startX, float endX, float startY, float endY, float startZ, float endZ) {
+std::pair<std::vector<glm::vec3>, std::vector<float>> createLights(float startX, float endX, float startY, float endY, float startZ, float endZ) {
     std::vector<glm::vec3> lights;
-    int steps = 3;
+    std::vector<float> weights;
+    int steps = 2;
     std::vector<float> width = interpolateSingleFloats(startX, endX, steps);
     std::vector<float> height = interpolateSingleFloats(startY, endY, steps);
     std::vector<float> depth = interpolateSingleFloats(startZ, endZ, steps);
+//    std::cout<<height.size()<<std::endl;
+    float intensity;
 
     for (auto x : width) {
         for (auto y : height) {
             for (auto z : depth) {
+                if (y==startY) {
+                    intensity = 0.5;
+                } else if (y==startY) {
+                    intensity = 0.4;
+                } else if (y==startY) {
+                    intensity = 0.3;
+                } else {
+                    intensity = 0.2;
+                }
                 lights.emplace_back(x, y, z);
+                weights.push_back(intensity);
             }
         }
     }
-    return lights;
+    return std::make_pair(lights, weights);
 }
 
 void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, glm::vec3 lightPosition) {
@@ -349,7 +376,9 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
             RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
             if (intersection.valid) {
                 // shoot a bunch of shadow rays...
-                std::vector<glm::vec3> allOfTheLights = createLights(-0.3, 0.3, 0.2, 0.3, 0.4, 0.5);
+                auto allOfTheLightData = createLights(-0.2, 0.2, 0.2, 0.4, 0.4, 0.5);
+                auto allOfTheLights = allOfTheLightData.first;
+                auto allOfTheWeights = allOfTheLightData.second;
 
                 for (auto light : allOfTheLights) {
                     CanvasPoint point (light.x, light.y, light.z);
@@ -361,9 +390,9 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
                 //RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
 
                 glm::vec3 normal = intersection.intersectedTriangle.normal;
-                float intensity = calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, normal);
+                float intensity = /*calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, normal)*/1;
 
-                auto shadowData = shootShadowRays(allOfTheLights, cameraPosition, intersection, triangles);
+                auto shadowData = shootShadowRays(allOfTheLights, allOfTheWeights, cameraPosition, intersection, triangles);
                 //if there were/was a valid shadow, use below intensity, otherwise use above
                 bool validShadow = std::get<0>(shadowData);
                 float shadowIntensity = (std::get<1>(shadowData));
