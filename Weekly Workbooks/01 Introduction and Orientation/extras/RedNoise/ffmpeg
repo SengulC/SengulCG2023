@@ -1,0 +1,2 @@
+ffmpeg -framerate 25 -name%d.ppm -c:v libx264 +faststart output.mp4
+

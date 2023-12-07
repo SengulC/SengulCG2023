@@ -20,11 +20,16 @@
 std::vector<CanvasTriangle> twodTriangles;
 int indexcheck;
 bool toggle = true;
-bool orbit = false;
+bool orbit = true;
 std::vector<std::vector<float>> depthMatrix(WIDTH, std::vector<float>(HEIGHT, 0.0f));
-float focalLength = 1.8;
+float focalLength = 2.0; // sphere
+//float focalLength = 1.8; //cornell
 float scale = 240.0f;
-glm::vec3 cameraPosition {0.0, 0.0, 4.0};
+glm::vec3 cameraPosition {0.0, 0.5, 4.0}; /*sphere*/
+//glm::vec3 cameraPosition {0.0, 0.0, 4.0}; // cornell
+glm::vec3 lightPosition {0.0, 0.6, 0.0}; // cornell reg
+//glm::vec3 lightPosition(-0.5, -0.5,-0.5); // cornell blue box specular
+//glm::vec3 lightPosition(1.5, -1.5,0.5); // cornell RED box specular
 std::map<std::string, Colour> mtls = readMaterial("models/cornell-box.mtl");
 std::vector<ModelTriangle> sphereTriangles = readObj("models/sphere.obj", mtls, 0.35, true);
 
@@ -33,18 +38,23 @@ glm::mat3 cameraOrientation(
         0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 1.0f
         );
+glm::mat3 origin(
+        1.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f
+        );
 // [right up forward]
 glm::mat3 rotateX(
         1.0f, 0.0f, 0.0f,
-        0.0f, cos(0.01), -sin(0.01),
-        0.0f, sin(0.01), cos(0.01)
+        0.0f, cos(0.1), -sin(0.1),
+        0.0f, sin(0.1), cos(0.1)
 );
 glm::mat3 rotateY(
-        cos(0.01), 0.0f, sin(0.01),
+        cos(0.1), 0.0f, sin(0.1),
         0.0f, 1.0f, 0.0f,
-        -sin(0.01), 0.0f, cos(0.01)
+        -sin(0.1), 0.0f, cos(0.1)
 );
-glm::vec3 lightPosition(0.0,/*0.5*/0.5,/*2.5*/0.5);
+//glm::vec3 lightPosition(0.0,0.5,2.5); sphere
 
 void handleEvent(SDL_Event event, DrawingWindow &window) {
 	if (event.type == SDL_KEYDOWN) {
@@ -116,7 +126,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
             auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
             std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
             tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale,
-                                        depthMatrix, orbit);
+                                        depthMatrix, orbit, false);
             twodTriangles = std::get<0>(tuple);
             cameraPosition = std::get<1>(tuple);
             cameraOrientation = std::get<2>(tuple);
@@ -132,7 +142,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
                 window.clearPixels();
                 std::tuple<std::vector<CanvasTriangle>, glm::vec3, glm::mat3, std::vector<std::vector<float>>> tuple;
                 tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength,
-                                            scale, depthMatrix, orbit);
+                                            scale, depthMatrix, orbit, false);
                 twodTriangles = std::get<0>(tuple);
                 cameraPosition = std::get<1>(tuple);
                 cameraOrientation = std::get<2>(tuple);
@@ -223,7 +233,7 @@ std::vector<ModelTriangle> filterTrianglesByColour(const std::vector<ModelTriang
 }
 
 int main(int argc, char *argv[]) {
-	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false); //fullscren
+	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false); //fullscreen
 	SDL_Event event;
 
 /*        for (auto &pair : mtls) {
@@ -232,7 +242,7 @@ int main(int argc, char *argv[]) {
         }
     }*/
 
-    // auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
+     auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
 
     Colour red (255,0,0); Colour blue (0,0,255); Colour cyan (0,255,255); Colour white (255,255,255);
     Colour gray(178,178,178), yellow(255,255,0), green(0,255,0), pink(255,0,255);
@@ -241,7 +251,7 @@ int main(int argc, char *argv[]) {
 
     // RASTERIZER
 //    auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
-//    auto tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
+//    auto tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit, false);
 //    tuple = drawRasterizedScene(window, modelTriangles, cameraPosition, cameraOrientation, focalLength, scale, depthMatrix, orbit);
 //    twodTriangles = std::get<0>(tuple);
 //    cameraPosition = std::get<1>(tuple);
@@ -249,7 +259,6 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-    auto modelTriangles = readObj("models/cornell-box.obj", mtls, 0.35, false);
 //    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //    drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
@@ -262,35 +271,31 @@ int main(int argc, char *argv[]) {
 //        }
 //        index++;
 //    }
-
-
-//    std::vector<glm::vec3> lightPositins
-    std::vector<glm::vec3> lights = {{-0.1,0.5,0.5}, {0.0,0.5,0.5}, {0.1,0.5,0.5},
-                                    {-0.1,0.6,0.5}, {0.0,0.6,0.5}, {0.1,0.6,0.5}};
-
-    std::vector<glm::vec3> cameraPositions = {cameraPosition, {0,0,3.5}};
+//    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+    std::vector<glm::vec3> lights = {{-0.1,0.5,2.5}, {0.0,0.5,2.5}, {0.1,0.5,2.5},
+                                     {-0.1,0.6,2.5}, {0.0,0.6,2.5}, {0.1,0.6,2.5},
+                                     {-0.1,0.5,2.5}, {0.0,0.5,2.5}, {0.1,0.5,2.5}};
 //    std::vector<glm::vec3> lights = {{-0.6, -0.5,-0.5}, {1.5, -1.5,0.5}}; // cornell blue box specular
+    bool wireframe = false;
     int count = 0;
-//    lightPosition = {-0.2,0.6,2.5};
+//    lightPosition = {-0.2,0.5,2.5};
 //
 //
     while (true) {
-        // We MUST poll for events - otherwise the window will freeze !
-        if (window.pollForInputEvents(event)) handleEvent(event, window);
+		// We MUST poll for events - otherwise the window will freeze !
+		if (window.pollForInputEvents(event)) handleEvent(event, window);
 
         if (count < lights.size()) {
             printVec3("light", lights[count]);
-            drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
-            cameraPosition = rotateX * cameraPosition;
-            cameraOrientation = LookAt(cameraOrientation, {0,0,0}, cameraPosition);
-            window.savePPM("./Reflective/reflective_left_wall_rotate" + std::to_string(count) + ".ppm") ;
-//            window.saveBMP("./Reflective/reflective_back_wall_rotate" + std::to_string(count) + ".bmp") ;
+            drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lights[count]);
+//            window.savePPM("./CornellLighting/phong" + std::to_string(count) + ".ppm") ;
+//            window.saveBMP("./CornellLighting/phong" + std::to_string(count) + ".bmp") ;
         } else {
             std::cout<<"done"<<std::endl;
         }
         count++;
 
 //		 Need to render the frame at the end, or nothing actually gets shown on the screen !
-        window.renderFrame();
-    }
+		window.renderFrame();
+	}
 }
