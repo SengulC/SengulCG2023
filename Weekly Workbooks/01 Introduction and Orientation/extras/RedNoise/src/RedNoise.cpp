@@ -287,7 +287,6 @@ void drawTexturedLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, T
         int magnitude = static_cast<int>(sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff));
         std::vector<float> depths = interpolateSingleFloats((from.depth), (to.depth), magnitude);
 
-        float z = (depths[i]);
         int xval = static_cast<int>(std::round(x));
         int yval = static_cast<int>(std::round(y));
 
@@ -441,8 +440,6 @@ void drawTextureFilled(DrawingWindow &window, CanvasTriangle triangle, const Tex
     float ratio = (points[1].y - points[0].y)/(points[2].y-points[0].y);
     float extraVz = ratio * (points[2].depth - points[0].depth) + points[0].depth;
     CanvasPoint extraV = {extraVx, middleV.y, extraVz};
-
-    uint32_t color;
 
     auto leftTextures = interpolateTexturePoint(points[0].texturePoint, points[2].texturePoint, topHeight+bottomHeight+100);
     auto rightTextures = interpolateTexturePoint(points[0].texturePoint, points[1].texturePoint, topHeight+bottomHeight+100);
@@ -879,7 +876,6 @@ void drawRaytracedSceneWithSoft(DrawingWindow &window, const std::vector<ModelTr
                 //glm::vec3 shadowRay = glm::normalize(lightPosition-(intersection.intersectionPoint));
                 //RayTriangleIntersection closestObjIntersection = getClosestValidIntersection((intersection.intersectionPoint), lightPosition, shadowRay, triangles, true, intersection.triangleIndex);
 
-                glm::vec3 normal = intersection.intersectedTriangle.normal;
                 float intensity = /*calculateBrightness(lightPosition, cameraPosition, intersection.intersectionPoint, normal)*/1;
 
                 auto shadowData = shootShadowRays(allOfTheLights, allOfTheWeights, cameraPosition, intersection, triangles);
@@ -1176,7 +1172,7 @@ int main(int argc, char *argv[]) {
                                      {-0.1,0.6,2.5}, {0.0,0.6,2.5}, {0.1,0.6,2.5},
                                      {-0.1,0.5,2.5}, {0.0,0.5,2.5}, {0.1,0.5,2.5}};
 //    std::vector<glm::vec3> lights = {{-0.6, -0.5,-0.5}, {1.5, -1.5,0.5}}; // cornell blue box specular
-    int count = 0;
+//    int count = 0;
 
     //Canvas Point		Texture Point
     //(160, 10)	→	(195, 5)
