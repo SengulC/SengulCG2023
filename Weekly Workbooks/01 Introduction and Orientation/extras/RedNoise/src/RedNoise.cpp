@@ -418,74 +418,74 @@ std::vector<TexturePoint> interpolateTexturePoint (TexturePoint from, TexturePoi
     return vect;
 }
 
-//void drawTextureFilled(DrawingWindow &window, CanvasTriangle triangle, const TextureMap& textureMap, const std::vector<TexturePoint>& texturePoints) {
-//    std::cout<<"drawing textured tri"<<std::endl;
-//    /*
-//     * Each TextureMap object has a publicly accessible pixels attribute that holds all of the pixel data loaded in from the PPM file.
-//     * This pixels attribute is a single dimension vector of pixel-packed RGB integers.
-//     * Note that there is no representation of x or y positioning within the data.
-//     * The pixel data is just stored linearly: pixels from one row flow directly into those from the next row
-//     * The vector contains pure RGB data - there is no concept of a "newline" or "end of row" marker.
-//     * You will need to work out the positioning of pixels yourself.
-//     * There are however publicly accessible width and height attributes of the TextureMap class
-//     * that you can use to find out the dimensions of the original image.
-//     */
-//
-//    // given triangle vertices, giving rectangular texturemap, interpolate and set colors with texturePoint
-//    std::vector<std::vector<uint32_t>> textureMatrix = linearListTo2DMatrix(textureMap.pixels, textureMap.height, textureMap.width);
-//    // now we have texturemap as a 2d matrix for easier access.
-//    // draw triangle via interpolation stuff
-//    // set texture pixels aka the colors via interpolation of the 3 texture points
-//
-//    // create canvas points and sort in terms of linked canvas points and texture points
-//    std::array<CanvasPoint, 3> points = sortAndLinkTextures(triangle.vertices, texturePoints);
-//
-////    std::cout<<"printing points"<<std::endl;
-////    for (CanvasPoint p : points) {
-////        std::cout << p << std::endl;
-////        std::cout << p.texturePoint << std::endl;
-////    }
-//
-//
-////     APPLY TEXTURE STUFF
-////     split triangle into 2 from middle vertex
-//    CanvasPoint middleV = points[1];
-//    int topHeight = static_cast<int> (std::abs(middleV.y - points[0].y));
-//    int bottomHeight = static_cast<int> (std::abs(points[2].y - middleV.y));
-//
-//    // extra vertex
-//    std::vector<float> extraVInterpolatedX = interpolateSingleFloats(points[0].x, points[2].x,topHeight + bottomHeight);
-//    float extraVx = extraVInterpolatedX[topHeight];
-//    float ratio = (points[1].y - points[0].y)/(points[2].y-points[0].y);
-//    float extraVz = ratio * (points[2].depth - points[0].depth) + points[0].depth;
-//    CanvasPoint extraV = {extraVx, middleV.y, extraVz};
-//
-//    uint32_t color; bool depth = false;
-//    std::vector<std::vector<float>> fakeDepthMatrix;
-//
-//    // top triangle
-//    std::vector<CanvasPoint> topStartVertices = interpolateCanvasPoint(points[0], extraV, topHeight+1);
-//    std::vector<CanvasPoint> topEndVertices = interpolateCanvasPoint(points[0], middleV, topHeight+1);
-//    std::cout<<"abt to texture"<<std::endl;
-//    std::vector<float> topTextures = interpolateSingleFloats(points[0].texturePoint.x, std::max(extraV.texturePoint.x, middleV.texturePoint.x), topHeight+1);
-//    for (int i = 0; i <= topHeight; i++) {
-//        float x = topTextures[i];
-//        color = textureMatrix[x][i];
-//        drawTexturedLine(window, topStartVertices[i], topEndVertices[i], color);
+void drawTextureFilled(DrawingWindow &window, CanvasTriangle triangle, const TextureMap& textureMap, const std::vector<TexturePoint>& texturePoints) {
+    std::cout<<"drawing textured tri"<<std::endl;
+    /*
+     * Each TextureMap object has a publicly accessible pixels attribute that holds all of the pixel data loaded in from the PPM file.
+     * This pixels attribute is a single dimension vector of pixel-packed RGB integers.
+     * Note that there is no representation of x or y positioning within the data.
+     * The pixel data is just stored linearly: pixels from one row flow directly into those from the next row
+     * The vector contains pure RGB data - there is no concept of a "newline" or "end of row" marker.
+     * You will need to work out the positioning of pixels yourself.
+     * There are however publicly accessible width and height attributes of the TextureMap class
+     * that you can use to find out the dimensions of the original image.
+     */
+
+    // given triangle vertices, giving rectangular texturemap, interpolate and set colors with texturePoint
+    std::vector<std::vector<uint32_t>> textureMatrix = linearListTo2DMatrix(textureMap.pixels, textureMap.height, textureMap.width);
+    // now we have texturemap as a 2d matrix for easier access.
+    // draw triangle via interpolation stuff
+    // set texture pixels aka the colors via interpolation of the 3 texture points
+
+    // create canvas points and sort in terms of linked canvas points and texture points
+    std::array<CanvasPoint, 3> points = sortAndLinkTextures(triangle.vertices, texturePoints);
+
+//    std::cout<<"printing points"<<std::endl;
+//    for (CanvasPoint p : points) {
+//        std::cout << p << std::endl;
+//        std::cout << p.texturePoint << std::endl;
 //    }
-//
-//    // bottom triangle
-//    std::vector<CanvasPoint> bottomStartVertices = interpolateCanvasPoint(extraV, points[2], bottomHeight+1);
-//    std::vector<CanvasPoint> bottomEndVertices = interpolateCanvasPoint(middleV, points[2], bottomHeight+1);
-//
-//    std::vector<float> bottomTextures = interpolateSingleFloats(std::min(middleV.texturePoint.x, extraV.texturePoint.x), points[2].texturePoint.x, bottomHeight+1);
-//    for (int i = 0; i <= bottomHeight; i++) {
-//        float x = bottomTextures[i];
-//        color = textureMatrix[x][i];
-//        drawTexturedLine(window, bottomStartVertices[i], bottomEndVertices[i], color);
-//    }
-//
-//}
+
+
+//     APPLY TEXTURE STUFF
+//     split triangle into 2 from middle vertex
+    CanvasPoint middleV = points[1];
+    int topHeight = static_cast<int> (std::abs(middleV.y - points[0].y));
+    int bottomHeight = static_cast<int> (std::abs(points[2].y - middleV.y));
+
+    // extra vertex
+    std::vector<float> extraVInterpolatedX = interpolateSingleFloats(points[0].x, points[2].x,topHeight + bottomHeight);
+    float extraVx = extraVInterpolatedX[topHeight];
+    float ratio = (points[1].y - points[0].y)/(points[2].y-points[0].y);
+    float extraVz = ratio * (points[2].depth - points[0].depth) + points[0].depth;
+    CanvasPoint extraV = {extraVx, middleV.y, extraVz};
+
+    uint32_t color; bool depth = false;
+    std::vector<std::vector<float>> fakeDepthMatrix;
+
+    // top triangle
+    std::vector<CanvasPoint> topStartVertices = interpolateCanvasPoint(points[0], extraV, topHeight+1);
+    std::vector<CanvasPoint> topEndVertices = interpolateCanvasPoint(points[0], middleV, topHeight+1);
+    std::cout<<"abt to texture"<<std::endl;
+    std::vector<float> topTextures = interpolateSingleFloats(points[0].texturePoint.x, std::max(extraV.texturePoint.x, middleV.texturePoint.x), topHeight+1);
+    for (int i = 0; i <= topHeight; i++) {
+        float x = topTextures[i];
+        color = textureMatrix[x][i];
+        drawTexturedLine(window, topStartVertices[i], topEndVertices[i], color);
+    }
+
+    // bottom triangle
+    std::vector<CanvasPoint> bottomStartVertices = interpolateCanvasPoint(extraV, points[2], bottomHeight+1);
+    std::vector<CanvasPoint> bottomEndVertices = interpolateCanvasPoint(middleV, points[2], bottomHeight+1);
+
+    std::vector<float> bottomTextures = interpolateSingleFloats(std::min(middleV.texturePoint.x, extraV.texturePoint.x), points[2].texturePoint.x, bottomHeight+1);
+    for (int i = 0; i <= bottomHeight; i++) {
+        float x = bottomTextures[i];
+        color = textureMatrix[x][i];
+        drawTexturedLine(window, bottomStartVertices[i], bottomEndVertices[i], color);
+    }
+
+}
 
 CanvasTriangle randomTriangle() {
     CanvasPoint v0 = {static_cast<float>(rand()%320),static_cast<float>(rand()%240),0,0};
@@ -1187,8 +1187,6 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
-//    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //    drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
     std::vector<glm::vec3> lights = {{-0.1,0.5,2.5}, {0.0,0.5,2.5}, {0.1,0.5,2.5},
@@ -1211,6 +1209,8 @@ int main(int argc, char *argv[]) {
 //    auto lights2 = createLights(-0.2, 0.2, 0.4, 0.6, 0.4, 0.5);
 //    auto lights3 = createLights(-0.2, 0.2, 0.6, 0.8, 0.4, 0.5);
 //    std::vector<std::pair<std::vector<glm::vec3>, std::vector<float>>> allOfTheLights {lights1, lights2, lights3};
+    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+//    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
     while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
