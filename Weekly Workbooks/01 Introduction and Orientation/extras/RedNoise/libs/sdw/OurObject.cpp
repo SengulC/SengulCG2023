@@ -3,23 +3,6 @@
 #define WIDTH 320
 #define HEIGHT 240
 
-void printVertexNormals (std::vector<ModelTriangle> triangles, std::vector<std::pair<glm::vec3, glm::vec3>> vertexNormals) {
-    std::cout<<"----printing triangles----"<<std::endl;
-    for (ModelTriangle tri : triangles) {
-        std::cout<<tri<<std::endl;
-    }
-
-    std::cout<<"----printing mappings----"<<std::endl;
-    glm::vec3 vertex, normal;
-    for (auto &&vn: vertexNormals) {
-        vertex = vn.first;
-        normal = vn.second;
-
-        std::cout << "vertex: (" << vertex.x << ", " << vertex.y << ", " << vertex.z << ") has normal: " << std::endl;
-        std::cout << "(" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
-    }
-}
-
 void printVec3 (std::string string, glm::vec3 vec) {
     std::cout << string << " (" << vec.x << ", " << vec.y << ", " << vec.z << ")" << std::endl;
 }
@@ -34,8 +17,6 @@ glm::vec3 calculateVertexNormal(const std::vector<ModelTriangle>& modelTriangles
             normal += tri.normal;
         }
     }
-    // looped through all triangles, found all occurences of the vertex within the triangles and added the tri normals appropriately
-    // now just avg/count
     normal = normal/count;
     return normal;
 }
