@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <math.h>
 #include "TexturePoint.h"
+#include "TextureMap.h"
 
 #define WIDTH 320
 #define HEIGHT 240
@@ -264,6 +265,37 @@ std::vector<CanvasPoint> interpolateCanvasPoint(CanvasPoint from, CanvasPoint to
     return vect;
 }
 
+void drawTexturedLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, uint32_t color) {
+    from.x = std::ceil(from.x);
+    to.x = std::ceil(to.x);
+    float xDiff = to.x - from.x;
+    float yDiff = to.y - from.y;
+    float zDiff = to.depth - from.depth;
+    float steps = std::max(std::abs(xDiff), std::abs(yDiff));
+    float xSteps = xDiff / steps;
+    float ySteps = yDiff / steps;
+
+    for (int i = 0; i < static_cast<int>(std::ceil(steps)) + 1; i++) {
+        float x = from.x + (xSteps * static_cast<float>(i));
+        float y = from.y + (ySteps * static_cast<float>(i));
+
+        int magnitude = static_cast<int>(sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff));
+        std::vector<float> depths = interpolateSingleFloats((from.depth), (to.depth), magnitude);
+
+        float z = (depths[i]);
+        int xval = static_cast<int>(std::round(x));
+        int yval = static_cast<int>(std::round(y));
+
+        if (xval < 320 && yval < 240 && xval > 0 && yval > 0) {
+            // within drawing bounds
+            std::cout<<"abt to draw textured line"<<std::endl;
+            window.setPixelColour(xval, yval, color);
+            std::cout<<"drawn"<<std::endl;
+        }
+    }
+}
+
+
 std::vector<std::vector<float>> drawLine(DrawingWindow &window, CanvasPoint from, CanvasPoint to, Colour color, std::vector<std::vector<float>> depthMatrix, bool depth) {
     from.x = std::ceil(from.x);
     to.x = std::ceil(to.x);
@@ -374,7 +406,20 @@ std::array<CanvasPoint, 3> sortAndLinkTextures(std::array<CanvasPoint, 3> vertic
     return vertices;
 }
 
+std::vector<TexturePoint> interpolateTexturePoint (TexturePoint from, TexturePoint to, int numberOfValues) {
+    std::vector<TexturePoint> vect;
+    std::vector<float> x = interpolateSingleFloats(from.x, to.x, numberOfValues);
+    std::vector<float> y = interpolateSingleFloats(from.y, to.y, numberOfValues);
+
+    for (int i = 0; i < numberOfValues; i++) {
+        TexturePoint temp(x[i], y[i]);
+        vect.push_back(temp);
+    }
+    return vect;
+}
+
 //void drawTextureFilled(DrawingWindow &window, CanvasTriangle triangle, const TextureMap& textureMap, const std::vector<TexturePoint>& texturePoints) {
+//    std::cout<<"drawing textured tri"<<std::endl;
 //    /*
 //     * Each TextureMap object has a publicly accessible pixels attribute that holds all of the pixel data loaded in from the PPM file.
 //     * This pixels attribute is a single dimension vector of pixel-packed RGB integers.
@@ -391,7 +436,6 @@ std::array<CanvasPoint, 3> sortAndLinkTextures(std::array<CanvasPoint, 3> vertic
 //    // now we have texturemap as a 2d matrix for easier access.
 //    // draw triangle via interpolation stuff
 //    // set texture pixels aka the colors via interpolation of the 3 texture points
-//
 //
 //    // create canvas points and sort in terms of linked canvas points and texture points
 //    std::array<CanvasPoint, 3> points = sortAndLinkTextures(triangle.vertices, texturePoints);
@@ -416,26 +460,29 @@ std::array<CanvasPoint, 3> sortAndLinkTextures(std::array<CanvasPoint, 3> vertic
 //    float extraVz = ratio * (points[2].depth - points[0].depth) + points[0].depth;
 //    CanvasPoint extraV = {extraVx, middleV.y, extraVz};
 //
-//    Colour color; bool depth = false;
+//    uint32_t color; bool depth = false;
 //    std::vector<std::vector<float>> fakeDepthMatrix;
 //
 //    // top triangle
 //    std::vector<CanvasPoint> topStartVertices = interpolateCanvasPoint(points[0], extraV, topHeight+1);
 //    std::vector<CanvasPoint> topEndVertices = interpolateCanvasPoint(points[0], middleV, topHeight+1);
-//
-//    std::vector<CanvasPoint> topStartTextures = interpolateTexturePoint(points[0].texturePoint, extraV.texturePoint, topHeight+1);
-//    std::vector<CanvasPoint> topEndTextures = interpolateTexturePoint(points[0].texturePoint, middleV.texturePoint, topHeight+1);
+//    std::cout<<"abt to texture"<<std::endl;
+//    std::vector<float> topTextures = interpolateSingleFloats(points[0].texturePoint.x, std::max(extraV.texturePoint.x, middleV.texturePoint.x), topHeight+1);
 //    for (int i = 0; i <= topHeight; i++) {
-//        color = textureMap[];
-//        fakeDepthMatrix = drawLine(window, topStartVertices[i], topEndVertices[i], color, fakeDepthMatrix, depth);
+//        float x = topTextures[i];
+//        color = textureMatrix[x][i];
+//        drawTexturedLine(window, topStartVertices[i], topEndVertices[i], color);
 //    }
 //
 //    // bottom triangle
 //    std::vector<CanvasPoint> bottomStartVertices = interpolateCanvasPoint(extraV, points[2], bottomHeight+1);
 //    std::vector<CanvasPoint> bottomEndVertices = interpolateCanvasPoint(middleV, points[2], bottomHeight+1);
+//
+//    std::vector<float> bottomTextures = interpolateSingleFloats(std::min(middleV.texturePoint.x, extraV.texturePoint.x), points[2].texturePoint.x, bottomHeight+1);
 //    for (int i = 0; i <= bottomHeight; i++) {
-////        color =;
-//        fakeDepthMatrix = drawLine(window, bottomStartVertices[i], bottomEndVertices[i], color, fakeDepthMatrix, depth);
+//        float x = bottomTextures[i];
+//        color = textureMatrix[x][i];
+//        drawTexturedLine(window, bottomStartVertices[i], bottomEndVertices[i], color);
 //    }
 //
 //}
@@ -1129,7 +1176,7 @@ void handleEvent(SDL_Event event, DrawingWindow &window) {
 }
 
 int main(int argc, char *argv[]) {
-	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, true); //fullscreen
+	DrawingWindow window = DrawingWindow(WIDTH, HEIGHT, false); //fullscreen
 	SDL_Event event;
 
     // RASTERIZER
@@ -1140,7 +1187,7 @@ int main(int argc, char *argv[]) {
 //    depthMatrix = std::get<3>(tuple);
 
     // RAYTRACER
-    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
+//    drawRaytracedScene(window, modelTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //    drawGouraucedScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 //    drawPhongdScene(window, sphereTriangles, scale, focalLength, cameraPosition, cameraOrientation, lightPosition);
 
@@ -1149,6 +1196,16 @@ int main(int argc, char *argv[]) {
                                      {-0.1,0.5,2.5}, {0.0,0.5,2.5}, {0.1,0.5,2.5}};
 //    std::vector<glm::vec3> lights = {{-0.6, -0.5,-0.5}, {1.5, -1.5,0.5}}; // cornell blue box specular
     int count = 0;
+
+    //Canvas Point		Texture Point
+    //(160, 10)	→	(195, 5)
+    //(300, 230)	→	(395, 380)
+    //(10, 150)	→	(65, 330
+
+    // (DrawingWindow &window, CanvasTriangle triangle, const TextureMap& textureMap, const std::vector<TexturePoint>& texturePoints
+    std::vector<TexturePoint> texturePoints {TexturePoint{195,5}, TexturePoint{395,380}, TexturePoint{65,330}};
+    CanvasTriangle triangle (CanvasPoint(160,10), CanvasPoint(300,230), CanvasPoint(10,150));
+//    drawTextureFilled(window, triangle, TextureMap("models/texture.ppm"), texturePoints);
 
     while (true) {
 		// We MUST poll for events - otherwise the window will freeze !
