@@ -928,67 +928,6 @@ void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>&
     std::cout<<"end of ray trace"<<std::endl;
 }
 
-//void drawRaytracedScene(DrawingWindow &window, const std::vector<ModelTriangle>& triangles, float scale, float focalLength, glm::vec3 cameraPosition, glm::mat3 cameraOrientation, glm::vec3 lightPosition) {
-//    std::cout <<"in raytracer"<< std::endl;
-//    window.clearPixels();
-//    std::vector<float> brightnesses;
-//    for (int y=0; y<HEIGHT; y++) {
-//        for (int x=0; x<WIDTH; x++) {
-//            CanvasPoint point(x, y, focalLength);
-//            glm::vec3 rayDirection =  convertToDirectionVector(point, scale, focalLength, cameraPosition, cameraOrientation);
-//            RayTriangleIntersection intersection = getClosestValidIntersection(cameraPosition, glm::vec3(x,y,focalLength), rayDirection, triangles, false, 10000);
-//            if (intersection.valid) {
-//                // ray from surface to light
-//                // terminal - init
-//                // from surface (init) to cam/light (terminal)
-//
-//                float radius = glm::length(lightPosition - intersection.intersectionPoint);
-//                float brightness = 5/(3*M_PI*radius*radius) /** 5*/;
-//
-//                glm::vec3 surfaceToLight = lightPosition - intersection.intersectionPoint;
-//                glm::vec3 normal = intersection.intersectedTriangle.normal;
-//                float angle = glm::normalizeDot(normal, surfaceToLight);
-//
-//                // SPECULAR
-//                glm::vec3 lightToSurface = intersection.intersectionPoint-lightPosition;
-//                glm::vec3 reflectionVector (lightToSurface - ((2*normal)*(glm::dot(lightToSurface, normal))));
-//                glm::vec3 surfaceToCam(cameraPosition-intersection.intersectionPoint);
-//                float specular = glm::normalizeDot(reflectionVector, surfaceToCam);
-//
-//                specular = pow(specular, 512);
-//
-//                // restrict a given value between 0-1
-//                float intensity = (brightness*angle*5)+specular;
-////                float intensity = angle;
-//                brightnesses.push_back(intensity);
-////                std::cout<<intensity<<std::endl;
-//                if (intensity > 1) {
-//                    intensity = 1;
-//                } else if (intensity < 0.1) {
-//                    intensity = 0.1;
-//                }
-//
-//                if (closestObjIntersection.valid &&
-//                    glm::distance(closestObjIntersection.intersectionPoint, intersection.intersectionPoint) >= 0.0001) {
-//                    // SHADOW
-//                    Colour currColor = intersection.intersectedTriangle.colour;
-//                    uint32_t shadow = convertColor(Colour(currColor.red *0, currColor.green *0, currColor.blue *0));
-//                    window.setPixelColour(x, y, shadow);
-//                } /*else if (intersection.intersectedTriangle.colour.name=="White") {
-//                    // hardcoding lightbox lol
-//                    window.setPixelColour(x, y, convertColor(Colour(255,255,255)));
-//                } */else {
-//                    Colour currColor = intersection.intersectedTriangle.colour;
-//                    uint32_t color = convertColor(Colour(currColor.red * intensity, currColor.green * intensity, currColor.blue * intensity));
-//                    window.setPixelColour(x, y, color);
-//                }
-//            }
-//        }
-//    }
-//    std::cout<<"end of ray trace"<<std::endl;
-//}
-
-
 std::vector<float> calculateBrightnesses(glm::vec3 lightPosition, glm::vec3 cameraPosition, RayTriangleIntersection intersection) {
     std::vector<float> brightnesses;
     int index = 0;
