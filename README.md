@@ -13,5 +13,5 @@ Below are the features I successfully implemented (including extensions to the b
   
 ## Rendering and Animation showcase video
 <video width="400" height="400" autoplay>
-  <source src="video.mp4" type="video/mp4">
+  <source src="graphics_video.mp4" type="video/mp4">
 </video>
