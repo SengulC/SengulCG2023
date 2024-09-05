@@ -14,3 +14,7 @@ Below are the features I successfully implemented (including extensions to the b
 ## Rendering and Animation showcase video
 https://github.com/user-attachments/assets/dae1e91e-834e-4105-adb7-e77488e15b70
 
+## Repository navigation
+Main file located @ /Weekly Workbooks/01 Introduction and Orientation/extras/RedNoise/src/RedNoise.cpp
+
+Direct link to file: https://github.com/SengulC/SengulCG2023/blob/main/Weekly%20Workbooks/01%20Introduction%20and%20Orientation/extras/RedNoise/src/RedNoise.cpp
