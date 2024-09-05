@@ -1,6 +1,14 @@
-## Computer Graphics Workbooks
+## Computer Graphics Coursework
 
-Welcome to the Computer Graphics Unit !
+This is my repository for the University of Bristol's Computer Graphics course where I coded the rendering of the Cornell Box and relevant animation techniques via C# & SDL.
 
-<a href="Weekly%20Workbooks/">Weekly Workbooks</a> will be released incrementally throughout the teaching block.  
-You should keep pace with the release of these workbooks (don't leave everything until the end of term !)
+Below are the features I successfully implemented (including extensions to the base course material)
+- camera movement
+- Ray Tracing with shadows
+- multi-light shadows
+- hard, soft shadows
+- ambient, diffuse, specular lighting
+- Gouraud and Phong shading
+- reflective surfaces
+  
+## Rendering and Animation showcase video
