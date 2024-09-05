@@ -1,6 +1,6 @@
 ## Computer Graphics Coursework
 
-This is my repository for the University of Bristol's Computer Graphics course where I coded the rendering of the Cornell Box and relevant animation techniques via C# & SDL.
+This is my repository for the University of Bristol's Computer Graphics course where I coded the rendering of the Cornell Box and relevant animation techniques via C++ & SDL.
 
 Below are the features I successfully implemented (including extensions to the base course material)
 - camera movement
