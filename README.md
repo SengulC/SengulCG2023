@@ -12,3 +12,6 @@ Below are the features I successfully implemented (including extensions to the b
 - reflective surfaces
   
 ## Rendering and Animation showcase video
+<video width="400" height="400" autoplay>
+  <source src="video.mp4" type="video/mp4">
+</video>
